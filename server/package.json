@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serverExpress.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon serverExpress.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-router": "^0.0.1",
+    "firebase": "^9.17.1",
+    "mysql2": "^3.1.2",
+    "nodemailer": "^6.9.1",
+    "sequelize": "^6.29.0"
+  }
+}
+

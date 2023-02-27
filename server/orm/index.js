@@ -72,9 +72,9 @@ db.Reviews.belongsTo(db.Player,{
 })
 // 1 to many relation BETWEEN OWNER and TERRAINS
 
-db.Owner.hasMany(db.Event)
-db.Event.belongsTo(db.Owner,{
-    foreignKey:"ownerId"
+db.Terrain.hasMany(db.Event)
+db.Event.belongsTo(db.Terrain,{
+    foreignKey:"terrainId"
 })
 
 //authentification 

@@ -11,8 +11,14 @@ module.exports=(sequelize,DataTypes)=>{
         Images:{type:DataTypes.TEXT('long')},
         Capacity:{type:DataTypes.INTEGER},
         Aviabilty:{type:DataTypes.BOOLEAN},
-        
-       
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+          },
+          updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+          }
     })
         return terrain;
 };

@@ -22,21 +22,40 @@ const AppointmentScheduler = () => {
     setConfirmVisible(true);
   };
   
-  const handleConfirm = () => {
-    // Send a POST request to your server with the selected day and time
-    axios.post(`http://localhost:3000/api/${playerId}/${terrainId}`, {
+  const handleConfirm = async () => {
+    
+    try{
+   const posts= await axios.post('http://localhost:3000/api/reservation/player/1/1', {
       Day: selectedDay,
       Hour: selectedTime,
-      reserved:false
+      Reserved:false
     })
-    .then((response) => {
-      console.log(response);
-      setConfirmVisible(false);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    console.log(posts);
+  }
+  catch(err){
+    console.log(err);
+  }
   };
+  // const handleConfirm = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:3000/api/reservation/player/1/1', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         Day: selectedDay,
+  //         Hour: selectedTime,
+  //         Reserved: false
+  //       })
+  //     });
+  
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const timeSlots = [9, 11, 13, 15, 17,19,21,23];
   

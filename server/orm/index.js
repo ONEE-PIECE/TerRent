@@ -10,6 +10,11 @@ const sequelize= new Sequelize(config.DATABASE,config.USER,config.PASSWORD,{
 }); 
 
 
+const defaultTimestampValue = {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+  };
+
 
 const db={} ;
 
@@ -27,9 +32,9 @@ db.Reviews=require('../orm/models/reviewsModel')(sequelize,DataTypes) // require
 
 
 
-db.sequelize.sync({force:false})
-.then(()=> console.log('All models were synchronized successfully'))
-.catch(err=>console.log(err))
+// // db.sequelize.sync({force:false})
+// .then(()=> console.log('All models were synchronized successfully'))
+// .catch(err=>console.log(err))
 
 //relations 
 //many to many relation events with players
@@ -81,3 +86,5 @@ db.Event.belongsTo(db.Terrain,{
 sequelize.authenticate()
 .then(()=> console.log('database connected'))
 .catch(err=>console.log(err))
+
+module.exports = db 

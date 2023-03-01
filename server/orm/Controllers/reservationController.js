@@ -2,8 +2,7 @@ const db = require('../index.js');
 const Reservation=db.Reservation
   const sendAppointment= async(req, res)=> {
   try {
-// console.log(req.body, "================");
-// console.log("hiiiiiiiiiiiiiiiiii");
+
     const { playerId, terrainId } = req.params;
     const { Day, Hour, Reserved } = req.body;
 
@@ -12,8 +11,8 @@ const Reservation=db.Reservation
       Day,
       Hour,
       Reserved,
-      PlayerId: playerId,
-      TerrainId: terrainId,
+      playerId: playerId,
+      terrainId: terrainId,
     });
     // Return the newly created reservation record
     res.status(201).json(reservation);
@@ -56,7 +55,7 @@ const deleteReservation=async(req,res)=>{
     const query =await Reservation.destroy({
       where :{id:reservationId}
     })
-    res.status(200).send('item deleted')
+    res.status(200).send(query)
   }
   catch(err){
     console.log(err);

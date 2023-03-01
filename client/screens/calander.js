@@ -25,7 +25,7 @@ const AppointmentScheduler = () => {
   const handleConfirm = async () => {
     
     try{
-   const posts= await axios.post('http://localhost:3000/api/reservation/player/1/1', {
+   const posts= await axios.post('http://192.168.104.9:3000/api/reservation/player/1/1', {
       Day: selectedDay,
       Hour: selectedTime,
       Reserved:false
@@ -36,27 +36,7 @@ const AppointmentScheduler = () => {
     console.log(err);
   }
   };
-  // const handleConfirm = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:3000/api/reservation/player/1/1', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         Day: selectedDay,
-  //         Hour: selectedTime,
-  //         Reserved: false
-  //       })
-  //     });
   
-  //     const data = await response.json();
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const timeSlots = [9, 11, 13, 15, 17,19,21,23];
   
   return (

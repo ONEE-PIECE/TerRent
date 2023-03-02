@@ -21,6 +21,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "permissions": ["ACCESS_FINE_LOCATION"],
+      "plugins": [
+        [
+          "expo-location",
+          {
+            "locationAlwaysAndWhenInUsePermission": "Allow $(TeRent) to use your location."
+          }
+        ]
+      ],
+      "package": "jdidi.test.newProject",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM"
+        }
       }
     },
     "web": {
@@ -28,3 +43,4 @@
     }
   }
 }
+ 

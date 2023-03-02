@@ -1,10 +1,10 @@
 import React from "react";
 import { Image, ImageBackground, ScrollView, View } from "react-native";
-import Slider from "../Allterrains/Imageslider.jsx";
+import Slider from "./Carrousel.jsx";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Card } from "react-native-paper";
-
+import Carrousel from "./Carrousel.jsx";
 import { Text } from "react-native-paper";
 const data = [
   {
@@ -41,6 +41,14 @@ const data = [
 const Allterrains = ({ navigation }) => {
   return (
     <ScrollView>
+      <Text>fcvgbhjk</Text>
+      <Image
+        style={{ width: "100%" }}
+        source={{
+          uri: "https://www.thamescentre.on.ca/sites/default/files/styles/twitter_large_image/public/images/2019-06/xxxx_spo_ocr-l-soccer-generic-stock-001-5.jpg?h=c00a0a28&itok=QWANWQQ8",
+        }}
+      ></Image>
+      <Carrousel />
       {data.map((item) => (
         <Card
           style={{
@@ -49,11 +57,15 @@ const Allterrains = ({ navigation }) => {
             shadowColor: "transparent",
           }}
           onPress={() => {
-            navigation.navigate("oneterrain");
+            navigation.navigate("carousel");
           }}
         >
           <View style={{ opacity: 0.9 }}>
-            <Card.Cover source={item.src} />
+            <Card.Cover
+              source={{
+                uri: item.src,
+              }}
+            />
           </View>
           <Text
             style={{

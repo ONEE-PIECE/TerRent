@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx";
+import Carrousel from "./client/screens/Components/Allterrains/Carrousel.jsx";
 import OneTerrain from "./client/screens/Components/Terraindetails/OneTerrain.jsx";
 
 const Stack = createNativeStackNavigator();
@@ -28,9 +29,9 @@ const App = () => {
           options={{ title: "Oneterrain" }}
         ></Stack.Screen>
         {/* <Stack.Screen
-          name="terraincalendar"
-          component={TerrainCalendar}
-          options={{ title: "Calendar" }}
+          name="carousel"
+          component={Carrousel}
+          options={{ title: "carousel" }}
         ></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>

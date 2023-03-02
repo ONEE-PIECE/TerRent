@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { View, TextInput } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import axios from "axios";
@@ -19,6 +19,11 @@ const data = [
     img: "https://img.favpng.com/18/18/18/computer-icons-icon-design-avatar-png-favpng-X29r5WhWMXVYvNsYXkR4iBgwf.jpg",
     fullname: "ala chaar",
     review: "this terrain good ",
+  },
+  {
+    img: "https://img.favpng.com/18/18/18/computer-icons-icon-design-avatar-png-favpng-X29r5WhWMXVYvNsYXkR4iBgwf.jpg",
+    fullname: "ahla",
+    review: "this terrain bad ",
   },
 ];
 
@@ -42,7 +47,7 @@ const OneTerrain = () => {
   // });
 
   return (
-    <View>
+    <ScrollView>
       <Text>
         Terrain Title<Text> Rating</Text>
       </Text>
@@ -51,28 +56,28 @@ const OneTerrain = () => {
 
       <Text>Capacity </Text>
 
-      {/* <Image src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg" />
+      <Image
+        source={{
+          uri: "https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg",
+        }}
+      />
       <Text>other images</Text>
       <Image
-        style={{ minWidth: "20%", maxWidth: "30%" }}
+        style={{ minWidth: 20, maxWidth: 30 }}
         src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
       />
       <Image
-        style={{ minWidth: "20%", maxWidth: "30%" }}
+        style={{ minWidth: 20, maxWidth: 30 }}
         src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
       />
       <Image
-        style={{ minWidth: "20%", maxWidth: "30%" }}
+        style={{ minWidth: 20, maxWidth: 30 }}
         src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
-      /> */}
+      />
       <Text> terrain description</Text>
       <Text> reviews here</Text>
-      <TextInput
-        placeholder="write your review here"
-        onChangeText={(e) => {
-          console.log(e.target.value);
-        }}
-      ></TextInput>
+      <TextInput onChangeText={(text) => console.log(text)} />
+
       <Button
       // onPress={() => {
       //   console.log(addReview());
@@ -82,22 +87,28 @@ const OneTerrain = () => {
         save
       </Button>
       {data.map((item) => (
-        <Card style={{ marginTop: 15 }}>
+        <Card style={{ marginTop: 15, marginBottom: 3 }}>
           <Avatar.Image
-            size={45}
-            source={item.img}
-            style={{ marginBottom: 40 }}
+            size={40}
+            style={{ marginTop: 10, marginLeft: 8 }}
+            source={{ uri: item.img }}
           />
-          <Card.Title style={{ marginLeft: 40 }} title={item.fullname} />
+          <Card.Title
+            style={{ marginTop: -40, marginLeft: 40 }}
+            title={item.fullname}
+          />
 
           <Card.Content>
-            <Text variant="headlineSmall">{item.review}</Text>
+            <Text
+              style={{ marginLeft: 20, fontSize: 20 }}
+              variant="headlineSmall"
+            >
+              {item.review}
+            </Text>
           </Card.Content>
         </Card>
       ))}
-
-      <Text>fgvbhj</Text>
-    </View>
+    </ScrollView>
   );
 };
 

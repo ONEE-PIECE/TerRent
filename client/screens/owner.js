@@ -37,6 +37,21 @@ const Reservation = () => {
         console.log(error);
       });
   };
+
+  
+  const handleDeleteReservation = (reservationId) => {
+    axios
+      .delete(`http://192.168.104.9:3000/api/reservation/player/${reservationId}`)
+      .then(function (response) {
+        console.log(response.data);
+        // Update the reservations state by filtering out the deleted reservation
+        const updatedReservations = reservations.filter((reservation) => reservation.id !== reservationId);
+        setReservations(updatedReservations);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <ScrollView>
       <Text>Reservations:</Text>
@@ -50,6 +65,11 @@ const Reservation = () => {
   onPress={() => handleUpdateReservation(reservation.id)}
   disabled={reservation.Reserved}
 />
+<Button
+title='Delete'
+onPress={() => handleDeleteReservation(reservation.id)}
+>
+</Button>
         </View>
       ))}
     </ScrollView>

@@ -55,12 +55,13 @@ const deleteReservation=async(req,res)=>{
     const query =await Reservation.destroy({
       where :{id:reservationId}
     })
-    res.status(200).send(query)
+    res.status(200).send('item deleted')
   }
   catch(err){
     console.log(err);
   }
 }
+
 
  module.exports = { deleteReservation,confirmTheReservationSentByTheUser,getAllReservationForAspecialTerrain,sendAppointment };
 

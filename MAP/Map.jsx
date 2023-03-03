@@ -73,7 +73,7 @@ console.log( "heree",location)
         })
       }}
       query={{
-        key: 'AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM',
+        key: '',
         language: 'en',
         types:"establishment",
         radius:30000,
@@ -127,7 +127,7 @@ console.log( "heree",location)
       <MapViewDirections 
             regin={regin}
             tunis={tunis}
-             apikey={"AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM"}
+             apikey={""}
       />
       <Polyline
             coordinates={[regin,tunis]}

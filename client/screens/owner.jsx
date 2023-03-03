@@ -11,7 +11,7 @@ const Reservation = () => {
   }, []);
   const handleFetchingAllTheReservationForAnOwner = () => {
     axios
-      .get('http://192.168.104.9:3000/api/reservation/player/1')
+      .get('http://192.168.104.13:3000/api/reservation/player/6')
       .then(function (response) {
         setReservations(response.data);
       })
@@ -21,7 +21,7 @@ const Reservation = () => {
   };
   const handleUpdateReservation = (reservationId) => {
     axios
-      .put(`http://192.168.104.9:3000/api/reservation/player/${reservationId}`)
+      .put(`http://192.168.104.13:3000/api/reservation/player/${reservationId}`)
       .then(function (response) {
         console.log(response.data);
         // Update the reservations state with the new data
@@ -41,7 +41,7 @@ const Reservation = () => {
   
   const handleDeleteReservation = (reservationId) => {
     axios
-      .delete(`http://192.168.104.9:3000/api/reservation/player/${reservationId}`)
+      .delete(`http://192.168.104.13:3000/api/reservation/player/${reservationId}`)
       .then(function (response) {
         console.log(response.data);
         // Update the reservations state by filtering out the deleted reservation

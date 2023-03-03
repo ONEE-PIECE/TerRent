@@ -25,7 +25,7 @@ const AppointmentScheduler = () => {
   const handleConfirm = async () => {
     
     try{
-   const posts= await axios.post('http://192.168.104.9:3000/api/reservation/player/1/1', {
+   const posts= await axios.post('http://192.168.104.13:3000/api/reservation/player/6/1', {
       Day: selectedDay,
       Hour: selectedTime,
       Reserved:false

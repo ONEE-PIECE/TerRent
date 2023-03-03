@@ -2,10 +2,10 @@ const db = require("../index");
 const Terrain = db.Terrain;
 const getAll = async (req, res) => {
   try {
-    const { terrainLocation } = req.body.terrainlocation;
+    const { Category } = req.params;
 
     const terrain = await Terrain.findAll({
-      where: { terrainlocation: terrainLocation },
+      where: { Category: Category },
     });
 
     res.status(201).json(terrain);
@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
 };
 const getAllCat = async (req, res) => {
   try {
-    const { terrainCategorie } = req.body.terraincategorie;
+    const { terrainCategorie } = req.params;
 
     const terrain = await Terrain.findAll({
       where: { terraincategorie: terrainCategorie },
@@ -30,9 +30,9 @@ const getAllCat = async (req, res) => {
 };
 const getOne = async (req, res) => {
   try {
-    const { terrainId } = req.body.terrainid;
+    const { terrainId } = req.params;
 
-    const terrain = await Terrain.findOne({ where: { terrainid: terrainId } });
+    const terrain = await Terrain.findOne({ where: { id: terrainId } });
 
     res.status(201).json(terrain);
   } catch (error) {

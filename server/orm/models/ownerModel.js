@@ -8,7 +8,16 @@ module.exports=(sequelize,DataTypes)=>{
         patentImage:{type:DataTypes.TEXT('long')},
         Email:{type:DataTypes.STRING},
         Password:{type:DataTypes.STRING},
-        ProfileImage:{type:DataTypes.TEXT('long')},   
+        ProfileImage:{type:DataTypes.TEXT('long')},
+        AccountConfirmation:{type:DataTypes.BOOLEAN},   
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+          },
+          updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+          }
     })
         return owner;
 };

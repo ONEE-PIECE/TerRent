@@ -10,7 +10,7 @@ import { TextInput } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentification } from "../../../FbConfig/config";
 import { useNavigation } from "@react-navigation/native";
-import {AsyncStorage} from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,17 +18,17 @@ const OwnerLogin = () => {
 
   const navigation = useNavigation();
   
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("marwen");
-
-      alert(value, "marwen");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
+_storeData = async () => {
+  try {
+    await AsyncStorage.setItem('marwen',"12345"
+    );
+  } catch (error) {
+console.log(error)    }
+};
+  
   useEffect(() => {
-_retrieveData()
+_storeData()
   }, []);
 
   const signInOwner = () => {

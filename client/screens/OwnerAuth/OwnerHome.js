@@ -2,23 +2,26 @@ import { StyleSheet, Text, View } from 'react-native'
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 const OwnerHome = () => {
 const [ownerData,setOwnerData] = useState([])
 const [stop,setStop] = useState(false)
+  
 
-
-_storeData = async () => {
+_retrieveData = async () => {
   try {
-    await AsyncStorage.setItem('marwen',"12345"
-    );
+    const value = await AsyncStorage.getItem("marwen");
+
+    alert(value, "marwen");
   } catch (error) {
-console.log(error)    }
-};
+    console.log(error);
+  }
+}
+
 
 useEffect(() => {
 
-  _storeData()
+  _retrieveData()
 },[stop])
 
 

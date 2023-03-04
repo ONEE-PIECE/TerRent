@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllreviews,
-  getrating,
+
+  addreview,
 } = require("../Controllers/reviewsController");
-router.get("/");
-router.get("/reviews/:terrainid", getAllreviews);
-router.get("/ratings/:terrainid", getrating);
+
+router.get("/getreview/:id", getAllreviews);
+
+router.post("/addreview/:id", addreview);
 
 module.exports = router;

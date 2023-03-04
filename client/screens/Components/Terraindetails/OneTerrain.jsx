@@ -1,60 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView } from "react-native";
 import { View, TextInput } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import axios from "axios";
 import { Avatar, Button, Card } from "react-native-paper";
-const data = [
-  {
-    img: "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png",
-    fullname: "atef mabrouki",
-    review: "this terrain sucks ",
-  },
-  {
-    img: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-    fullname: "iheb kedri",
-    review: "this terrain still ",
-  },
-  {
-    img: "https://img.favpng.com/18/18/18/computer-icons-icon-design-avatar-png-favpng-X29r5WhWMXVYvNsYXkR4iBgwf.jpg",
-    fullname: "ala chaar",
-    review: "this terrain good ",
-  },
-  {
-    img: "https://img.favpng.com/18/18/18/computer-icons-icon-design-avatar-png-favpng-X29r5WhWMXVYvNsYXkR4iBgwf.jpg",
-    fullname: "ahla",
-    review: "this terrain bad ",
-  },
-];
 
-const OneTerrain = () => {
+const OneTerrain = ({ navigation, route }) => {
   const [review, setreview] = useState("");
-  const [allreviews, setallreviews] = useState([]);
-  // const addReview = (post) => {
-  //   axios
-  //     .post(`http://127.0.0.1:3000/api/reviews/add`, {
-  //       iduser: 1,
-  //       idterrain: 1,
-  //       review: review,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //     });
-  // };
-  // axios.get(`http://127.0.0.1:3000/api/reviews:${"iduser"}`).then((data) => {
-  //   console.log(data);
-  //   res.json(data);
-  // });
+  const [data, setdata] = useState([]);
+  const [dataterrain, setdataterrain] = useState([]);
+  const addReview = () => {
+    axios.post(
+      `http://192.168.100.14:3000/api/reviews/addreview/${route.params.id}`,
+      {
+        idterrain: route.params.id,
+        review: review,
+      }
+    );
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `http://192.168.100.14:3000/api/reviews/getreview/${route.params.id}`
+      )
+      .then((response) => {
+        axios
+          .get(
+            `http://192.168.100.14:3000/api/terrain/terrains/atefIYED/${route.params.id}`
+          )
+          .then((response2) => {
+            console.log(response.data, "mehdi");
+            setdata(response.data);
+            setdataterrain(response2.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <ScrollView>
+      <Card style={{ marginTop: 0, marginBottom: 3 }}>
+        <Card.Title
+          style={{ marginTop: 0, marginLeft: 5 }}
+          //   title={route.params.Name}
+        />
+
+        <Card.Content>
+          <Text
+            style={{ marginLeft: 20, fontSize: 20 }}
+            variant="headlineSmall"
+          >
+            {"item.Comments"}
+          </Text>
+        </Card.Content>
+      </Card>
       <Text>
-        Terrain Title<Text> Rating</Text>
+        Terrain Title<Text> {data[0] ? data[0].Rating : "loading"}</Text>
       </Text>
 
-      <Text>Price </Text>
+      <Text>{"dataterrain.Price"} </Text>
 
-      <Text>Capacity </Text>
+      <Text>{"dataterrain.Capacity"} </Text>
 
       <Image
         source={{
@@ -74,8 +81,8 @@ const OneTerrain = () => {
         style={{ minWidth: 20, maxWidth: 30 }}
         src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
       />
-      <Text> terrain description</Text>
-      <Text> reviews here</Text>
+      <Text> {dataterrain.Description}</Text>
+      <Text> Terrain reviews here</Text>
       <TextInput onChangeText={(text) => console.log(text)} />
 
       <Button
@@ -95,7 +102,7 @@ const OneTerrain = () => {
           />
           <Card.Title
             style={{ marginTop: -40, marginLeft: 40 }}
-            title={item.fullname}
+            title={"player name"}
           />
 
           <Card.Content>
@@ -103,7 +110,7 @@ const OneTerrain = () => {
               style={{ marginLeft: 20, fontSize: 20 }}
               variant="headlineSmall"
             >
-              {item.review}
+              {item.Comments}
             </Text>
           </Card.Content>
         </Card>

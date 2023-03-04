@@ -8,20 +8,26 @@ import {
   TouchableWithoutFeedback,
   Animated,
 } from "react-native";
+import { Card } from "react-native-paper";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const data = [
   {
-    id: "1",
+    id: "mourouj terrain",
+    rating: "5 Stars",
     image:
       "https://fivethirtyeight.com/wp-content/uploads/2022/11/GettyImages-1442587075-e1668806020544.jpg?w=917",
   },
   {
-    id: "2",
+    id: "ariana terrain ",
+    rating: "4.2 Stars",
     image:
       "https://media.istockphoto.com/id/1199894704/photo/african-american-young-boy-playing-soccer-in-a-stadium-pitch-child-running-with-soccer-ball.jpg?s=612x612&w=0&k=20&c=mRKKlAIo7CoWLKcxQGbSaKYO6_VdWxa1NpAtqb4oBT4=",
   },
   {
-    id: "3",
+    id: "zahra terrain ",
+    rating: "3.9 Stars",
     image:
       "https://img.freepik.com/free-vector/flat-design-soccer-player-silhouette-illustration_23-2149483061.jpg?w=2000",
   },
@@ -29,29 +35,29 @@ const data = [
 
 const ITEM_WIDTH = 300;
 const ITEM_HEIGHT = 300;
-const ITEM_SPACING = 20;
+const ITEM_SPACING = 30;
 
 const AnimatedTouchable = Animated.createAnimatedComponent(
   TouchableWithoutFeedback
 );
 
 const Carrousel = () => {
+  const navigation = useNavigation();
+
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const onItemPress = (index) => {
-    setCurrentIndex(index);
-  };
-
   return (
-    <View style={styles.container}>
+    <View>
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
-        snapToInterval={ITEM_WIDTH + ITEM_SPACING * 2}
-        contentContainerStyle={{ paddingHorizontal: ITEM_SPACING }}
+        snapToInterval={408}
+        contentContainerStyle={{
+          paddingLeft: 10,
+        }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           { useNativeDriver: false }
@@ -80,18 +86,66 @@ const Carrousel = () => {
 
           return (
             <AnimatedTouchable
-              onPress={() => onItemPress(index)}
               style={[
                 styles.itemContainer,
-                {
-                  transform: [{ scale }],
-                  opacity,
-                  elevation,
-                },
+
                 index === currentIndex && styles.selectedItem,
               ]}
             >
-              <Image source={{ uri: item.image }} style={styles.itemImage} />
+              <Card
+                style={{
+                  paddingBottom: 10,
+                  paddingRight: 20,
+                  paddingLeft: 0,
+                  shadowColor: "white",
+                }}
+                onPress={() => {
+                  navigation.navigate("oneterrain");
+                }}
+              >
+                <View style={{ opacity: 0.9 }}>
+                  <Card.Cover
+                    style={styles.itemImage}
+                    source={{
+                      uri: item.image,
+                    }}
+                  />
+                </View>
+                <Text
+                  style={{
+                    position: "absolute",
+                    top: 120,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                    color: "white",
+                    fontSize: 20,
+                    paddingLeft: 20,
+                    borderBottomLeftRadius: 14,
+                    borderBottomRightRadius: 14,
+                  }}
+                >
+                  {item.id}
+                </Text>
+
+                <Text
+                  style={{
+                    position: "absolute",
+                    top: 145,
+                    left: 270,
+                    right: 0,
+                    bottom: 0,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "white",
+                  }}
+                >
+                  {item.rating}
+                </Text>
+              </Card>
             </AnimatedTouchable>
           );
         }}
@@ -101,10 +155,6 @@ const Carrousel = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
   itemContainer: {
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT,
@@ -112,13 +162,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginRight: ITEM_SPACING,
   },
-  selectedItem: {
-    borderWidth: 2,
-    borderColor: "#333",
-  },
+
   itemImage: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+    width: 390,
+    height: 180,
   },
 });
 export default Carrousel;

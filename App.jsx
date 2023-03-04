@@ -13,13 +13,16 @@ import Reservation from './client/screens/owner.jsx';
 import Home from "./client/screens/Components/Homepage/Home.jsx";
 import AddTerrainForm from "./client/screens/addTerrain.jsx";
 import HandleOwnerTerrains from "./client/screens/ownerTerrains.jsx";
+import Confirmation from "./MAP/Confirmation";
+
+import Mapplayer from "./MAP/Mapplayer ";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <Stack.Navigator  >
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{ title: "Home" }}
@@ -33,7 +36,7 @@ const App = () => {
           name="oneterrain"
           component={OneTerrain}
           options={{ title: "Oneterrain" }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
 {/*        
         <Stack.Screen
           name="Reservation"
@@ -45,11 +48,24 @@ const App = () => {
           component={AppointmentScheduler}
           options={{ title: "AppointmentScheduler" }}
         ></Stack.Screen> */}
-           {/* <Stack.Screen 
+            <Stack.Screen 
         name="Map"
         component={Map}
         options={{title:'Map',headerShown:false}}
+        ></Stack.Screen>
+
+          <Stack.Screen 
+        name="Confirmation"
+        component={Confirmation}
+        options={{title:'Confirmation',headerShown:false}}
+        ></Stack.Screen>   
+
+         {/* <Stack.Screen 
+        name="Mapplayer"
+        component={Mapplayer}
+        options={{title:'Mapplayer',headerShown:false}}
         ></Stack.Screen> */}
+
         {/* <Stack.Screen 
         name="HandleOwnerTerrains"
         component={HandleOwnerTerrains}

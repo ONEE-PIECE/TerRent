@@ -11,7 +11,7 @@ import { NavigationContainer, } from '@react-navigation/native';
 
 
 
-const Map=({navigation:{navigate}})=> {
+const Mapplayer=({navigation:{navigate}})=> {
 
 
 
@@ -59,7 +59,7 @@ const Map=({navigation:{navigate}})=> {
       
         {/* <Text style={{marginTop:80}}>{text}</Text> */}
        
-         <GooglePlacesAutocomplete
+         {/* <GooglePlacesAutocomplete
            placeholder='Search here...'
            fetchDetails={true}
             GooglePlacesSearchQuery={{
@@ -86,9 +86,9 @@ const Map=({navigation:{navigate}})=> {
         radius:30000,
         location:`${regin.latitude},${regin.longitude}`
       }}
-        styles={{container:{flex:0,position:'absolute',width:"80%",zIndex:1},
+        styles={{container:{flex:0,position:'absolute',width:"100%",zIndex:1},
         listView:{backgroundColor:"white"}}}
-    />
+    /> */}
       <MapView 
       provider={PROVIDER_GOOGLE}
 
@@ -112,6 +112,7 @@ const Map=({navigation:{navigate}})=> {
     <Marker coordinate={{
       latitude:regin.latitude,longitude:regin.longitude}} 
       draggable={true}
+    
       title={"here "}
      
       
@@ -133,32 +134,32 @@ const Map=({navigation:{navigate}})=> {
         center={regin} 
         radius={100}
     /> 
-
-    {/* <Marker coordinate={tunis}
+{/* 
+    <Marker coordinate={tunis}
           onDragEnd= {(tunis)=>settunis(tunis.nativeEvent.coordinate)}
           draggable={true}
           title={"here "}
        /> */}
 
 
-      {/* <MapViewDirections 
+      <MapViewDirections 
               origin={regin}
               destination={tunis}
               apikey={GOOGLE_MAPS_KEY}
               strokeWidth={5}
-      /> */}
+      />
            {/* <Polyline
             coordinates={[regin,tunis]}
             strokeWidth={5}
             /> */}
          </MapView>
 
-
+{/* 
          <View style={{position:'absolute' ,bottom:30,zIndex:1,left:130,}}>
          <Button title='confirm your position ' onPress={()=>navigate('Confirmation', {lat:location.coords.latitude,long:location.coords.longitude})} >
         </Button>
         </View>
-        {console.log(Location)}
+        {console.log(Location)} */}
        
      
     </View>
@@ -176,4 +177,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Map;
+export default Mapplayer;

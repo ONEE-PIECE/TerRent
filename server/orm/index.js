@@ -81,3 +81,6 @@ db.Event.belongsTo(db.Owner,{
 sequelize.authenticate()
 .then(()=> console.log('database connected'))
 .catch(err=>console.log(err))
+
+
+module.exports = db;

@@ -1,12 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import OwnerHome from './client/screens/OwnerAuth/OwnerHome';
+import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
+import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
+
+const Stack = createNativeStackNavigator();
+
 
 export default function App() {
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+    <Stack.Navigator 
+    initialRouteName='Login'
+    screenOptions={{
+      headerTintColor:'black',
+      headerTitleAlign:'center'
+
+    }}
+    >
+    <Stack.Screen name="Login" component={OwnerLogin} />
+    <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} />
+    <Stack.Screen name="Home" component={OwnerHome} />
+    </Stack.Navigator>
+  </NavigationContainer>
+
   );
 }
 

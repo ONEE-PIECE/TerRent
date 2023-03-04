@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TextInput } from "react-native";
+import { Button } from "native-base";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentification } from "../../../FbConfig/config";
 import { useNavigation } from "@react-navigation/native";
@@ -19,24 +20,22 @@ const OwnerLogin = () => {
   const navigation = useNavigation();
   
   
-_storeData = async () => {
+_storeData = async (id) => {
   try {
-    await AsyncStorage.setItem('marwen',"12345"
+    await AsyncStorage.setItem('Token',id
     );
   } catch (error) {
 console.log(error)    }
 };
   
-  useEffect(() => {
-_storeData()
-  }, []);
+  
 
   const signInOwner = () => {
     signInWithEmailAndPassword(authentification, email, password)
       .then((res) => {
-        console.log("hello world", res._tokenResponse.localId);
+        _storeData(res._tokenResponse.localId)
       })
-      .then((res) => {
+      .then(() => {
         navigation.navigate("Home");
       })
       .catch((err) => {

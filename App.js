@@ -5,14 +5,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OwnerHome from './client/screens/OwnerAuth/OwnerHome';
 import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
 import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
-
+import { NativeBaseProvider } from 'native-base';
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
 
 
-  return (
+  return (<NativeBaseProvider>
     <NavigationContainer>
     <Stack.Navigator 
     initialRouteName='Login'
@@ -22,11 +22,13 @@ export default function App() {
 
     }}
     >
+      
     <Stack.Screen name="Login" component={OwnerLogin} />
     <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} />
     <Stack.Screen name="Home" component={OwnerHome} />
     </Stack.Navigator>
   </NavigationContainer>
+  </NativeBaseProvider>
 
   );
 }

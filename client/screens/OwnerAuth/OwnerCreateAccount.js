@@ -1,24 +1,26 @@
-import { TouchableOpacity,KeyboardAvoidingView,StyleSheet, Text, View ,TextInput, Button} from 'react-native'
+import { TouchableOpacity,KeyboardAvoidingView,StyleSheet, Text, View ,TextInput} from 'react-native'
 import React,{useState} from 'react'
-import {launchImageLibrary} from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker'
 import { authentification } from '../../../FbConfig/config';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import  axios from 'axios'
+
 import { useNavigation } from '@react-navigation/native';
-
-
+import { Button,Stack,Icon,Input,Pressable, Center } from 'native-base';
+import {Ionicons,MaterialIcons} from '@expo/vector-icons'
 const OwnerCreateAccount = () => {
 
   const navigation=useNavigation();
 
 const [email,setEmail]= useState('');
 const [password,setPassword]= useState('');
+const [ConfirmPassword,setConfirmPassword]= useState('');
 const [fullName,setFullName]= useState('');
 const [phoneNumber,setPhoneNumber]= useState('');
 const [patentImage,setPatentImage]= useState('');
 const [ProfileImage,setProfileImage]= useState('');
 const [FireId,setFireId]= useState('');
-
+const [show,setShow]= useState(false);
 
 
 const axiosPost=(FireId)=>{
@@ -30,28 +32,40 @@ const axiosPost=(FireId)=>{
     patentImage:patentImage,
     ProfileImage:ProfileImage,
   }
-  axios.post('http://192.168.100.10:3000/owner/signUpOwner',body)
-  .then(response=>console.log(response))
+  axios.post('http://192.168.104.10:3000/owner/signUpOwner',body)
+  .then(response=>console.log("account created successfully"))
   .catch(err=>console.log(err))
 }
 
 //! IMAGE UPLOADER 
-// const options = {
-//   title: 'Select Image',
-//   maxHeight: 200,
-//   maxWidth: 200,
-//   mediaType: 'photo',
-//   includeBase64: false,
-//   quality: 1,
-// };
 
 
-// const openGallery = async () =>{
-//   try{
-//   const image = await launchImageLibrary(options)
-//   console.log(image)
-//   } catch (e) {console.log(e)};
-// }
+
+ const pickProfileImage = async ()=>{
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    quality: 1,
+  });
+
+  if (!result.cancelled) {
+    setProfileImage(result.uri);
+  }
+ }
+  const pickPatentImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setPatentImage(result.uri);
+    }
+  };
+
+
+
 
  const Register = () =>{
   createUserWithEmailAndPassword(authentification,email,password)
@@ -65,61 +79,30 @@ const axiosPost=(FireId)=>{
 }
 
 return (
-    <KeyboardAvoidingView
-    style={styles.container}
-    behavior='padding'
-    >
-       <View style={styles.inputContainer}>
-           <TextInput 
-           placeholder="Full Name"
-           value={fullName}
-           onChangeText={ text=> {setFullName(text)}}
-           style={styles.input}
-           />
-           <TextInput 
-           placeholder="Phone Number"
-           value={phoneNumber}
-           onChangeText={ number=> {setPhoneNumber(number)}}
-           style={styles.input}
-           />
-           <TextInput 
-           placeholder="Email"
-           value={email}
-           onChangeText={ text=> {setEmail(text)}}
-           style={styles.input}
-           />
-                 <TextInput 
-           placeholder="Password"
-           value={password}
-           onChangeText={ text=> setPassword(text) }
-           style={styles.input}
-           secureTextEntry
-           /></View>
-{/* <View style={styles.UploadButton}>
-           <Button
-           title="Upload Patent Image"
-           value={patentImage}
-           onPress={openGallery}
-           style={styles.input}
-           ></Button>
-         
-           <Button
-           title="Upload Profile Image"
-           value={ProfileImage}
-           style={styles.input}
-           ></Button>
-  </View> */}
-       <View style={styles.buttonContainer}>
-           <TouchableOpacity
-           onPress={Register}
-           style={styles.button}
-           >
-       <Text style={styles.buttonOutLineText}>Register</Text>
-           </TouchableOpacity>
-       </View>
+<Center  flex={1} px="3">
+<Stack  space={4} w="75%" maxW="300px" mx="auto">
+      <Input size="lg" placeholder="Full Name" value={fullName} onChangeText={(text)=>{setFullName(text)}} />
+      <Input size="lg" placeholder="Phone Number" value={phoneNumber} onChangeText={(text)=>{setPhoneNumber(text)}} />
     
-    </KeyboardAvoidingView>
+      <Input size="lg" placeholder="Email" value={email}  onChangeText={(text)=>{setEmail(text)}} />
 
+<Input w={{
+      base: "75%",
+      md: "25%"
+    }} type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+            <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={6} mr="2" color="muted.400" />
+          </Pressable>} value={password} onChangeText={(text)=>{setPassword(text)}} placeholder="Password" />
+          <Input w={{
+      base: "75%",
+      md: "25%"
+    }} type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+            <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={6} mr="2" color="muted.400" />
+          </Pressable>}  value={ConfirmPassword} onChangeText={(text)=>{setConfirmPassword(text)}} placeholder="Confirm Password" />
+      <Button leftIcon={<Icon as={Ionicons} name="cloud-upload-outline" size={7}/>} onPress={pickPatentImage} >Upload Patent Image</Button>
+      <Button leftIcon={<Icon as={Ionicons} name="cloud-upload-outline"  size={7}/>}  onPress={pickProfileImage}   >Upload Profile Image</Button>
+      <Button onPress={() =>{Register()}}>Register</Button>
+    </Stack>
+    </Center>
   )
 }
 

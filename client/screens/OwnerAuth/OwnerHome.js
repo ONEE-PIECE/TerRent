@@ -1,18 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity,StyleSheet, Text, View } from 'react-native'
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
+import {signOut} from "firebase/auth"
+import { authentification } from "../../../FbConfig/config";
+import { useNavigation } from "@react-navigation/native";
+
 
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 const OwnerHome = () => {
 const [ownerData,setOwnerData] = useState([])
 const [stop,setStop] = useState(false)
+  const navigation = useNavigation()
+const LogOut = () => {
+
   
+signOut(authentification).then((res) => {
+  console.log(res)
+alert("Good Bye ",ownerData.FullName)
+navigation.navigate("Login")
+}).catch((error) => {
+  console.log(error)
+});
+}
+
 
 _retrieveData = async () => {
   try {
-    const value = await AsyncStorage.getItem("marwen");
+    const value = await AsyncStorage.getItem("Token");
 
-    alert(value, "marwen");
+   console.log("welcome :",value)
+    let ownerData= await axios.get(`http://192.168.100.10:3000/owner/signInOwner/${value}`)
+    console.log("owner",ownerData.data );
+    return ownerData.data;
+
   } catch (error) {
     console.log(error);
   }
@@ -21,10 +41,13 @@ _retrieveData = async () => {
 
 useEffect(() => {
 
-  _retrieveData()
+  _retrieveData().then((res)=> 
+ { console.log('response :::::',res);  
+   setOwnerData(res[0])}
+  )
 },[stop])
 
-
+console.log(ownerData);
 
   
 
@@ -32,9 +55,19 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      {/* <Text> Hello {data[0].FullName}  WelCome To your app</Text> */}
+     <View>
+      <Text> Hello {ownerData.FullName} WelCome To your app</Text>
+     </View>
+     <View>
+     <TouchableOpacity
+            onPress={() => {LogOut()}}
+            style={styles.button}
+            >
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
     </View>
-  )
+  
+    </View>)
 }
 
 export default OwnerHome
@@ -46,4 +79,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    backgroundColor: "red",
+    width: "100%",
+    marginTop: 100,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  }
 });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { NavigationContainer, } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; 
 
@@ -38,9 +38,10 @@ const Confirmation = ( {navigation,route}) => {
     }
    
   };
+  console.log('iheb',lat)
   console.log( "atef",route.params.lat,route.params.long)
   return (
-    <View> 
+    <View style={styles.container}> 
       <TextInput
         placeholder="Name"
         value={name}
@@ -95,4 +96,22 @@ const Confirmation = ( {navigation,route}) => {
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    top:'30%',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+    input: {
+    marginTop:50,
+    marginBottom:50,
+    height:40,
+    borderColor: 'gray',
+    borderWidth: 2,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
+});
 export default Confirmation;

@@ -57,7 +57,7 @@ const Map=({navigation:{navigate}})=> {
   return (
     <View style={{marginTop:33,flex:1}}>
       
-        {/* <Text style={{marginTop:80}}>{text}</Text> */}
+        
        
          <GooglePlacesAutocomplete
            placeholder='Search here...'
@@ -134,23 +134,7 @@ const Map=({navigation:{navigate}})=> {
         radius={100}
     /> 
 
-    {/* <Marker coordinate={tunis}
-          onDragEnd= {(tunis)=>settunis(tunis.nativeEvent.coordinate)}
-          draggable={true}
-          title={"here "}
-       /> */}
 
-
-      {/* <MapViewDirections 
-              origin={regin}
-              destination={tunis}
-              apikey={GOOGLE_MAPS_KEY}
-              strokeWidth={5}
-      /> */}
-           {/* <Polyline
-            coordinates={[regin,tunis]}
-            strokeWidth={5}
-            /> */}
          </MapView>
 
 
@@ -158,7 +142,7 @@ const Map=({navigation:{navigate}})=> {
          <Button title='confirm your position ' onPress={()=>navigate('Confirmation', {lat:location.coords.latitude,long:location.coords.longitude})} >
         </Button>
         </View>
-        {console.log(Location)}
+       
        
      
     </View>

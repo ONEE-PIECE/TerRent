@@ -57,38 +57,7 @@ const Mapplayer=({navigation:{navigate}})=> {
   return (
     <View style={{marginTop:33,flex:1}}>
       
-        {/* <Text style={{marginTop:80}}>{text}</Text> */}
        
-         {/* <GooglePlacesAutocomplete
-           placeholder='Search here...'
-           fetchDetails={true}
-            GooglePlacesSearchQuery={{
-        rankby:"distance"
-      }}
-
-      onPress={(data, details = null) => {
-       
-        console.log(data, details)
-        setregin({
-          latitude:details.geometry.location.lat,
-          longitude:details.geometry.location.lng,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        })
-     
-      }}
-     
-      
-      query={{
-        key: 'AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM',
-        language: 'en',
-        types:"establishment",
-        radius:30000,
-        location:`${regin.latitude},${regin.longitude}`
-      }}
-        styles={{container:{flex:0,position:'absolute',width:"100%",zIndex:1},
-        listView:{backgroundColor:"white"}}}
-    /> */}
       <MapView 
       provider={PROVIDER_GOOGLE}
 
@@ -134,12 +103,7 @@ const Mapplayer=({navigation:{navigate}})=> {
         center={regin} 
         radius={100}
     /> 
-{/* 
-    <Marker coordinate={tunis}
-          onDragEnd= {(tunis)=>settunis(tunis.nativeEvent.coordinate)}
-          draggable={true}
-          title={"here "}
-       /> */}
+
 
 
       <MapViewDirections 
@@ -148,18 +112,10 @@ const Mapplayer=({navigation:{navigate}})=> {
               apikey={GOOGLE_MAPS_KEY}
               strokeWidth={5}
       />
-           {/* <Polyline
-            coordinates={[regin,tunis]}
-            strokeWidth={5}
-            /> */}
+           
          </MapView>
 
-{/* 
-         <View style={{position:'absolute' ,bottom:30,zIndex:1,left:130,}}>
-         <Button title='confirm your position ' onPress={()=>navigate('Confirmation', {lat:location.coords.latitude,long:location.coords.longitude})} >
-        </Button>
-        </View>
-        {console.log(Location)} */}
+
        
      
     </View>

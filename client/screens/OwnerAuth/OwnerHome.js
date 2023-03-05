@@ -29,7 +29,7 @@ _retrieveData = async () => {
     const value = await AsyncStorage.getItem("Token");
 
    console.log("welcome :",value)
-    let ownerData= await axios.get(`http://192.168.100.10:3000/owner/signInOwner/${value}`)
+    let ownerData= await axios.get(`http://192.168.43.52:3000/owner/signInOwner/${value}`)
     console.log("owner",ownerData.data );
     return ownerData.data;
 

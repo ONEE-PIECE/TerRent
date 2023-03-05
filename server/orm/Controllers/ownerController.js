@@ -13,6 +13,7 @@ const owner = await Owner.create({
         PhoneNumber,
         patentImage,
         ProfileImage,
+        AccountConfirmation:false
 
     }) 
     res.status(200).json(owner);

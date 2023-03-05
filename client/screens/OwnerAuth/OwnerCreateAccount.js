@@ -25,12 +25,12 @@ const [show,setShow]= useState(false);
 
 // Upload an image to Firebase Cloud Storage
 const uploadImage = async (uri, path) => {
-  const response = await fetch(patentImage);
+  const response = await fetch(uri);
   const blob = await response.blob();
 
   try {
     const snapshot = await storage.ref().child(path).put(blob);
-    console.log('Image uploaded successfully!');
+    console.log('Image uploaded successfully!',snapshot);
   } catch (error) {
     console.error('Error uploading image:', error);
   }
@@ -49,7 +49,7 @@ const axiosPost=(FireId)=>{
     patentImage:patentImage,
     ProfileImage:ProfileImage,
   }
-  axios.post('http://192.168.104.10:3000/owner/signUpOwner',body)
+  axios.post('http://192.168.43.52:3000/owner/signUpOwner',body)
   .then(response=>console.log("account created successfully"))
   .catch(err=>console.log(err))
 }
@@ -65,7 +65,7 @@ const axiosPost=(FireId)=>{
     quality: 1,
   });
 
-  if (!result.cancelled) {
+  if (!result.canceled) {
     setProfileImage(result.uri);
   }
  }
@@ -75,7 +75,7 @@ const axiosPost=(FireId)=>{
       allowsEditing: true,
       quality: 1,
     });
-
+console.log('result patentimage', result);
     if (!result.cancelled) {
       setPatentImage(result.uri);
     }
@@ -87,7 +87,7 @@ const axiosPost=(FireId)=>{
  const Register = () =>{
   createUserWithEmailAndPassword(authentification,email,password)
   .then(res=>{
-    
+    // uploadImage(patentImage,'my-image.jpg')
     axiosPost(res._tokenResponse.localId)
     navigation.navigate('Login')
 

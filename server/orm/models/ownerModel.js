@@ -10,7 +10,9 @@ module.exports=(sequelize,DataTypes)=>{
         FullName:{type:DataTypes.STRING},
         PhoneNumber:{type:DataTypes.INTEGER},
         patentImage:{type:DataTypes.TEXT('long')},
-        ProfileImage:{type:DataTypes.TEXT('long')},   
+        ProfileImage:{type:DataTypes.TEXT('long')},
+        AccountConfirmation:{type:DataTypes.BOOLEAN}
+       
     })
         return owner;
 };

@@ -33,6 +33,18 @@ const getAllReservationForAspecialTerrain=async(req,res)=>{
     console.log(err);
   }
 }
+const getAllReservedSlots=async(req,res)=>{
+  try{
+    const {terrainId}=req.params
+    const query=await Reservation.findAll({where:{Reserved:true,
+    terrainId:terrainId
+    }})
+    res.status(200).json(query)
+  }
+  catch(err){
+console.log(err);
+  }
+}
 
 const confirmTheReservationSentByTheUser=async(req,res)=>{
   try{
@@ -63,5 +75,5 @@ const deleteReservation=async(req,res)=>{
 }
 
 
- module.exports = { deleteReservation,confirmTheReservationSentByTheUser,getAllReservationForAspecialTerrain,sendAppointment };
+ module.exports = { deleteReservation,confirmTheReservationSentByTheUser,getAllReservationForAspecialTerrain,sendAppointment,getAllReservedSlots };
 

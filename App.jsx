@@ -13,6 +13,7 @@ import AppointmentScheduler from './client/screens/calander.jsx'
  import AddTerrainForm from "./client/screens/addTerrain.jsx";
  import HandleOwnerTerrains from "./client/screens/ownerTerrains.jsx";
 
+
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
@@ -44,9 +45,9 @@ const App = () => {
           options={{ title: "Reservation" }}
         ></Stack.Screen> */}
         <Stack.Screen
-          name="AppointmentScheduler"
-          component={AppointmentScheduler}
-          options={{ title: "AppointmentScheduler" }}
+          name="Reservation"
+          component={Reservation}
+          options={{ title: "Reservation" }}
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

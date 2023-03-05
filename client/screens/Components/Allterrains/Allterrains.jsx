@@ -15,7 +15,7 @@ const Allterrains = ({ navigation, route }) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.100.14:3000/api/terrain/terrains/category/${route.params.Category}`
+        `http://192.168.101.13:3000/api/terrain/terrains/category/${route.params.Category}`
       )
       .then((response) => {
         if (response.data.length === 0) {
@@ -80,6 +80,7 @@ const Allterrains = ({ navigation, route }) => {
           }}
         >
           <View style={{ opacity: 0.9 }}>
+            {console.log(item)}
             <Card.Cover
               source={{
                 uri: item.Images,

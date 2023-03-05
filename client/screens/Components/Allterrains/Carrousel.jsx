@@ -14,22 +14,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const data = [
   {
-    id: "mourouj terrain",
+    id: "most rated 1 ",
     rating: "5 Stars",
     image:
       "https://fivethirtyeight.com/wp-content/uploads/2022/11/GettyImages-1442587075-e1668806020544.jpg?w=917",
   },
   {
-    id: "ariana terrain ",
+    id: "most rated 2 ",
     rating: "4.2 Stars",
     image:
       "https://media.istockphoto.com/id/1199894704/photo/african-american-young-boy-playing-soccer-in-a-stadium-pitch-child-running-with-soccer-ball.jpg?s=612x612&w=0&k=20&c=mRKKlAIo7CoWLKcxQGbSaKYO6_VdWxa1NpAtqb4oBT4=",
   },
   {
-    id: "zahra terrain ",
+    id: "most rated 3",
     rating: "3.9 Stars",
     image:
-      "https://img.freepik.com/free-vector/flat-design-soccer-player-silhouette-illustration_23-2149483061.jpg?w=2000",
+      "https://athletics.central.edu/images/2020/5/13/Soccer_Field_Women_2018.jpg",
   },
 ];
 

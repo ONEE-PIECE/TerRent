@@ -20,7 +20,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -36,7 +36,6 @@ const App = () => {
             ),
           }}
         ></Stack.Screen>
-        
         <Stack.Screen
           name="Allterrains"
           component={Allterrains}
@@ -68,12 +67,12 @@ const App = () => {
               />
             ),
           }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>
         {/* <Stack.Screen
           name="carousel"
           component={Carrousel}
           options={{ title: "carousel" }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>
         {/* <AppointmentScheduler /> */}
         {/* <ChatComponent/> */}
         {/* <Reservation/> */}
@@ -85,7 +84,7 @@ const App = () => {
             headerShown: "LoginScreen",
           }}
         />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} /> */}
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} /> 
         <Stack.Screen
           name="HomeScreen"
           component={HomeSceen}
@@ -93,7 +92,7 @@ const App = () => {
             title: "Home",
             headerShown: "Home",
           }}
-        />
+        />*/}
       </Stack.Navigator>
     </NavigationContainer>
   );

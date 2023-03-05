@@ -65,3 +65,4 @@ const deleteReservation=async(req,res)=>{
 
  module.exports = { deleteReservation,confirmTheReservationSentByTheUser,getAllReservationForAspecialTerrain,sendAppointment };
 
+

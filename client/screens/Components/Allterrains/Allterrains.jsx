@@ -1,54 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ImageBackground, ScrollView, View } from "react-native";
-import Slider from "./Carrousel.jsx";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Card } from "react-native-paper";
 import Carrousel from "./Carrousel.jsx";
 import { Text } from "react-native-paper";
-const data = [
-  {
-    src: "https://cepsum.imgix.net/2021/03/soccer-ligues-exterieur-c.jpg?auto=compress%2Cformat&ixlib=php-3.3.0",
-    title: "Ariana Terrain",
-    rating: "5",
-    capacity: "10",
-  },
-  {
-    src: "https://www.wate.com/wp-content/uploads/sites/42/2022/03/1040x585-2022-0119-best-size-4-soccer-ball-3e953e-1.jpg",
-    title: "Mourouj Terrain",
-    rating: "4.74 ",
-    capacity: "12",
-  },
-  {
-    src: "https://chronicle.brightspotcdn.com/02/35/6569497e16c8d337843b578ff306/1476ca2cb5cf7a03ee92612764413561.jpg",
-    title: "Lac Terrain",
-    rating: "4.6 ",
-    capacity: "10",
-  },
-  {
-    src: "https://wwwcache.highschoolot.com/asset/content/womens_soccer/2018/03/01/17381690/football-1396740-DMID1-5dy9namhq-640x360.jpg",
-    title: "Tunis Terrain",
-    rating: "4.4 ",
-    capacity: "14",
-  },
-  {
-    src: "https://www.thamescentre.on.ca/sites/default/files/styles/twitter_large_image/public/images/2019-06/xxxx_spo_ocr-l-soccer-generic-stock-001-5.jpg?h=c00a0a28&itok=QWANWQQ8",
-    title: "Sousse Terrain",
-    rating: "3.9 ",
-    capacity: "10",
-  },
-];
-const Allterrains = ({ navigation }) => {
+import axios from "axios";
+import { Alert } from "react-native";
+
+const Allterrains = ({ navigation, route }) => {
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://192.168.101.13:3000/api/terrain/terrains/category/${route.params.Category}`
+      )
+      .then((response) => {
+        if (response.data.length === 0) {
+          alert("no data");
+        } else {
+          setdata(response.data);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <ScrollView>
-      <Text>fcvgbhjk</Text>
-      <Image
-        style={{ width: "100%" }}
-        source={{
-          uri: "https://www.thamescentre.on.ca/sites/default/files/styles/twitter_large_image/public/images/2019-06/xxxx_spo_ocr-l-soccer-generic-stock-001-5.jpg?h=c00a0a28&itok=QWANWQQ8",
-        }}
-      ></Image>
+      <Card>
+        <Card.Cover
+          source={{
+            uri: "https://chronicle.brightspotcdn.com/02/35/6569497e16c8d337843b578ff306/1476ca2cb5cf7a03ee92612764413561.jpg",
+          }}
+          style={{
+            width: 420,
+            height: 200,
+            marginBottom: 10,
+          }}
+        />
+        <Text
+          style={{
+            position: "absolute",
+            top: 0,
+            left: -12,
+            right: 0,
+            bottom: 10,
+            justifyContent: "center",
+            alignItems: "center",
+
+            color: "black",
+            fontSize: 25,
+            paddingLeft: 20,
+            borderBottomLeftRadius: 14,
+            borderBottomRightRadius: 14,
+          }}
+        >
+          Soccer For All
+        </Text>
+      </Card>
+
+      <Text style={{ fontSize: 20, marginBottom: 10, marginLeft: 10 }}>
+        Most Rated Soccer Fields
+      </Text>
       <Carrousel />
+      <Text style={{ fontSize: 20, marginBottom: 10, marginLeft: 10 }}>
+        All Terrains
+      </Text>
       {data.map((item) => (
         <Card
           style={{
@@ -56,14 +75,15 @@ const Allterrains = ({ navigation }) => {
             paddingHorizontal: 10,
             shadowColor: "transparent",
           }}
-          onPress={() => {
-            navigation.navigate("carousel");
+          onPress={(e) => {
+            navigation.navigate("oneterrain", { id: item.id });
           }}
         >
           <View style={{ opacity: 0.9 }}>
+            {console.log(item)}
             <Card.Cover
               source={{
-                uri: item.src,
+                uri: item.Images,
               }}
             />
           </View>
@@ -84,7 +104,7 @@ const Allterrains = ({ navigation }) => {
               borderBottomRightRadius: 14,
             }}
           >
-            {item.title}
+            {item.Name}
           </Text>
 
           <Text
@@ -99,7 +119,7 @@ const Allterrains = ({ navigation }) => {
               color: "white",
             }}
           >
-            {item.capacity} Player
+            {item.Capacity} Player
           </Text>
           <Text
             style={{
@@ -113,7 +133,7 @@ const Allterrains = ({ navigation }) => {
               color: "white",
             }}
           >
-            {item.rating} Stars
+            {item.Rating} Stars
           </Text>
         </Card>
       ))}

@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { authentification } from '../../../FbConfig/config';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import  axios from 'axios'
-
+import { storage } from '../../../FbConfig/config.js';
 import { useNavigation } from '@react-navigation/native';
 import { Button,Stack,Icon,Input,Pressable, Center } from 'native-base';
 import {Ionicons,MaterialIcons} from '@expo/vector-icons'
@@ -21,6 +21,23 @@ const [patentImage,setPatentImage]= useState('');
 const [ProfileImage,setProfileImage]= useState('');
 const [FireId,setFireId]= useState('');
 const [show,setShow]= useState(false);
+
+
+// Upload an image to Firebase Cloud Storage
+const uploadImage = async (uri, path) => {
+  const response = await fetch(patentImage);
+  const blob = await response.blob();
+
+  try {
+    const snapshot = await storage.ref().child(path).put(blob);
+    console.log('Image uploaded successfully!');
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+};
+
+
+
 
 
 const axiosPost=(FireId)=>{

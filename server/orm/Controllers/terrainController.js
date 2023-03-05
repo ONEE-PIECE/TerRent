@@ -2,32 +2,38 @@ const db = require("../index");
 const Terrain = db.Terrain;
 const getAll = async (req, res) => {
   try {
-    const { Category } = req.params;
+    const {region}=req.params
 
+    const terrain = await Terrain.findAll({
+
+      where: { Region: region },
+    }
+    )    
+      res.status(201).json(terrain);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  }
+
+
+    const getAllCat=async (req,res)=>{
+const {Category}=req.params
+      try{
     const terrain = await Terrain.findAll({
       where: { Category: Category },
     });
 
     res.status(201).json(terrain);
-  } catch (error) {
+  }
+   catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
-};
-const getAllCat = async (req, res) => {
-  try {
-    const { terrainCategorie } = req.params;
+}
 
-    const terrain = await Terrain.findAll({
-      where: { terraincategorie: terrainCategorie },
-    });
 
-    res.status(201).json(terrain);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
+
 const getOne = async (req, res) => {
   try {
     const { terrainId } = req.params;
@@ -42,12 +48,14 @@ const getOne = async (req, res) => {
 };
 
 
+
 const addTerrain= async(req, res)=> {
   try {
     
     const { ownerId } = req.params;
     const {  Name,Price,Description,Location,Region,Category,Images,Capacity,Aviability } = req.body;
     
+
     // Create a new reservation record
     const terrain = await Terrain.create({
       Name,
@@ -59,15 +67,15 @@ const addTerrain= async(req, res)=> {
       Images,
       Capacity,
       Aviability,
-      ownerId:ownerId
-    });      
+
+      ownerId: ownerId,
+    });
     res.status(201).json(terrain);
   } catch (error) {
-    
     console.error(error);
-    res.status(500).send(error)
+    res.status(500).send(error);
   }
-  }
+};
   
   const getTerrainsForSpecialOwner=async(req,res)=>{
     try{
@@ -128,3 +136,4 @@ const addTerrain= async(req, res)=> {
     addTerrain,getTerrainsForSpecialOwner,deleteTerrainForAnOwner,updateTerrain, getAll, getOne, getAllCat
   }
   
+

@@ -80,7 +80,7 @@ const Map=({navigation:{navigate}})=> {
      
       
       query={{
-        key: 'AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM',
+        key: '',
         language: 'en',
         types:"establishment",
         radius:30000,

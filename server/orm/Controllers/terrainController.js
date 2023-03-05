@@ -53,7 +53,7 @@ const addTerrain= async(req, res)=> {
   try {
     
     const { ownerId } = req.params;
-    const {  Name,Price,Description,Location,Region,Category,Images,Capacity,Aviability } = req.body;
+    const {  Name,Price,Description,lat,long,Region,Category,Images,Capacity,Aviability } = req.body;
     
 
     // Create a new reservation record
@@ -61,7 +61,8 @@ const addTerrain= async(req, res)=> {
       Name,
       Price,
       Description,
-      Location,
+      lat,
+      long,
       Region,
       Category,
       Images,

@@ -120,7 +120,7 @@ const App = () => {
           component={AppointmentScheduler}
           options={{ title: "AppointmentScheduler" }}
         ></Stack.Screen> */}
-            <Stack.Screen 
+            {/* <Stack.Screen 
         name="Map"
         component={Map}
         options={{title:'Map',headerShown:false}}
@@ -130,7 +130,7 @@ const App = () => {
         name="Confirmation"
         component={Confirmation}
         options={{title:'Confirmation',headerShown:false}}
-        ></Stack.Screen>   
+        ></Stack.Screen>    */}
 
          {/* <Stack.Screen 
         name="Mapplayer"
@@ -143,6 +143,12 @@ const App = () => {
         component={HandleOwnerTerrains}
         options={{title:'HandleOwnerTerrains',headerShown:false}}
         ></Stack.Screen> */}
+
+
+<Stack.Screen name="Login" component={OwnerLogin} />
+    <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} />
+    <Stack.Screen name="Home" component={OwnerHome} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

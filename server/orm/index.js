@@ -87,4 +87,5 @@ sequelize.authenticate()
 .then(()=> console.log('database connected'))
 .catch(err=>console.log(err))
 
-module.exports = db 
+
+module.exports = db;

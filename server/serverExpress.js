@@ -1,7 +1,36 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const express = require('express');
     // const http = require('http');
     // const socketIO = require('socket.io');
     const cors = require('cors');
+    const Owner = require('./orm/Routes/ownerRoutes.js');
+
     const reviewsRoute = require("./orm/Routes/reviewsRoute");
     const reservationRouter = require('./orm/Routes/reservationRoute');
     const terrainRouter = require('./orm/Routes/terrainRoute');
@@ -14,10 +43,13 @@
 
 
     app.use(express.json());
+    app.use(express.urlencoded({extended: true}));
+    app.use(cors());
+    app.use('/owner',Owner)
+
     app.use('/api/reservation', reservationRouter);
     app.use('/api/terrain', terrainRouter);
     app.use("/api/reviews", reviewsRoute);
-    app.use(cors());
 
     // io.on('connection', (socket) => {
     // console.log('A user connected');

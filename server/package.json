@@ -18,8 +18,8 @@
     "firebase": "^9.17.1",
     "mysql2": "^3.1.2",
     "nodemailer": "^6.9.1",
-    "nodemon": "^2.0.21",
-    "react-native-gesture-handler": "~2.9.0",
-    "sequelize": "^6.29.0"
+    "sequelize": "^6.29.0",
+    "nodemon": "^2.0.20"
+
   }
 }

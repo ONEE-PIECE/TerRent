@@ -1,5 +1,6 @@
 const { sequelize, DataTypes } = require("sequelize");
 
+
 module.exports = (sequelize, DataTypes) => {
   const terrain = sequelize.define("terrains", {
     Name: { type: DataTypes.STRING },
@@ -23,4 +24,4 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   return terrain;
-};
+

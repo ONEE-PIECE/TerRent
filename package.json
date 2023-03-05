@@ -41,7 +41,9 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-super-grid": "^5.0.0",
     "react-native-web": "~0.18.10",
+
     "sequelize": "^6.29.0"
+
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,3 +1,4 @@
+
 const express = require("express");
 const PORT = 3000;
 const db = require("../server/orm/index");
@@ -17,3 +18,4 @@ app.use(cors());
 app.listen(PORT, () => {
   console.log("server working");
 });
+

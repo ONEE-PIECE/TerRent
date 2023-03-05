@@ -6,7 +6,7 @@ import { Avatar, Button, Card, Surface } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation: { navigate } }) => {
   return (
     <ScrollView>
       <Card
@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
           shadowColor: "transparent",
         }}
         onPress={() => {
-          navigation.navigate("Allterrains");
+          navigate("Allterrains", { Category: "foot" });
         }}
       >
         <View style={{ opacity: 0.9 }}>
@@ -70,7 +70,7 @@ const Home = ({ navigation }) => {
           shadowColor: "transparent",
         }}
         onPress={() => {
-          navigation.navigate("Allterrains");
+          navigate("Allterrains", { Category: "basket" });
         }}
       >
         <View style={{ opacity: 0.9 }}>
@@ -122,7 +122,7 @@ const Home = ({ navigation }) => {
           shadowColor: "transparent",
         }}
         onPress={() => {
-          navigation.navigate("Allterrains");
+          navigate("Allterrains", { Category: "hand" });
         }}
       >
         <View style={{ opacity: 0.9 }}>
@@ -174,7 +174,7 @@ const Home = ({ navigation }) => {
           shadowColor: "transparent",
         }}
         onPress={() => {
-          navigation.navigate("Allterrains");
+          navigate("Allterrains", { Category: "tennis" });
         }}
       >
         <View style={{ opacity: 0.9 }}>
@@ -227,7 +227,7 @@ const Home = ({ navigation }) => {
           shadowColor: "transparent",
         }}
         onPress={() => {
-          navigation.navigate();
+          navigate("Allterrains", { Category: "paintball" });
         }}
       >
         <View style={{ opacity: 0.9 }}>

@@ -1,9 +1,7 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
-
-
 
 const AppointmentScheduler = () => {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -25,32 +23,20 @@ const AppointmentScheduler = () => {
   };
   
   const handleConfirm = async () => {
-    try {
-      const posts = await axios.post('http://192.168.43.108:3000/api/reservation/player/1/1', {
-        Day: selectedDay,
-        Hour: selectedTime,
-        Reserved: false,
-      });
-      console.log(posts);
-
-    } catch (err) {
-      console.log(err);
-    }
+    
+    try{
+   const posts= await axios.post('http://192.168.104.9:3000/api/reservation/player/1/1', {
+      Day: selectedDay,
+      Hour: selectedTime,
+      Reserved:false
+    })
+    console.log(posts);
+  }
+  catch(err){
+    console.log(err);
+  }
   };
-  useEffect(() => {
-    fetchReservedSlots();
-  }, []);
-
-  const fetchReservedSlots = async () => {
-    try {
-      const response = await axios.get('http://192.168.43.108:3000/api/reservation/players/1');
-     console.log(response.data);
-    }
-     catch(err){
-throw err
-     }
-    }
-  ;
+  
   const timeSlots = [9, 11, 13, 15, 17,19,21,23];
   
   return (
@@ -114,6 +100,7 @@ throw err
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

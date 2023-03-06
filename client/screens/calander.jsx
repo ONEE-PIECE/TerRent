@@ -60,6 +60,7 @@ throw err
         markedDates={{
           [selectedDay]: { selected: true },
         }}
+        
       />
       <Modal
         animationType="slide"
@@ -110,6 +111,7 @@ throw err
 </TouchableOpacity>
     </View>
   </View>
+  
 </Modal>
     </View>
   );
@@ -117,9 +119,37 @@ throw err
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1e3f20',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  calendarContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    overflow: 'hidden',
+    margin: 10,
+  },
+  calendarHeader: {
+    backgroundColor: '#2f4f4f',
+    padding: 10,
+  },
+  calendarHeaderText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  calendarDay: {
+    color: '#2f4f4f',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  calendarSelectedDay: {
+    backgroundColor: '#2f4f4f',
+    borderRadius: 50,
   },
   modalContainer: {
     flex: 1,
@@ -134,16 +164,45 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   timeSlot: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#5cb85c',
     padding: 10,
     marginVertical: 5,
     width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  timeSlotText: {
+    color: '#5cb85c',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
   selectedTimeSlot: {
     backgroundColor: 'green',
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  modalButton: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+  cancelButton: {
+    backgroundColor: 'red',
+    borderColor: 'red',
+  },
+  confirmButton: {
+    backgroundColor: 'green',
+    borderColor: 'green',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 export default AppointmentScheduler;

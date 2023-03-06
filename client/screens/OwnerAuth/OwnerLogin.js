@@ -12,6 +12,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentification } from "../../../FbConfig/config";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,17 +20,14 @@ const OwnerLogin = () => {
 
   const navigation = useNavigation();
   
+  _storeData = async (id) => {
+    try {
+      await AsyncStorage.setItem('Token',id);
+    } catch (error) {
+      console.log(error)
+    }
+  };
   
-_storeData = async (id) => {
-  try {
-    await AsyncStorage.setItem('Token',id
-    );
-  } catch (error) {
-console.log(error)    }
-};
-  
-  
-
   const signInOwner = () => {
     signInWithEmailAndPassword(authentification, email, password)
       .then((res) => {
@@ -54,6 +52,8 @@ console.log(error)    }
             setEmail(text);
           }}
           style={styles.input}
+          placeholderTextColor="#999"
+          keyboardType="email-address"
         />
         <TextInput
           placeholder="Password"
@@ -61,6 +61,7 @@ console.log(error)    }
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
+          placeholderTextColor="#999"
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -85,11 +86,11 @@ console.log(error)    }
   );
 };
 
-export default OwnerLogin;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#1b1b1b",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -97,41 +98,49 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
+    backgroundColor: "#fff",
+    borderWidth: 0,
+    borderBottomWidth: 2,
+    borderBottomColor: "#33cc33",
+    marginBottom: 20,
+    fontSize: 18,
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 10,
+    color: "#1b1b1b",
+    fontWeight: "bold",
   },
   buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
   },
   button: {
-    backgroundColor: "#0782F9",
-    width: "100%",
-    padding: 15,
+    backgroundColor: "#33cc33",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
     borderRadius: 10,
     alignItems: "center",
   },
-  buttonOutLine: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
   buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  buttonOutLine: {
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "#33cc33",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonOutLineText: {
-    backgroundColor: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
-    borderColor: "#0782F9",
-    borderWidth: 2,
+    color: "#33cc33",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
+
+
+export default OwnerLogin;

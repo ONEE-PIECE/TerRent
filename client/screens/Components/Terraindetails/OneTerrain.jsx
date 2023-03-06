@@ -11,7 +11,7 @@ const OneTerrain = ({ navigation, route }) => {
   const [dataterrain, setdataterrain] = useState([]);
   const addReview = () => {
     axios.post(
-      `http://192.168.101.13:3000/api/reviews/addreview/${route.params.id}`,
+      `http://192.168.43.108:3000/api/reviews/addreview/${route.params.id}`,
       {
         idterrain: route.params.id,
         review: review,
@@ -21,13 +21,13 @@ const OneTerrain = ({ navigation, route }) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.101.13:3000/api/reviews/getreview/${route.params.id}`
+        `http://192.168.43.108:3000/api/reviews/getreview/${route.params.id}`
       )
       .then((response) => {
         console.log(route.params);
         axios
           .get(
-            `http://192.168.101.13:3000/api/terrain/terrains/atefIYED/${route.params.id}`
+            `http://192.168.43.108:3000/api/terrain/terrains/atefIYED/${route.params.id}`
           )
           .then((response2) => {
             console.log(response.data, "mehdi");

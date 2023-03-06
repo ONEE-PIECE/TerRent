@@ -6,12 +6,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import  React from "react";
 import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx";
-import Carrousel from "./client/screens/Components/Allterrains/Carrousel.jsx";
+
 import OneTerrain from "./client/screens/Components/Terraindetails/OneTerrain.jsx";
 
-import { Button } from "react-native";
 import { Avatar } from "react-native-paper";
-import { StyleSheet } from "react-native";
+
 import LoginScreen from "./client/screens/Components/playerSignInAndSignUp/LoginScreen.jsx";
 
 import SignUpScreen from "./client/screens/Components/playerSignInAndSignUp/SignUpScreen.jsx";
@@ -20,10 +19,14 @@ import HomeSceen from "./client/screens/Components/playerSignInAndSignUp/HomeSce
 import AppointmentScheduler from './client/screens/calander.jsx'
 import Reservation from './client/screens/owner.jsx';
 import Home from "./client/screens/Components/Homepage/Home.jsx";
-import AddTerrainForm from "./client/screens/addTerrain.jsx";
+
 import HandleOwnerTerrains from "./client/screens/ownerTerrains.jsx";
 import Confirmation from "./MAP/Confirmation";
 import Mapplayer from "./MAP/Mapplayer ";
+import OwnerHome from './client/screens/OwnerAuth/OwnerHome';
+import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
+import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
+import OwnerOrPlayer from "./client/screens/Components/OwnerOrPlayer.jsx";
 
 
 const Stack = createNativeStackNavigator();
@@ -31,7 +34,16 @@ const App = () => {
   return (
     <NavigationContainer >
       <Stack.Navigator  >
-        {/* <Stack.Screen
+     
+     <Stack.Screen name="Login" component={OwnerLogin} >
+
+     </Stack.Screen>
+     <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} >
+
+     </Stack.Screen>
+     <Stack.Screen name="Homemarwan" component={OwnerHome} >
+     </Stack.Screen>
+         <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -79,16 +91,9 @@ const App = () => {
             ),
           }}
         ></Stack.Screen>
-        <Stack.Screen
-          name="carousel"
-          component={Carrousel}
-          options={{ title: "carousel" }}
-
-        ></Stack.Screen>
-         {/* <AppointmentScheduler />
-         {/* <ChatComponent/>  */}
-         {/* <Reservation/>   */}
-        {/* <Stack.Screen
+        
+            
+         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{
@@ -109,18 +114,18 @@ const App = () => {
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen>  */}
-        {/* <Stack.Screen
+        ></Stack.Screen>  
+         {/* <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen> */}
-        {/* <Stack.Screen
+        ></Stack.Screen>  */}
+        <Stack.Screen
           name="AppointmentScheduler"
           component={AppointmentScheduler}
           options={{ title: "AppointmentScheduler" }}
-        ></Stack.Screen> */}
-            {/* <Stack.Screen 
+        ></Stack.Screen>
+             <Stack.Screen 
         name="Map"
         component={Map}
         options={{title:'Map',headerShown:false}}
@@ -130,33 +135,21 @@ const App = () => {
         name="Confirmation"
         component={Confirmation}
         options={{title:'Confirmation',headerShown:false}}
-        ></Stack.Screen>    */}
+        ></Stack.Screen>    
 
-         {/* <Stack.Screen 
+          <Stack.Screen 
         name="Mapplayer"
         component={Mapplayer}
         options={{title:'Mapplayer',headerShown:false}}
-        ></Stack.Screen> */}
+        ></Stack.Screen> 
 
-        {/* <Stack.Screen 
+         <Stack.Screen 
         name="HandleOwnerTerrains"
         component={HandleOwnerTerrains}
         options={{title:'HandleOwnerTerrains',headerShown:false}}
-        ></Stack.Screen> */}
-
-
-<Stack.Screen name="Login" component={OwnerLogin} />
-    <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} />
-    <Stack.Screen name="Home" component={OwnerHome} />
-
+        ></Stack.Screen> 
       </Stack.Navigator>
     </NavigationContainer>
   );
       }
-
-
-     
-
- 
-
 export default App;

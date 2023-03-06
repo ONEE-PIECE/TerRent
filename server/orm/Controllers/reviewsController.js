@@ -33,9 +33,5 @@ const addreview = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
-
-
-
-
  module.exports = { getAllreviews,addreview };
 

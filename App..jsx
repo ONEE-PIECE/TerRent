@@ -1,5 +1,5 @@
 
-import Map from "./MAP/Map"
+import Map from "./client/MAP/Map.jsx"
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,29 +21,38 @@ import Reservation from './client/screens/owner.jsx';
 import Home from "./client/screens/Components/Homepage/Home.jsx";
 
 import HandleOwnerTerrains from "./client/screens/ownerTerrains.jsx";
-import Confirmation from "./MAP/Confirmation";
-import Mapplayer from "./MAP/Mapplayer ";
+import Confirmation from "./client/MAP/Confirmation.jsx";
+ import Mapplayer from "./client/MAP/Mapplayer .jsx";
+
 import OwnerHome from './client/screens/OwnerAuth/OwnerHome';
 import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
 import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
 import OwnerOrPlayer from "./client/screens/Components/OwnerOrPlayer.jsx";
+import AddEventForm from "./client/screens/addEvents.jsx";
 
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer >
+       {/* <Stack.Screen
+       name="OwnerOrPlayer"
+       component={OwnerOrPlayer}
+       options={{title:'OwnerOrPlayer',headerShown:false,initialRouteName:'OwnerOrPlayer'}}
+       >
+       </Stack.Screen> */}
       <Stack.Navigator  >
+
      
-     <Stack.Screen name="Login" component={OwnerLogin} >
+     {/* <Stack.Screen name="Login" component={OwnerLogin} >
 
      </Stack.Screen>
      <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} >
 
      </Stack.Screen>
      <Stack.Screen name="Homemarwan" component={OwnerHome} >
-     </Stack.Screen>
-         <Stack.Screen
+     </Stack.Screen> */}
+         {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -91,8 +100,6 @@ const App = () => {
             ),
           }}
         ></Stack.Screen>
-        
-            
          <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
@@ -114,18 +121,18 @@ const App = () => {
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen>  
+        ></Stack.Screen>   */}
          {/* <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
         ></Stack.Screen>  */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="AppointmentScheduler"
           component={AppointmentScheduler}
           options={{ title: "AppointmentScheduler" }}
-        ></Stack.Screen>
-             <Stack.Screen 
+        ></Stack.Screen> */}
+             {/* <Stack.Screen 
         name="Map"
         component={Map}
         options={{title:'Map',headerShown:false}}
@@ -142,12 +149,18 @@ const App = () => {
         component={Mapplayer}
         options={{title:'Mapplayer',headerShown:false}}
         ></Stack.Screen> 
-
-         <Stack.Screen 
+*/}
+         {/* <Stack.Screen 
         name="HandleOwnerTerrains"
         component={HandleOwnerTerrains}
         options={{title:'HandleOwnerTerrains',headerShown:false}}
-        ></Stack.Screen> 
+        ></Stack.Screen>   */}
+        <Stack.Screen
+         name="AddEventForm"
+         component={AddEventForm}
+         options={{ title: "AddEventForm" }}
+        >
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

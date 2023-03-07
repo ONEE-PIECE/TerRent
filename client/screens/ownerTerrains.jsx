@@ -15,7 +15,7 @@ const HandleOwnerTerrains = () => {
 
   const getTerrains = async () => {
     try {
-      const response = await axios.get('http://192.168.43.108:3000/api/terrain/terrainS/1');
+      const response = await axios.get('http://192.168.43.108:3000/api/terrain/0dREETaPxIc98JD74fLxQrVzKJm2');
        setTerrains(response.data);
     } catch (error) {
       console.error(error);

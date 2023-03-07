@@ -11,7 +11,7 @@ const {
   getOne,
 } = require("../Controllers/terrainController.js");
 router.post("/:ownerId", addTerrain);
-router.get("/terrain/:ownerId", getTerrainsForSpecialOwner);
+router.get("/:ownerId", getTerrainsForSpecialOwner);
 router.delete("/:id", deleteTerrainForAnOwner);
 router.patch("/:id", updateTerrain);
 

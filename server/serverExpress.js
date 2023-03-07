@@ -1,39 +1,13 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const express = require('express');
-    // const http = require('http');
-    // const socketIO = require('socket.io');
+    
     const cors = require('cors');
     const Owner = require('./orm/Routes/ownerRoutes.js');
 
     const reviewsRoute = require("./orm/Routes/reviewsRoute");
     const reservationRouter = require('./orm/Routes/reservationRoute');
     const terrainRouter = require('./orm/Routes/terrainRoute');
+    const EventRouter=require('./orm/Routes/eventsRoute')
     const db = require('../server/orm/index');
 
     const app = express();
@@ -50,33 +24,7 @@
     app.use('/api/reservation', reservationRouter);
     app.use('/api/terrain', terrainRouter);
     app.use("/api/reviews", reviewsRoute);
-
-    // io.on('connection', (socket) => {
-    // console.log('A user connected');
-    
-   
-    // socket.on('newReservation', async (reservation) => {
-    //     try {
-   
-    //     const savedReservation = await db.saveReservation(reservation);
-        
-  
-    //     io.emit('reservationAdded', savedReservation);
-    //     io.emit('notification', {
-    //         message: `You have a new reservation at ${savedReservation.time}:00 on ${savedReservation.day}`,
-    //         ownerId: savedReservation.terrain.ownerId,
-    //     });
-    //     } catch (error) {
-    //     console.error(error);
-    //     }
-    // });
-    
-    // socket.on('disconnect', () => {
-    //     console.log('A user disconnected');
-    // });
-    // });
-
-   
+    app.use('/api/events',EventRouter)   
 
 app.listen(PORT, () => {
   console.log("server working");

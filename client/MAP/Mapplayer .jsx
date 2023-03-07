@@ -111,8 +111,7 @@ const Mapplayer=({navigation:{navigate}})=> {
               destination={tunis}
               apikey={GOOGLE_MAPS_KEY}
               strokeWidth={5}
-      />
-           
+      />   
          </MapView>
 
 
@@ -127,8 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    width: '100%',
-    height: '100%',
+    width: 400,
+    height: 130,
   },
 });
 

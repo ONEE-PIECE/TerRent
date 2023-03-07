@@ -1,13 +1,14 @@
 import { TouchableOpacity,KeyboardAvoidingView,StyleSheet, Text, View ,TextInput} from 'react-native'
 import React,{useState} from 'react'
 import * as ImagePicker from 'expo-image-picker'
-import { authentification } from '../../../FbConfig/config';
+import { authentification } from '../../FbConfig/config.js';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import  axios from 'axios'
-import { storage } from '../../../FbConfig/config.js';
+import { storage } from '../../FbConfig/config.js';
 import { useNavigation } from '@react-navigation/native';
-import { Button,Stack,Icon,Input,Pressable, Center } from 'native-base';
+import { Button,Stack,Icon,Input,Pressable, Center ,NativeBaseProvider} from 'native-base';
 import {Ionicons,MaterialIcons} from '@expo/vector-icons'
+
 const OwnerCreateAccount = () => {
 
   const navigation=useNavigation();
@@ -96,6 +97,7 @@ console.log('result patentimage', result);
 }
 
 return (
+  <NativeBaseProvider>
 <Center  flex={1} px="3">
 <Stack  space={4} w="75%" maxW="300px" mx="auto">
       <Input size="lg" placeholder="Full Name" value={fullName} onChangeText={(text)=>{setFullName(text)}} />
@@ -120,6 +122,7 @@ return (
       <Button onPress={() =>{Register()}}>Register</Button>
     </Stack>
     </Center>
+    </NativeBaseProvider>
   )
 }
 
@@ -130,10 +133,8 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-
   }
 ,
-
 inputContainer:{
 width:'80%',
 },
@@ -175,7 +176,4 @@ buttonOutLineText:{
   alignItems :'center',
   
 },
-
-
-
 })

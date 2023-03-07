@@ -4,6 +4,8 @@ import { View, TextInput } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import axios from "axios";
 import { Avatar, Button, Card } from "react-native-paper";
+import AppointmentScheduler from "../../calander.jsx";
+import Mapplayer from "../../../MAP/Mapplayer .jsx";
 
 const OneTerrain = ({ navigation, route }) => {
   const [review, setreview] = useState("");
@@ -14,7 +16,7 @@ const OneTerrain = ({ navigation, route }) => {
       `http://192.168.43.108:3000/api/reviews/addreview/${route.params.id}`,
       {
         idterrain: route.params.id,
-        review: review,
+        Comments: review,
       }
     );
   };
@@ -52,7 +54,7 @@ const OneTerrain = ({ navigation, route }) => {
             style={{ marginLeft: 20, fontSize: 20 }}
             variant="headlineSmall"
           >
-            {"item.Comments"}
+            {item.Comments}
           </Text>
         </Card.Content>
       </Card>
@@ -60,9 +62,9 @@ const OneTerrain = ({ navigation, route }) => {
         Terrain Title<Text> {data[0] ? data[0].Rating : "loading"}</Text>
       </Text>
 
-      <Text>{"dataterrain.Price"} </Text>
+      <Text>{dataterrain.Price} </Text>
 
-      <Text>{"dataterrain.Capacity"} </Text>
+      <Text>{dataterrain.Capacity} </Text>
 
       <Image
         source={{
@@ -70,27 +72,21 @@ const OneTerrain = ({ navigation, route }) => {
         }}
       />
       <Text>other images</Text>
-      <Image
+      <Card  >
+      <Card.Cover
         style={{ minWidth: 20, maxWidth: 30 }}
-        src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
+        source={ {uri:item.img1}}
       />
-      <Image
-        style={{ minWidth: 20, maxWidth: 30 }}
-        src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
-      />
-      <Image
-        style={{ minWidth: 20, maxWidth: 30 }}
-        src="https://athletics.rose-hulman.edu/images/2020/8/19/Soccer_Field_Endzone_2020.jpg"
-      />
+      </Card>
       <Text> {dataterrain.Description}</Text>
       <Text> Terrain reviews here</Text>
       <TextInput onChangeText={(text) => console.log(text)} />
 
       <Button
-      // onPress={() => {
-      //   console.log(addReview());
-      //   addReview;
-      // }}
+      onPress={() => {
+        setreview(addReview());
+        addReview;
+      }}
       >
         save
       </Button>
@@ -116,6 +112,8 @@ const OneTerrain = ({ navigation, route }) => {
           </Card.Content>
         </Card>
       ))}
+      <Mapplayer />
+      <AppointmentScheduler />
     </ScrollView>
   );
 };

@@ -81,7 +81,7 @@ const addTerrain= async(req, res)=> {
   const getTerrainsForSpecialOwner=async(req,res)=>{
     try{
       const {ownerId}=req.params
-      const query=await Terrain.findAll({where:{ownerId:ownerId}}) 
+      const query=await Terrain.findAll({where:{ownerFireid:ownerId}}) 
       res.status(200).json(query)
     }
     catch(err){

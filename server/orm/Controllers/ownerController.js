@@ -14,7 +14,6 @@ const owner = await Owner.create({
         patentImage,
         ProfileImage,
         AccountConfirmation:false
-
     }) 
     res.status(200).json(owner);
 } catch (err) {console.log(err);}

@@ -13,7 +13,7 @@ const OneTerrain = ({ navigation, route }) => {
   const [dataterrain, setdataterrain] = useState([]);
   const addReview = () => {
     axios.post(
-      `http://192.168.43.108:3000/api/reviews/addreview/${route.params.id}`,
+      `http://192.168.101.8:3000/api/reviews/addreview/${route.params.id}`,
       {
         idterrain: route.params.id,
         Comments: review,
@@ -22,14 +22,12 @@ const OneTerrain = ({ navigation, route }) => {
   };
   useEffect(() => {
     axios
-      .get(
-        `http://192.168.43.108:3000/api/reviews/getreview/${route.params.id}`
-      )
+      .get(`http://192.168.101.8:3000/api/reviews/getreview/${route.params.id}`)
       .then((response) => {
         console.log(route.params);
         axios
           .get(
-            `http://192.168.43.108:3000/api/terrain/terrains/atefIYED/${route.params.id}`
+            `http://192.168.101.8:3000/api/terrain/terrains/atefIYED/${route.params.id}`
           )
           .then((response2) => {
             console.log(response.data, "mehdi");
@@ -72,21 +70,21 @@ const OneTerrain = ({ navigation, route }) => {
         }}
       />
       <Text>other images</Text>
-      <Card  >
-      <Card.Cover
-        style={{ minWidth: 20, maxWidth: 30 }}
-        source={ {uri:item.img1}}
-      />
+      <Card>
+        <Card.Cover
+          style={{ minWidth: 20, maxWidth: 30 }}
+          source={{ uri: item.img1 }}
+        />
       </Card>
       <Text> {dataterrain.Description}</Text>
       <Text> Terrain reviews here</Text>
       <TextInput onChangeText={(text) => console.log(text)} />
 
       <Button
-      onPress={() => {
-        setreview(addReview());
-        addReview;
-      }}
+        onPress={() => {
+          setreview(addReview());
+          addReview;
+        }}
       >
         save
       </Button>

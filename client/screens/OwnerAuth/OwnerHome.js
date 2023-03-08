@@ -10,7 +10,13 @@ import AsyncStorage  from '@react-native-async-storage/async-storage';
 const OwnerHome = () => {
 const [ownerData,setOwnerData] = useState([])
 const [stop,setStop] = useState(false)
-  const navigation = useNavigation()
+ 
+
+
+const navigation = useNavigation()
+
+
+
 const LogOut = () => {
 
   

@@ -29,7 +29,7 @@ import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
 import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
 import OwnerOrPlayer from "./client/screens/Components/OwnerOrPlayer.jsx";
 import AddEventForm from "./client/screens/addEvents.jsx";
-
+import ownerTerrains from "./client/screens/ownerTerrains.jsx";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -44,14 +44,14 @@ const App = () => {
       <Stack.Navigator  >
 
      
-     {/* <Stack.Screen name="Login" component={OwnerLogin} >
+     <Stack.Screen name="Login" component={OwnerLogin} >
 
      </Stack.Screen>
      <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} >
 
      </Stack.Screen>
-     <Stack.Screen name="Homemarwan" component={OwnerHome} >
-     </Stack.Screen> */}
+     <Stack.Screen name="HomeOwner" component={ownerTerrains} >
+     </Stack.Screen>
          {/* <Stack.Screen
           name="Home"
           component={Home}

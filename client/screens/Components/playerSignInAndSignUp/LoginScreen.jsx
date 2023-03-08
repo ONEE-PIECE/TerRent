@@ -4,8 +4,6 @@ import { auth } from './config'
 import { useNavigation } from '@react-navigation/native'
 import 'react-native-gesture-handler';
 import { FacebookAuthProvider, signInWithCredential, signInWithEmailAndPassword } from 'firebase/auth';
-import { AccessToken } from 'react-native-fbsdk-next';
-import { logInWithReadPermissionsAsync } from 'expo-facebook';
 
 
 const LoginScreen = () => {
@@ -16,22 +14,7 @@ const LoginScreen = () => {
   
 //still not done 
 
-  const logInWithFacebook = async () => {
-    try {
-      await logInWithReadPermissionsAsync("", {
-        permissions: ['public_profile', 'email']
-      })
-        .then(res => console.log(res));
-      const data = await AccessToken.getCurrentAccessToken();
-      if (!data) {
-        return;
-      }
-      const fbCredentials = FacebookAuthProvider.credential(data.access_token)
-      const auth = getAuth()
-      const res = await signInWithCredential(auth, fbCredentials)
-      console.log(res);
-    } catch (error) { console.error(error); }
-  }
+ 
 
 
 
@@ -79,8 +62,7 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={logInWithFacebook}
-          style={styles.facebook}
+                   style={styles.facebook}
         >
           <Text style={styles.buttonText}>Login with Facebook</Text>
         </TouchableOpacity>

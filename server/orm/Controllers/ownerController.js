@@ -2,11 +2,14 @@ const db = require('../index.js');
 const Owner = db.Owner;
 
 
+
 module.exports = {
 
 CreateOwner: async (req,res) => {
 const {Fireid,FullName,PhoneNumber,patentImage,ProfileImage}= req.body;
    try {
+ 
+
 const owner = await Owner.create({
         Fireid,
         FullName,

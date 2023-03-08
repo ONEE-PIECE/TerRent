@@ -2,13 +2,15 @@ import { TouchableOpacity,KeyboardAvoidingView,StyleSheet, Text, View ,TextInput
 import React,{useState} from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { authentification } from '../../FbConfig/config.js';
+import {app} from '../../FbConfig/config.js';
+import { getStorage,ref,uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import  axios from 'axios'
-import { storage } from '../../FbConfig/config.js';
 import { useNavigation } from '@react-navigation/native';
 import { Button,Stack,Icon,Input,Pressable, Center ,NativeBaseProvider} from 'native-base';
 import {Ionicons,MaterialIcons} from '@expo/vector-icons'
-
+ const storage=getStorage(app)
+const storageRef=ref(storage,'terrent_images/')
 const OwnerCreateAccount = () => {
 
   const navigation=useNavigation();
@@ -24,22 +26,56 @@ const [FireId,setFireId]= useState('');
 const [show,setShow]= useState(false);
 
 
-// Upload an image to Firebase Cloud Storage
-const uploadImage = async (uri, path) => {
+/// Upload an image to Firebase Cloud Storage
+const uploadPatentImage = async (uri) => {
   const response = await fetch(uri);
   const blob = await response.blob();
-
-  try {
-    const snapshot = await storage.ref().child(path).put(blob);
-    console.log('Image uploaded successfully!',snapshot);
-  } catch (error) {
-    console.error('Error uploading image:', error);
-  }
+  const filename = uri.substring(uri.lastIndexOf('/') + 1);
+  const storage=getStorage(app)
+  const storageRef=ref(storage,`terrent_Patent_images/${filename}`)
+  const uploadTask = uploadBytesResumable(storageRef,blob,filename)
+  uploadTask.on(
+    'state_changed',
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`Upload is ${progress}% done`);
+    },
+    (error) => {
+      console.log(error);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        setPatentImage(downloadURL);
+      });
+    }
+  );
 };
 
-
-
-
+const uploadProfileImage = async (uri) => {
+  const response = await fetch(uri);
+  const blob = await response.blob();
+  const filename = uri.substring(uri.lastIndexOf('/') + 1);
+  const storage=getStorage(app)
+  const storageRef=ref(storage,`terrent_Profile_images/${filename}`)
+  const uploadTask = uploadBytesResumable(storageRef,blob,filename)
+  uploadTask.on(
+    'state_changed',
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`Upload is ${progress}% done`);
+    },
+    (error) => {
+      console.log(error);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        setProfileImage(downloadURL);
+      });
+    }
+  );
+};
 
 const axiosPost=(FireId)=>{
   console.log(FireId);
@@ -50,37 +86,41 @@ const axiosPost=(FireId)=>{
     patentImage:patentImage,
     ProfileImage:ProfileImage,
   }
-  axios.post('http://192.168.43.52:3000/owner/signUpOwner',body)
+  axios.post('http://192.168.104.8:3000/owner/signUpOwner',body)
   .then(response=>console.log("account created successfully"))
   .catch(err=>console.log(err))
 }
 
 //! IMAGE UPLOADER 
 
-
-
  const pickProfileImage = async ()=>{
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     quality: 1,
+    
   });
 
   if (!result.canceled) {
-    setProfileImage(result.uri);
+    uploadProfileImage(result.uri)    
   }
  }
   const pickPatentImage = async () => {
+  try {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       quality: 1,
+      base64:false,
+    
+
     });
-console.log('result patentimage', result);
-    if (!result.cancelled) {
-      setPatentImage(result.uri);
-    }
-  };
+    if (!result.canceled) {
+      uploadPatentImage(result.uri)
+
+        }
+   }catch (e) {console.log(e)};
+   };
 
 
 
@@ -88,7 +128,6 @@ console.log('result patentimage', result);
  const Register = () =>{
   createUserWithEmailAndPassword(authentification,email,password)
   .then(res=>{
-    // uploadImage(patentImage,'my-image.jpg')
     axiosPost(res._tokenResponse.localId)
     navigation.navigate('Login')
 

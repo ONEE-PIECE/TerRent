@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { View, Text, Button, Modal,TextInput,Image,StyleSheet } from 'react-native';
-
+import AsyncStorage  from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/native";
+import { baseUrl } from '../urlConfig/urlConfig';
 const HandleOwnerTerrains = () => {
   const [terrains, setTerrains] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -12,15 +14,45 @@ const HandleOwnerTerrains = () => {
   const [images, setImages] = useState('');
   const [capacity, setCapacity] = useState('');
   const [availability, setAvailability] = useState('');
+  const [loading, setLoading] = useState('Loading...');
+  const navigation = useNavigation()
 
-  const getTerrains = async () => {
-    try {
-      const response = await axios.get('http://192.168.43.108:3000/api/terrain/0dREETaPxIc98JD74fLxQrVzKJm2');
-       setTerrains(response.data);
-    } catch (error) {
-      console.error(error);
+
+
+// SignOut function 
+
+
+  const LogOut = () => {
+    signOut(authentification).then((res) => {
+      console.log(res)
+    alert("Good Bye ",ownerData.FullName)
+    navigation.navigate("Login")
+    }).catch((error) => {
+      console.log(error)
+    });
     }
-  };
+    _retrieveData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("Token");
+    
+       console.log("welcome :",value)
+        let ownerData= await axios.get(`${baseUrl}api/terrain/${value}`)
+        console.log("owner",ownerData.data );
+        return ownerData.data;
+    
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+  // const getTerrains = async () => {
+  //   try {
+  //     const response = await axios.get('http://192.168.43.108:3000/api/terrain/0dREETaPxIc98JD74fLxQrVzKJm2');
+  //      setTerrains(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleDeleteTerrain = async (id) => { 
     try {
@@ -52,12 +84,14 @@ const HandleOwnerTerrains = () => {
 
   
   useEffect(() => {
-    getTerrains();
-  }, []);
+    _retrieveData().then((response) => {
+setTerrains(response[0])
+    })
+    }, []);
 
   return (
     <View>
-      {terrains.map((terrain) => (
+             { terrains ? ( terrains.map((terrain) => (
         <View key={terrain.id}>
           <Text>{terrain.Name}</Text>
           <Text>{terrain.Price}</Text>
@@ -79,7 +113,7 @@ const HandleOwnerTerrains = () => {
             }}
           />
         </View>
-      ))}
+      ))):(<Text>Loading..</Text>)} 
      <Modal
    animationType="slide"
    visible={modalVisible}

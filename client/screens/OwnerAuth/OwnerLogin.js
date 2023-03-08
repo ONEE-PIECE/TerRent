@@ -34,7 +34,7 @@ const OwnerLogin = () => {
         _storeData(res._tokenResponse.localId)
       })
       .then(() => {
-        navigation.navigate("Home");
+        navigation.navigate("HomeOwner");
       })
       .catch((err) => {
         console.log(err);

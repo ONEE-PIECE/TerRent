@@ -24,7 +24,7 @@ import HandleOwnerTerrains from "./client/screens/ownerTerrains.jsx";
 import Confirmation from "./client/MAP/Confirmation.jsx";
  import Mapplayer from "./client/MAP/Mapplayer .jsx";
 
-import OwnerHome from './client/screens/OwnerAuth/OwnerHome';
+import OwnerHome from './client/screens/owner.jsx';
 import OwnerLogin from './client/screens/OwnerAuth/OwnerLogin';
 import OwnerCreateAccount from './client/screens/OwnerAuth/OwnerCreateAccount';
 import OwnerOrPlayer from "./client/screens/Components/OwnerOrPlayer.jsx";
@@ -50,7 +50,7 @@ const App = () => {
      <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} >
 
      </Stack.Screen>
-     <Stack.Screen name="HomeOwner" component={ownerTerrains} >
+     <Stack.Screen name="HomeOwner" component={AddEventForm} >
      </Stack.Screen>
          {/* <Stack.Screen
           name="Home"

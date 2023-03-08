@@ -16,7 +16,6 @@ const [stop,setStop] = useState(false)
 const navigation = useNavigation()
 
 
-
 const LogOut = () => {
 
   

@@ -9,8 +9,6 @@ import  axios from 'axios'
 import { useNavigation } from '@react-navigation/native';
 import { Button,Stack,Icon,Input,Pressable, Center ,NativeBaseProvider} from 'native-base';
 import {Ionicons,MaterialIcons} from '@expo/vector-icons'
- const storage=getStorage(app)
-const storageRef=ref(storage,'terrent_images/')
 const OwnerCreateAccount = () => {
 
   const navigation=useNavigation();

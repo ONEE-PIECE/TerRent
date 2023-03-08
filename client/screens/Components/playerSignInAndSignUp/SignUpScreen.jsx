@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, } from 'firebase/auth'
 import { auth } from './config'
 import React, { useState } from "react";
 import 'react-native-gesture-handler';

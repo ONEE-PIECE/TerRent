@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { authentification } from "../../FbConfig/config.js";
+import { authentification } from "../../config.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
-import { storage } from "../../FbConfig/config.js";
+import { storage } from "../../config";
 import { useNavigation } from "@react-navigation/native";
 import {
   Button,

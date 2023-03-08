@@ -35,7 +35,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Landingscreen"
           component={LandingScreen}
           options={{
@@ -106,9 +106,9 @@ const App = () => {
             },
             title: "Register Here",
           }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
         {/* <Stack.Screen name="Homemarwan" component={OwnerHome}></Stack.Screen> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -187,7 +187,7 @@ const App = () => {
           }}
         ></Stack.Screen>
 
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} /> */}
         {/* <Stack.Screen
           name="HomeScreen"
           component={HomeSceen}
@@ -202,7 +202,7 @@ const App = () => {
             headerShown: "Home",
           }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
@@ -211,8 +211,8 @@ const App = () => {
           name="AppointmentScheduler"
           component={AppointmentScheduler}
           options={{ title: "AppointmentScheduler" }}
-        ></Stack.Screen>
-        <Stack.Screen
+        ></Stack.Screen> */}
+        {/* <Stack.Screen
           name="Map"
           component={Map}
           options={{ title: "Map", headerShown: false }}
@@ -221,13 +221,13 @@ const App = () => {
           name="Confirmation"
           component={Confirmation}
           options={{ title: "Confirmation", headerShown: false }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
         <Stack.Screen
           name="Mapplayer"
           component={Mapplayer}
           options={{ title: "Mapplayer", headerShown: false }}
         ></Stack.Screen>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="HandleOwnerTerrains"
           component={HandleOwnerTerrains}
           options={{ title: "HandleOwnerTerrains", headerShown: false }}
@@ -236,7 +236,7 @@ const App = () => {
           name="AddEventForm"
           component={AddEventForm}
           options={{ title: "AddEventForm" }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

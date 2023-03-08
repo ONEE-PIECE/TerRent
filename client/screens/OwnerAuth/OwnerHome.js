@@ -2,7 +2,7 @@ import { TouchableOpacity,StyleSheet, Text, View } from 'react-native'
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import {signOut} from "firebase/auth"
-import { authentification } from "../../../client/FbConfig/config.js";
+import { authentification } from "../../config.js";
 import { useNavigation } from "@react-navigation/native";
 
 

@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { auth } from "./config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { authentification } from "./config.js";
 import React, { useState } from "react";
 import "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -21,26 +21,25 @@ const SignUpScreen = () => {
   const [username, setusername] = useState("");
   const navigation = useNavigation();
 
-  const handleSignUp = async () => {
-    const userInfos = await createUserWithEmailAndPassword(
-      auth,
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(
+      authentification,
       email,
       password
     )
       .then((res) => {
         addAccount(res._tokenResponse.localId);
-        navigation.navigate("HomeScreen");
-        alert(`Welcome`);
+        navigation.navigate("HomeScreen")
+        // alert(`Welcome`);
       })
       .catch((err) => {
-        setTimeout(() => {
-          alert("Invalid email or password");
-        }, 2000);
+        console.log(err);
+        alert("Invalid email or password");
       });
   };
 
   //userName must tbe unique
-  const validUserName = (username, email) => {
+  const validUserName = (username) => {
     if (username.length < 3) {
       alert("Username must be at least 3 characters long");
       return false;
@@ -61,6 +60,9 @@ const SignUpScreen = () => {
         UserName: username,
       })
       .then((res) => {
+        if (validUserName(username)) {
+          return navigation.navigate("Home");
+        }
         console.log(res);
       })
       .catch((err) => {
@@ -123,9 +125,7 @@ const SignUpScreen = () => {
           title={"Sign Up"}
           onPress={() => {
             handleSignUp();
-            if (validUserName(username, email)) {
-              return navigation.navigate("Home");
-            }
+
           }}
           style={styles.button}
         >
@@ -147,6 +147,7 @@ const SignUpScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position:"relative",
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
+    
     backgroundColor: "transparent",
     paddingHorizontal: 10,
     borderRadius: 0,

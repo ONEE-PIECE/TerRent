@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { auth } from "./config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { authentcation } from "./config.js";
 import React, { useState } from "react";
 import "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -21,26 +21,29 @@ const SignUpScreen = () => {
   const [username, setusername] = useState("");
   const navigation = useNavigation();
 
-  const handleSignUp = async () => {
-    const userInfos = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
+  const handleSignUp = () => {
+    console.log(email); // Log the email variable to the console
+    createUserWithEmailAndPassword(authentcation, email, password)
       .then((res) => {
-        addAccount(res._tokenResponse.localId);
-        navigation.navigate("HomeScreen");
-        alert(`Welcome`);
+        console.log(res);
+        if (res.user) {
+          const tenantId = res.user;
+          console.log(tenantId);
+          // addAccount(res._tokenResponse.localId);
+          navigation.navigate("Home");
+          // alert(`Welcome`);
+        } else {
+          console.log("User not defined");
+        }
       })
       .catch((err) => {
-        setTimeout(() => {
-          alert("Invalid email or password");
-        }, 2000);
+        console.log(err);
+        alert(err);
       });
   };
 
   //userName must tbe unique
-  const validUserName = (username, email) => {
+  const validUserName = (username) => {
     if (username.length < 3) {
       alert("Username must be at least 3 characters long");
       return false;
@@ -54,13 +57,16 @@ const SignUpScreen = () => {
 
   const addAccount = (fireId) => {
     axios
-      .post("http://192.168.101.8:3000/api/player/playerSignUp", {
+      .post("http://192.168.1.37:3000/api/player/playerSignUp", {
         FireId: fireId,
         FirstName: firstname,
         SecondName: lastname,
         UserName: username,
       })
       .then((res) => {
+        if (validUserName(username)) {
+          return navigation.navigate("Home");
+        }
         console.log(res);
       })
       .catch((err) => {
@@ -69,7 +75,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
         <Text style={{ color: "darkorange", top: -50, fontSize: 15, left: 20 }}>
           Register Here and join the fun
@@ -121,12 +127,7 @@ const SignUpScreen = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           title={"Sign Up"}
-          onPress={() => {
-            handleSignUp();
-            if (validUserName(username, email)) {
-              return navigation.navigate("Home");
-            }
-          }}
+          onPress={handleSignUp}
           style={styles.button}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
@@ -147,6 +148,7 @@ const SignUpScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position:"relative",
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
@@ -156,6 +158,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
+    
     backgroundColor: "transparent",
     paddingHorizontal: 10,
     borderRadius: 0,

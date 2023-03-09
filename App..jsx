@@ -5,9 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx";
-
 import OneTerrain from "./client/screens/Components/Terraindetails/OneTerrain.jsx";
-
 import { Avatar } from "react-native-paper";
 
 import LoginScreen from "./client/screens/Components/playerSignInAndSignUp/LoginScreen.jsx";
@@ -29,13 +27,14 @@ import OwnerCreateAccount from "./client/screens/OwnerAuth/OwnerCreateAccount";
 
 import AddEventForm from "./client/screens/addEvents.jsx";
 import LandingScreen from "./client/screens/Components/landing/landingpage.jsx";
+import ChatScreen from "./client/screens/chat/ChatScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        {/*<Stack.Screen
           name="Landingscreen"
           component={LandingScreen}
           options={{
@@ -78,7 +77,7 @@ const App = () => {
             title: "Register Here",
           }}
         ></Stack.Screen>
-        <Stack.Screen
+       <Stack.Screen
           name="playerlogin"
           component={LoginScreen}
           options={{
@@ -107,7 +106,6 @@ const App = () => {
             title: "Register Here",
           }}
         ></Stack.Screen> */}
-        <Stack.Screen name="Homemarwan" component={OwnerHome}></Stack.Screen>
         <Stack.Screen
           name="Home"
           component={Home}
@@ -142,7 +140,7 @@ const App = () => {
           name="Allterrains"
           component={Allterrains}
           options={{
-            title: "Allterrains",
+            title: "",
             statusBarColor: "black",
             headerStyle: {
               backgroundColor: "black",
@@ -151,15 +149,6 @@ const App = () => {
               color: "orange",
             },
             headerTintColor: "orange",
-            headerRight: () => (
-              <Avatar.Image
-                source={{
-                  uri: "https://static.vecteezy.com/system/resources/thumbnails/001/504/972/small/search-icon-free-vector.jpg",
-                }}
-                size={40}
-                style={{ top: -5 }}
-              />
-            ),
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -186,27 +175,11 @@ const App = () => {
             ),
           }}
         ></Stack.Screen>
-
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeSceen}
-          options={{
-            headerStyle: {
-              backgroundColor: "black",
-            },
-            headerTitleStyle: {
-              color: "orange",
-            },
-            title: "Home",
-            headerShown: "Home",
-          }}
-        />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen>
+        ></Stack.Screen>*/}
         <Stack.Screen
           name="AppointmentScheduler"
           component={AppointmentScheduler}
@@ -225,8 +198,19 @@ const App = () => {
         {/* <Stack.Screen
           name="Mapplayer"
           component={Mapplayer}
-          options={{ title: "Mapplayer", headerShown: false }}
-        ></Stack.Screen> */}
+          options={{
+            title: "Mapplayer",
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "orange",
+            },
+            headerTintColor: "orange",
+            title: "Get your directions !",
+          }}
+        ></Stack.Screen>
         {/* <Stack.Screen
           name="HandleOwnerTerrains"
           component={HandleOwnerTerrains}

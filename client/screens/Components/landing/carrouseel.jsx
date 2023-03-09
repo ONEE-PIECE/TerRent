@@ -10,7 +10,7 @@ const MyCarousel = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       carouselRef.current?.snapToNext();
-    }, 20000); // Change the time duration here for the slide rotation
+    }, 15000);
     return () => clearInterval(timer);
   }, []);
 
@@ -45,7 +45,7 @@ const MyCarousel = () => {
     },
   ];
 
-  const renderData = [...data, ...data.slice(0, 3)]; // add the first 3 images to the end to ensure all images are displayed
+  const renderData = [...data, ...data.slice(0, 3)];
 
   const renderItem = ({ item }) => {
     return (
@@ -70,10 +70,10 @@ const MyCarousel = () => {
       itemWidth={screenWidth}
       loop={true}
       autoplay={true}
-      autoplayInterval={7000} // Change the time duration here for the slide rotation
+      autoplayInterval={7000}
       onSnapToItem={onSnapToItem}
       initialScrollIndex={currentIndex}
-      decelerationRate="normal" // Set the decelerationRate prop
+      decelerationRate="normal"
     />
   );
 };

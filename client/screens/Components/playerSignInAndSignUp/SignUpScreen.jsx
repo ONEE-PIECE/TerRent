@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authentification } from "./config.js";
+import { authentcation } from "./config.js";
 import React, { useState } from "react";
 import "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -22,19 +22,23 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
 
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(
-      authentification,
-      email,
-      password
-    )
+    console.log(email); // Log the email variable to the console
+    createUserWithEmailAndPassword(authentcation, email, password)
       .then((res) => {
-        addAccount(res._tokenResponse.localId);
-        navigation.navigate("HomeScreen")
-        // alert(`Welcome`);
+        console.log(res);
+        if (res.user) {
+          const tenantId = res.user;
+          console.log(tenantId);
+          // addAccount(res._tokenResponse.localId);
+          navigation.navigate("Home");
+          // alert(`Welcome`);
+        } else {
+          console.log("User not defined");
+        }
       })
       .catch((err) => {
         console.log(err);
-        alert("Invalid email or password");
+        alert(err);
       });
   };
 
@@ -123,10 +127,7 @@ const SignUpScreen = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           title={"Sign Up"}
-          onPress={() => {
-            handleSignUp();
-
-          }}
+          onPress={handleSignUp}
           style={styles.button}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>

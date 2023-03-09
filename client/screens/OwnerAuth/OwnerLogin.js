@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { Button, Icon } from "native-base";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { authentification } from "../../config.js";
+import { authentification } from "../Components/playerSignInAndSignUp/config";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

@@ -29,6 +29,7 @@ import OwnerCreateAccount from "./client/screens/OwnerAuth/OwnerCreateAccount";
 
 import AddEventForm from "./client/screens/addEvents.jsx";
 import LandingScreen from "./client/screens/Components/landing/landingpage.jsx";
+import ChatScreen from "./client/screens/chat/ChatScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -105,6 +106,21 @@ const App = () => {
               color: "orange",
             },
             title: "Register Here",
+          }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="CHAT"
+          component={ChatScreen}
+          options={{
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerShown: false,
+            headerTitleStyle: {
+              color: "orange",
+            },
+            title: "CHAT",
           }}
         ></Stack.Screen>
         {/* <Stack.Screen name="Homemarwan" component={OwnerHome}></Stack.Screen> */}

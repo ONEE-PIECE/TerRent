@@ -10,7 +10,7 @@ function HomeSceen() {
 
   return (
     <View >
-      <Text> Welcome </Text>
+      {/* <Text> Welcome </Text> */}
 
       <TouchableOpacity
           onPress={() => {

@@ -45,25 +45,7 @@ const Mapplayer = ({ navigation: navigate }) => {
     })();
   }, []);
 
-    
-   
-  useEffect(()=>{ axios.get('http://192.168.104.6:3000/api/terrain/terrains/oneterrains/1')
-    .then((result)=>{
-      console.log(result.data.Name,"mmmmmmmm");
-      setposition({
-      latitude:result.data.lat,
-      longitude:result.data.long ,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    name:result.data.Name
-    
-    })
-     
-    }).catch((err)=>{console.log(err)}
-    )}
-   ,[])
-
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -71,75 +53,56 @@ const Mapplayer = ({ navigation: navigate }) => {
   }
 
   return (
-    <View style={{marginTop:33,flex:1}}>
-      <MapView 
-      provider={PROVIDER_GOOGLE}
+    <View style={{ flex: 1 }}>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={{
+          latitude: 36.8941559,
+          longitude: 10.1870625,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation={true}
+        onUserLocationChange={(e) => {
+          console.log("onUserLocationChange", e.nativeEvent.coordinate);
+          setregin({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude,
+          });
+        }}
+      >
+        {/* this for the current location */}
 
-      style={styles.map}   initialRegion={{
-        latitude:36.8941559,
-        longitude:10.1870625,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-  }} showsUserLocation={true}
-  onUserLocationChange={(e)=>{console.log("onUserLocationChange",e.nativeEvent.coordinate);
-  setregin({
-    latitude: e.nativeEvent.coordinate.latitude,
-    longitude:e.nativeEvent.coordinate.longitude
-   })
-}}>
-    
-   
+        <Marker
+          coordinate={{
+            latitude: regin.latitude,
+            longitude: regin.longitude,
+          }}
+          draggable={true}
+          title={"here "}
+          description={"this is me "}
+          onDragStart={(e) => {
+            console.log("drag start", e.nativeEvent.coordinate);
+          }}
+          onDragEnd={(e) => {
+            console.log("drag end", e.nativeEvent.coordinate);
+            setregin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
+        ></Marker>
 
-    {/* this for the current location */}
-    
-    <Marker coordinate={{
-      latitude:regin.latitude,
-      longitude:regin.longitude
-    }} 
-      draggable={true}
-    
-      title={"here "}
-     
-      
-            description={"this is me "}
-            onDragStart={(e)=>{   
-             console.log("drag start", e.nativeEvent.coordinate)
-      }}
-          onDragEnd={(e)=>{
-           console.log("drag end",e.nativeEvent.coordinate)
-           setregin({
-           latitude:e.nativeEvent.coordinate.latitude,
-           longitude:e.nativeEvent.coordinate.longitude })
-      }}
+        <Circle center={regin} radius={100} />
 
-    ></Marker >
-     <Marker  
-    coordinate={position}
-    title={position.name}
-
-    /> 
-    {console.log('name',position.Name)}
-  
-      <Circle 
-        center={regin} 
-        radius={100}
-    /> 
-
-
-
-      <MapViewDirections 
-              origin={regin}
-              destination={position}
-              apikey={GOOGLE_MAPS_KEY}
-              strokeWidth={5}
-      />   
-         </MapView>
-         <Polyline 
-         destination={[regin,position]}/>
-
-
-       
-     
+        <MapViewDirections
+          origin={regin}
+          destination={tunis}
+          apikey={GOOGLE_MAPS_KEY}
+          strokeWidth={5}
+        />
+      </MapView>
     </View>
   );
 };

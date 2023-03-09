@@ -22,7 +22,7 @@ router.patch("/:id", updateTerrain);
 router.get("/");
 router.get("/terrains/region/:region", getAll);
 router.get("/terrains/category/:Category", getAllCat);
-router.get("/terrains/oneterrains/:terrainId", getOne);
+router.get("/terrains/atefIYED/:terrainId", getOne);
 
 
 module.exports=router

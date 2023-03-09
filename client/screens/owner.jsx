@@ -9,15 +9,13 @@ const Reservation = () => {
   const [reservations, setReservations] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [filterReserved, setFilterReserved] = useState(false);
-
   useEffect(() => {
-    handleFetchingAllTheReservationForAnOwner(),
-      handleUpdateReservation()
+    handleFetchingAllTheReservationForAnOwner()
   }, []);
 
   const handleFetchingAllTheReservationForAnOwner = () => {
     axios
-      .get('http://192.168.43.108:3000/api/reservation/player/1')
+      .get(`${baseUrl}api/reservation/player/1`)
       .then(function (response) {
         setReservations(response.data);
       })
@@ -25,6 +23,17 @@ const Reservation = () => {
         console.log(error);
       });
   };
+
+const addPoints =playerFireId=>{
+  console.log(playerFireId)
+ axios.get(`${baseUrl}api/player/${playerFireId}`)
+ .then((response)=>
+ console.log("123456789",response.data)).catch((error)=>console.log(error));
+
+// let addedPoints=5
+//   axios.put(`${baseUrl}api/player/updatePlayerPoints`,{FireId:playerFireId,
+//     Points:addedPoints})
+}
 
   const handleUpdateReservation = (reservationId) => {
     axios
@@ -92,7 +101,9 @@ const Reservation = () => {
           
       <Button
   title="Confirm"
-  onPress={() => handleUpdateReservation(reservation.id)}
+  onPress={() => {
+    // handleUpdateReservation(reservation.id)
+    addPoints(reservation.playerFireId)}      }
   disabled={reservation.Reserved}
   style={styles.confirmButton}
   titleStyle={styles.confirmButtonText}

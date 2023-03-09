@@ -44,13 +44,13 @@ foreignKey:"eventId"
 })
 db.Player.belongsToMany(db.Event,{through:"eventsHasPlayers",
 as: "events",
-foreignKey:"playerId"
+foreignKey:"playerFireId"
 })
 // 1 to many relation BETWEEN OWNER and TERRAINS
 
 db.Owner.hasMany(db.Terrain)
 db.Terrain.belongsTo(db.Owner,{
-    foreignKey:"ownerId"
+    foreignKey:"ownerFireid"
 })
 //1 to many relation BETWEEN  terrains and reservation 
 db.Terrain.hasMany(db.Reservation)
@@ -67,15 +67,15 @@ db.Reviews.belongsTo(db.Terrain,{
 
 db.Player.hasMany(db.Reservation)
 db.Reservation.belongsTo(db.Player,{
-    foreignKey:"playerId"
+    foreignKey:"playerFireId"
 })
 //1 to many relation BETWEEN  Player and reviews
 
 db.Player.hasMany(db.Reviews)
 db.Reviews.belongsTo(db.Player,{
-    foreignKey:"playerId"
+    foreignKey:"playerFireId"
 })
-// 1 to many relation BETWEEN OWNER and TERRAINS
+// 1 to many relation BETWEEN events and TERRAINS
 
 db.Terrain.hasMany(db.Event)
 db.Event.belongsTo(db.Terrain,{

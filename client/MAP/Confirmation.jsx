@@ -3,7 +3,7 @@ import axios from 'axios';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { NavigationContainer, } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; 
-
+import { baseUrl } from '../urlConfig/urlConfig';
 
 const Confirmation = ( {navigation,route}) => {
   const [name, setName] = useState('');
@@ -15,7 +15,7 @@ const Confirmation = ( {navigation,route}) => {
   const [category, setCategory] = useState('');
   const [images, setImages] = useState('');
   const [capacity, setCapacity] = useState('');
-  const [availability, setAvailability] = useState(false);
+  const [availability, setAvailability] = useState("");
   const handleAddTerrain = async () => {
     
     try {
@@ -31,15 +31,14 @@ const Confirmation = ( {navigation,route}) => {
         Capacity: capacity,
         Availability: availability,
       };
-      const response = await axios.post('http://192.168.104.13:3000/api/terrain/ownerId', newTerrain);
+      const response = await axios.post(`${baseUrl}api/terrain/mzxFZrPpG7ZLEYtSWQfgYXiBWJA3`, newTerrain);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
    
   };
-  console.log('iheb',lat)
-  console.log( "atef",route.params.lat,route.params.long)
+
   return (
     <View style={styles.container}> 
       <TextInput
@@ -58,11 +57,7 @@ const Confirmation = ( {navigation,route}) => {
         value={description}
         onChangeText={setDescription}
       />
-      {/* <TextInput
-        placeholder="Location"
-        value={location}
-        onChangeText={setLocation}
-      /> */}
+  
       <TextInput
         placeholder="Region"
         value={region}
@@ -84,10 +79,10 @@ const Confirmation = ( {navigation,route}) => {
         onChangeText={setCapacity}
         keyboardType="numeric"
       />
-      <Button
-        title={availability ? 'Available' : 'Unavailable'}
-        onPress={() => setAvailability(!availability)}
-      />
+      <TextInput
+         placeholder="Availability.. [From 10:00 to 23:00]"
+         onChangeText={setAvailability}
+         />
       <Button
         title="Add Terrain"
         onPress={handleAddTerrain}

@@ -123,11 +123,11 @@ const App = () => {
           component={Reservation}
           options={{ title: "Reservation" }}
         ></Stack.Screen>   */}
-         {/* <Stack.Screen
+         <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen>  */}
+        ></Stack.Screen> 
         {/* <Stack.Screen
           name="AppointmentScheduler"
           component={AppointmentScheduler}
@@ -149,8 +149,8 @@ const App = () => {
         name="Mapplayer"
         component={Mapplayer}
         options={{title:'Mapplayer',headerShown:false}}
-        ></Stack.Screen> 
-*/}
+        ></Stack.Screen>  */}
+
          {/* <Stack.Screen 
         name="HandleOwnerTerrains"
         component={HandleOwnerTerrains}
@@ -162,7 +162,7 @@ const App = () => {
          options={{ title: "AddEventForm" }}
         >
         </Stack.Screen> */}
-             <Stack.Screen
+             {/* <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{
@@ -179,7 +179,7 @@ const App = () => {
             title: "Home",
             headerShown: "Home",
           }}
-        /> 
+        />  */}
       </Stack.Navigator>
     </NavigationContainer>
   );

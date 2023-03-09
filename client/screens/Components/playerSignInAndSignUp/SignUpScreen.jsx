@@ -44,7 +44,7 @@ const SignUpScreen = () => {
   }
 
   const addAccount = (fireId) => {
-    axios.post(`${baseUrl}player/playerSignUp`, {
+    axios.post(`${baseUrl}api/player/playerSignUp`, {
       FireId:fireId,
       FirstName: firstname,
       SecondName: lastname,

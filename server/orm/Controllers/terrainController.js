@@ -68,8 +68,7 @@ const addTerrain= async(req, res)=> {
       Images,
       Capacity,
       Aviability,
-
-      ownerId: ownerId,
+     ownerFireid: ownerId,
     });
     res.status(201).json(terrain);
   } catch (error) {

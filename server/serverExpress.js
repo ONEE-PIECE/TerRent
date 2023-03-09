@@ -3,7 +3,7 @@
     
     const cors = require('cors');
     const Owner = require('./orm/Routes/ownerRoutes.js');
-
+    const player = require('./orm/Routes/playerRoute.js');
     const reviewsRoute = require("./orm/Routes/reviewsRoute");
     const reservationRouter = require('./orm/Routes/reservationRoute');
     const terrainRouter = require('./orm/Routes/terrainRoute');
@@ -21,7 +21,7 @@
       limit: '50mb'}));
     app.use(cors());
     app.use('/owner',Owner)
-
+    app.use('/api/player',player)
     app.use('/api/reservation', reservationRouter);
     app.use('/api/terrain', terrainRouter);
     app.use("/api/reviews", reviewsRoute);

@@ -36,7 +36,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/*<Stack.Screen
           name="Landingscreen"
           component={LandingScreen}
           options={{
@@ -79,7 +79,7 @@ const App = () => {
             title: "Register Here",
           }}
         ></Stack.Screen>
-        <Stack.Screen
+       <Stack.Screen
           name="playerlogin"
           component={LoginScreen}
           options={{
@@ -107,23 +107,8 @@ const App = () => {
             },
             title: "Register Here",
           }}
-        ></Stack.Screen>
-        <Stack.Screen
-          name="CHAT"
-          component={ChatScreen}
-          options={{
-            statusBarColor: "black",
-            headerStyle: {
-              backgroundColor: "black",
-            },
-            headerShown: false,
-            headerTitleStyle: {
-              color: "orange",
-            },
-            title: "CHAT",
-          }}
-        ></Stack.Screen>
-        {/* <Stack.Screen name="Homemarwan" component={OwnerHome}></Stack.Screen> */}
+        ></Stack.Screen> */}
+
         <Stack.Screen
           name="Home"
           component={Home}
@@ -158,7 +143,7 @@ const App = () => {
           name="Allterrains"
           component={Allterrains}
           options={{
-            title: "Allterrains",
+            title: "",
             statusBarColor: "black",
             headerStyle: {
               backgroundColor: "black",
@@ -167,15 +152,6 @@ const App = () => {
               color: "orange",
             },
             headerTintColor: "orange",
-            headerRight: () => (
-              <Avatar.Image
-                source={{
-                  uri: "https://static.vecteezy.com/system/resources/thumbnails/001/504/972/small/search-icon-free-vector.jpg",
-                }}
-                size={40}
-                style={{ top: -5 }}
-              />
-            ),
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -202,27 +178,11 @@ const App = () => {
             ),
           }}
         ></Stack.Screen>
-
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         {/* <Stack.Screen
-          name="HomeScreen"
-          component={HomeSceen}
-          options={{
-            headerStyle: {
-              backgroundColor: "black",
-            },
-            headerTitleStyle: {
-              color: "orange",
-            },
-            title: "Home",
-            headerShown: "Home",
-          }}
-        /> */}
-        <Stack.Screen
           name="Reservation"
           component={Reservation}
           options={{ title: "Reservation" }}
-        ></Stack.Screen>
+        ></Stack.Screen>*/}
         <Stack.Screen
           name="AppointmentScheduler"
           component={AppointmentScheduler}
@@ -241,9 +201,20 @@ const App = () => {
         <Stack.Screen
           name="Mapplayer"
           component={Mapplayer}
-          options={{ title: "Mapplayer", headerShown: false }}
+          options={{
+            title: "Mapplayer",
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "orange",
+            },
+            headerTintColor: "orange",
+            title: "Get your directions !",
+          }}
         ></Stack.Screen>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="HandleOwnerTerrains"
           component={HandleOwnerTerrains}
           options={{ title: "HandleOwnerTerrains", headerShown: false }}
@@ -252,7 +223,7 @@ const App = () => {
           name="AddEventForm"
           component={AddEventForm}
           options={{ title: "AddEventForm" }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

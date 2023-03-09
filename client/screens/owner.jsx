@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Text, View, Button, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet } from 'react-native';
+import { baseUrl } from '../urlConfig/urlConfig';
 
 const Reservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -27,7 +28,7 @@ const Reservation = () => {
 
   const handleUpdateReservation = (reservationId) => {
     axios
-      .put(`http://192.168.43.108:3000/api/reservation/player/${reservationId}`)
+      .put(`${baseUrl}api/reservation/player/${reservationId}`)
       .then(function (response) {
         console.log(response.data);
         // Update the reservations state with the new data
@@ -46,7 +47,7 @@ const Reservation = () => {
 
   const handleDeleteReservation = (reservationId) => {
     axios
-      .delete(`http://192.168.43.108:3000/api/reservation/player/${reservationId}`)
+      .delete(`${baseUrl}api/reservation/player/${reservationId}`)
       .then(function (response) {
         console.log(response.data);
         // Update the reservations state by filtering out the deleted reservation

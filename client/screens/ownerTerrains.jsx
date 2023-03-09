@@ -56,7 +56,7 @@ const HandleOwnerTerrains = () => {
 
   const handleDeleteTerrain = async (id) => { 
     try {
-      const response = await axios.delete(`http://192.168.43.108:3000/api/terrain/${id}`);
+      const response = await axios.delete(`${baseUrl}api/terrain/${id}`);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -65,7 +65,7 @@ const HandleOwnerTerrains = () => {
 
   const handleUpdateTerrain = async () => {
     try {
-      const response = await axios.patch(`http://192.168.43.108:3000/api/terrain/${selectedTerrain.id}`, {
+      const response = await axios.patch(`${baseUrl}api/terrain/${selectedTerrain.id}`, {
         Name: name,
         Price: price,
         Description: description,

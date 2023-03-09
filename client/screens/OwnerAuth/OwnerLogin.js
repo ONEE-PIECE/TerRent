@@ -12,7 +12,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentification } from "../../FbConfig/config.js";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import axios from "axios";
+import { baseUrl } from "../../urlConfig/urlConfig.js";
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,21 +28,42 @@ const OwnerLogin = () => {
       console.log(error)
     }
   };
-  
-  const signInOwner = () => {
-    signInWithEmailAndPassword(authentification, email, password)
-      .then((res) => {
-        _storeData(res._tokenResponse.localId)
-      })
-      .then(() => {
-        navigation.navigate("HomeOwner");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
 
+
+  
+
+
+  //getting owner data by email to verify that the account is authorized to access or not 
+
+const axiosGetOwner= async (Email)=>{
+
+    axios= axios.get(`${baseUrl}owner/signInOwner/Authorization/${Email}`).then((res)=>{
+     console.log(res.data)
+  setOwnerData(res.data)})
+  return axios
+}
+
+
+const signInOwner = async () => {
+  try {
+    // get data from axios
+    const axiosResponse = await axios.get(`${baseUrl}owner/signInOwner/Authorization/${email}`);
+    const data = axiosResponse.data;
+    console.log(data[0].AccountConfirmation)
+    setOwnerData(data);
+   if(data[0].AccountConfirmation){
+    const res = await signInWithEmailAndPassword(authentification, email, password);
+    _storeData(res._tokenResponse.localId);
+    navigation.navigate("HomeOwner");} else{
+      alert('Your account is not authorized to login please wait for confirmation')
+    }
+    
+    
+  } catch (error) {
+    console.log(error);
+    alert(error);
+  }
+};
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>

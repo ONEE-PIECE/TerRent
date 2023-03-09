@@ -7,6 +7,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull: false,
 
 },
+        Email:{type:DataTypes.STRING},
         FullName:{type:DataTypes.STRING},
         PhoneNumber:{type:DataTypes.INTEGER},
         patentImage:{type:DataTypes.TEXT('long')},

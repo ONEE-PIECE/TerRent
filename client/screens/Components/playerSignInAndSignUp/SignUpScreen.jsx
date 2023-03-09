@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
+import { baseUrl } from '../../../urlConfig/urlConfig.js'
 
 
 const SignUpScreen = () => {
@@ -43,10 +44,11 @@ const SignUpScreen = () => {
   }
 
   const addAccount = (fireId) => {
-    axios.post("http://192.168.103.9:3000/player/playerSignUp", {
+    axios.post(`${baseUrl}player/playerSignUp`, {
       FireId:fireId,
       FirstName: firstname,
       SecondName: lastname,
+      Email:email,
       UserName: username
     }).then(res => { console.log(res)
       })

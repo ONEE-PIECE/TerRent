@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
+import { baseUrl } from '../urlConfig/urlConfig';
 
 
 
@@ -26,7 +27,7 @@ const AppointmentScheduler = () => {
   
   const handleConfirm = async () => {
     try {
-      const posts = await axios.post('http://192.168.43.108:3000/api/reservation/player/1/1', {
+      const posts = await axios.post(`${baseUrl}api/reservation/player/1/1`, {
         Day: selectedDay,
         Hour: selectedTime,
         Reserved: false,
@@ -43,7 +44,7 @@ const AppointmentScheduler = () => {
 
   const fetchReservedSlots = async () => {
     try {
-      const response = await axios.get('http://192.168.43.108:3000/api/reservation/players/1');
+      const response = await axios.get(`${baseUrl}api/reservation/players/1`);
      console.log(response.data);
     }
      catch(err){

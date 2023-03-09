@@ -6,12 +6,13 @@ const Owner = db.Owner;
 module.exports = {
 
 CreateOwner: async (req,res) => {
-const {Fireid,FullName,PhoneNumber,patentImage,ProfileImage}= req.body;
+const {Fireid,Email,FullName,PhoneNumber,patentImage,ProfileImage}= req.body;
    try {
  
 
 const owner = await Owner.create({
         Fireid,
+        Email,
         FullName,
         PhoneNumber,
         patentImage,
@@ -24,7 +25,7 @@ const owner = await Owner.create({
 
 getOwner : async (req, res) => {
     const {Fireid}=req.params;
-   console.log("fire iddddddddddddddddd",req.params);
+   console.log("fire id:",req.params);
     try{
    
     const owner = await Owner.findAll({
@@ -34,7 +35,18 @@ getOwner : async (req, res) => {
         
 } catch(err){console.log(err);}
 
-}
+},
+getOwnerByEmailForAuthorization: async (req, res) => {
+    const {Email}=req.params;
+    try{
+   
+    const owner = await Owner.findAll({
+        where:{
+            Email:Email}})
+            res.status(201).json(owner);
+        
+} catch(err){console.log(err);}
 
+}
 
 }

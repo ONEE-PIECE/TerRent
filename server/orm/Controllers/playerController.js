@@ -4,8 +4,8 @@ const Player =db.Player;
 
 
   const  addPlayer =async (req, res)=> {
-       const {FireId,FirstName,SecondName,UserName}=req.body
-       const user = await Player.create({FireId,FirstName,SecondName,UserName})
+       const {FireId,FirstName,SecondName,Email,UserName}=req.body
+       const user = await Player.create({FireId,FirstName,SecondName,Email,UserName})
         res.status(201).send(user)
      }
     

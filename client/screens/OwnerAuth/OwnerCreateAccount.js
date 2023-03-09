@@ -79,6 +79,7 @@ const axiosPost=(FireId)=>{
   console.log(FireId);
   let body={
     Fireid: FireId,
+    Email:email,
     FullName:fullName,
     PhoneNumber:phoneNumber,
     patentImage:patentImage,

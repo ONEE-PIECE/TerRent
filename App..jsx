@@ -35,23 +35,24 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer >
+            <Stack.Navigator  >
        {/* <Stack.Screen
        name="OwnerOrPlayer"
        component={OwnerOrPlayer}
        options={{title:'OwnerOrPlayer',headerShown:false,initialRouteName:'OwnerOrPlayer'}}
        >
        </Stack.Screen> */}
-      <Stack.Navigator  >
 
+{/* 
      
-     <Stack.Screen name="Login" component={OwnerLogin} >
+      <Stack.Screen name="Login" component={OwnerLogin} >
 
      </Stack.Screen>
      <Stack.Screen name="CreateAccount" component={OwnerCreateAccount} >
 
      </Stack.Screen>
      <Stack.Screen name="HomeOwner" component={AddEventForm} >
-     </Stack.Screen>
+     </Stack.Screen>  */}
          {/* <Stack.Screen
           name="Home"
           component={Home}
@@ -155,12 +156,30 @@ const App = () => {
         component={HandleOwnerTerrains}
         options={{title:'HandleOwnerTerrains',headerShown:false}}
         ></Stack.Screen>   */}
-        <Stack.Screen
+        {/* <Stack.Screen
          name="AddEventForm"
          component={AddEventForm}
          options={{ title: "AddEventForm" }}
         >
-        </Stack.Screen>
+        </Stack.Screen> */}
+             <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            title: "Login",
+            headerShown: "LoginScreen",
+          }}
+        />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} /> 
+        
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeSceen}
+          options={{
+            title: "Home",
+            headerShown: "Home",
+          }}
+        /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

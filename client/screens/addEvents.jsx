@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { getStorage,ref,uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import {app} from '../FbConfig/config.js';
+import { baseUrl } from '../urlConfig/urlConfig.js';
 
 
 const AddEventForm = () => {
@@ -21,7 +22,7 @@ const AddEventForm = () => {
       const value = await AsyncStorage.getItem("Token");
   setUserToken(value);
      console.log("welcome :",value)
-      let ownerData= await axios.get(`http://192.168.104.8:3000/owner/signInOwner/${value}`)
+      let ownerData= await axios.get(`${baseUrl}owner/signInOwner/${value}`)
       console.log("owner",ownerData.data );
       return ownerData.data;
   

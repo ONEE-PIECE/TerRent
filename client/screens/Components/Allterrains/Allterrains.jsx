@@ -8,6 +8,7 @@ import Carrousel from "./Carrousel.jsx";
 import { Text } from "react-native-paper";
 import axios from "axios";
 import { Alert } from "react-native";
+import { baseUrl } from "../../../urlConfig/urlConfig.js";
 
 const Allterrains = ({ navigation, route }) => {
   const [data, setdata] = useState([]);
@@ -15,7 +16,7 @@ const Allterrains = ({ navigation, route }) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.43.108:3000/api/terrain/terrains/category/${route.params.Category}`
+        `${baseUrl}api/terrain/terrains/category/${route.params.Category}`
       )
       .then((response) => {
         if (response.data.length === 0) {

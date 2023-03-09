@@ -31,7 +31,7 @@ const Confirmation = ( {navigation,route}) => {
         Capacity: capacity,
         Availability: availability,
       };
-      const response = await axios.post('http://192.168.104.13:3000/api/terrain/ownerId', newTerrain);
+      const response = await axios.post('http://192.168.104.6:3000/api/terrain/ownerId', newTerrain);
       console.log(response.data);
     } catch (error) {
       console.error(error);

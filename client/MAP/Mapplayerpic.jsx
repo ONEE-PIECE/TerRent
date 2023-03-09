@@ -13,10 +13,8 @@ import Confirmation from "./Confirmation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { NavigationContainer } from "@react-navigation/native";
-import { Dimensions } from "react-native";
-import { useWindowDimensions } from "react-native";
 
-const Mapplayer = ({ navigation: navigate }) => {
+const Mapplayerpic = ({ navigation: navigate }) => {
   const [tunis, settunis] = useState({
     latitude: 36.80638936,
     longitude: 10.181667,
@@ -53,7 +51,7 @@ const Mapplayer = ({ navigation: navigate }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ marginTop: 33, flex: 1 }}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -112,10 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    width: Dimensions.width,
-    height: "100%",
+    width: 400,
+    height: 150,
     backgroundColor: "white",
   },
 });
 
-export default Mapplayer;
+export default Mapplayerpic;

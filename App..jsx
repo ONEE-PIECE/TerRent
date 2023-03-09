@@ -29,6 +29,7 @@ import OwnerCreateAccount from "./client/screens/OwnerAuth/OwnerCreateAccount";
 
 import AddEventForm from "./client/screens/addEvents.jsx";
 import LandingScreen from "./client/screens/Components/landing/landingpage.jsx";
+import ChatScreen from "./client/screens/chat/ChatScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 const App = () => {

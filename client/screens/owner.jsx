@@ -24,16 +24,16 @@ const Reservation = () => {
       });
   };
 
-const addPoints =playerFireId=>{
-  console.log(playerFireId)
- axios.get(`${baseUrl}api/player/${playerFireId}`)
- .then((response)=>
- console.log("123456789",response.data)).catch((error)=>console.log(error));
+// const addPoints =playerFireId=>{
+//   console.log(playerFireId)
+//  axios.get(`${baseUrl}api/player/${playerFireId}`)
+//  .then((response)=>
+//  console.log("123456789",response.data)).catch((error)=>console.log(error));
 
-// let addedPoints=5
-//   axios.put(`${baseUrl}api/player/updatePlayerPoints`,{FireId:playerFireId,
-//     Points:addedPoints})
-}
+// // let addedPoints=5
+// //   axios.put(`${baseUrl}api/player/updatePlayerPoints`,{FireId:playerFireId,
+// //     Points:addedPoints})
+// }
 
   const handleUpdateReservation = (reservationId) => {
     axios

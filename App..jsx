@@ -5,9 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx";
-
 import OneTerrain from "./client/screens/Components/Terraindetails/OneTerrain.jsx";
-
 import { Avatar } from "react-native-paper";
 
 import LoginScreen from "./client/screens/Components/playerSignInAndSignUp/LoginScreen.jsx";
@@ -106,6 +104,7 @@ const App = () => {
             },
             title: "Register Here",
           }}
+
         ></Stack.Screen>*/}
 
         <Stack.Screen
@@ -232,7 +231,7 @@ const App = () => {
           component={Confirmation}
           options={{ title: "Confirmation", headerShown: false }}
         ></Stack.Screen>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Mapplayer"
           component={Mapplayer}
           options={{

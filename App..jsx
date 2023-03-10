@@ -29,14 +29,13 @@ import OwnerCreateAccount from "./client/screens/OwnerAuth/OwnerCreateAccount";
 
 import AddEventForm from "./client/screens/addEvents.jsx";
 import LandingScreen from "./client/screens/Components/landing/landingpage.jsx";
-import ChatScreen from "./client/screens/chat/ChatScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/*<Stack.Screen
+        {/* <Stack.Screen
           name="Landingscreen"
           component={LandingScreen}
           options={{
@@ -78,8 +77,8 @@ const App = () => {
             },
             title: "Register Here",
           }}
-        ></Stack.Screen>
-       <Stack.Screen
+        ></Stack.Screen> 
+        <Stack.Screen
           name="playerlogin"
           component={LoginScreen}
           options={{
@@ -107,7 +106,7 @@ const App = () => {
             },
             title: "Register Here",
           }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>*/}
 
         <Stack.Screen
           name="Home"
@@ -122,20 +121,24 @@ const App = () => {
             },
             title: "",
             headerRight: () => (
-              <Avatar.Image
-                source={{
-                  uri: "https://cdn.shopify.com/s/files/1/0248/2002/3381/articles/Runners-youtube-DangerousSport_600x600_ab197b16-1b9b-4c07-b354-2d1ddcc1ade3.jpg?v=1674242092",
-                }}
-                size={40}
+              <View
                 style={{
-                  top: -3,
-                  borderWidth: 2.5,
+                  top: 0,
+                  borderWidth: 3,
+                  borderRadius: 20,
 
                   borderColor: "orange",
 
                   borderStyle: "solid",
                 }}
-              />
+              >
+                <Avatar.Image
+                  source={{
+                    uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+                  }}
+                  size={30}
+                />
+              </View>
             ),
           }}
         ></Stack.Screen>
@@ -152,6 +155,26 @@ const App = () => {
               color: "orange",
             },
             headerTintColor: "orange",
+            headerRight: () => (
+              <View
+                style={{
+                  top: 0,
+                  borderWidth: 3,
+                  borderRadius: 20,
+
+                  borderColor: "orange",
+
+                  borderStyle: "solid",
+                }}
+              >
+                <Avatar.Image
+                  source={{
+                    uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+                  }}
+                  size={30}
+                />
+              </View>
+            ),
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -168,13 +191,24 @@ const App = () => {
             headerTintColor: "orange",
             title: "Oneterrain",
             headerRight: () => (
-              <Avatar.Image
-                source={{
-                  uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+              <View
+                style={{
+                  top: 0,
+                  borderWidth: 3,
+                  borderRadius: 20,
+
+                  borderColor: "orange",
+
+                  borderStyle: "solid",
                 }}
-                size={40}
-                style={{ top: -5 }}
-              />
+              >
+                <Avatar.Image
+                  source={{
+                    uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+                  }}
+                  size={30}
+                />
+              </View>
             ),
           }}
         ></Stack.Screen>

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
-const BottomNavigationBar = ({ navigation }) => {
+const BottomNavigationBar = ({}) => {
   const [activeTab, setActiveTab] = useState("Home");
+  const auth = getAuth();
+  const navigation = useNavigation();
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
@@ -34,7 +38,14 @@ const BottomNavigationBar = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => handleTabPress("Logout")}
+        onPress={() => {
+          signOut(auth)
+            .then(() => {})
+            .catch((error) => {
+              console.error(error);
+            });
+          navigation.navigate("playerlogin");
+        }}
       >
         <Ionicons
           name={activeTab === "log-out-outline" ? "logout" : "log-out-sharp"}

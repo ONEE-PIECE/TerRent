@@ -1,86 +1,47 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { getAuth, signOut } from "firebase/auth";
-import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
+import { BottomNavigation, Text } from "react-native-paper";
 
-const BottomNavigationBar = ({}) => {
-  const [activeTab, setActiveTab] = useState("Home");
-  const auth = getAuth();
-  const navigation = useNavigation();
+const MusicRoute = () => <Text>Home</Text>;
 
-  const handleTabPress = (tabName) => {
-    setActiveTab(tabName);
-    navigation.navigate(tabName);
-  };
+const AlbumsRoute = () => <Text>Events</Text>;
+
+const RecentsRoute = () => <Text>Notifications</Text>;
+
+const NotificationsRoute = () => <Text>Profile</Text>;
+
+const Bottomnav = () => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {
+      key: "music",
+      title: "Favorites",
+      focusedIcon: "heart",
+      unfocusedIcon: "heart-outline",
+    },
+    { key: "albums", title: "Albums", focusedIcon: "album" },
+    { key: "recents", title: "Recents", focusedIcon: "history" },
+    {
+      key: "notifications",
+      title: "Notifications",
+      focusedIcon: "bell",
+      unfocusedIcon: "bell-outline",
+    },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    music: MusicRoute,
+    albums: AlbumsRoute,
+    recents: RecentsRoute,
+    notifications: NotificationsRoute,
+  });
 
   return (
-    <View style={styles.bottomNavigationBar}>
-      <TouchableOpacity
-        style={styles.tabButton}
-        onPress={() => handleTabPress("Home")}
-      >
-        <Ionicons
-          name={activeTab === "Home" ? "home" : "home-outline"}
-          size={24}
-          color={activeTab === "Home" ? "darkorange" : "lightgrey"}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.tabButton}
-        onPress={() => handleTabPress("Search")}
-      >
-        <Ionicons
-          name={activeTab === "calendar-outline" ? "search" : "calendar"}
-          size={24}
-          color={activeTab === "Search" ? "darkorange" : "lightgrey"}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.tabButton}
-        onPress={() => {
-          signOut(auth)
-            .then(() => {})
-            .catch((error) => {
-              console.error(error);
-            });
-          navigation.navigate("playerlogin");
-        }}
-      >
-        <Ionicons
-          name={activeTab === "log-out-outline" ? "logout" : "log-out-sharp"}
-          size={24}
-          color={activeTab === "Logout" ? "darkorange" : "lightgrey"}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.tabButton}
-        onPress={() => handleTabPress("Profile")}
-      >
-        <Ionicons
-          name={activeTab === "Profile" ? "person" : "person-outline"}
-          size={24}
-          color={activeTab === "Profile" ? "darkorange" : "lightgrey"}
-        />
-      </TouchableOpacity>
-    </View>
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  bottomNavigationBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "black",
-    borderTopWidth: 2,
-    borderTopColor: "darkorange",
-  },
-  tabButton: {
-    flex: 1,
-    alignItems: "center",
-  },
-});
-
-export default BottomNavigationBar;
+export default Bottomnav;

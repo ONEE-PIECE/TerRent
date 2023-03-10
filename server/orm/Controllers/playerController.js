@@ -25,8 +25,7 @@ const updatePlayer = async (req,res) => {
     res.status(201).send(user)
  }
 const getPlayer = async (req, res) => {
-    let id = req.params.id
-    const player= await Player.findByPk(id)
+    const player= await Player.findAll({where:{FireId:req.params.FireId}})
     res.status(200).json(player)
 }
 

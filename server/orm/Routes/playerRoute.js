@@ -5,7 +5,7 @@ const controller=require('../Controllers/playerController')
 
 
 router.post('/playerSignUp',controller.addPlayer )
-router.get('/:playerFireId',controller.getPlayer)
+router.get('/:FireId',controller.getPlayer)
 router.put('/updatePlayer',controller.updatePlayer)
 router.put('/updatePlayerPoints',controller.updatePlayerPoints)
 

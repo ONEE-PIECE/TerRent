@@ -54,7 +54,7 @@ const SignUpScreen = () => {
 
   const addAccount = (fireId) => {
     axios
-      .post("http://192.168.101.8:3000/api/player/playerSignUp", {
+      .post("http://192.168.1.37:3000/api/player/playerSignUp", {
         FireId: fireId,
         FirstName: firstname,
         SecondName: lastname,
@@ -69,7 +69,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
         <Text style={{ color: "darkorange", top: -50, fontSize: 15, left: 20 }}>
           Register Here and join the fun

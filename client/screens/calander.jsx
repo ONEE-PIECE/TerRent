@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
 import { baseUrl } from '../urlConfig/urlConfig';
+import { Root, Popup } from "popup-ui";
 
 
 
@@ -11,20 +12,19 @@ const AppointmentScheduler = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  
-  
+
   const handleDayPress = (day) => {
     setSelectedDay(day.dateString);
     setSelectedTime(null);
     setModalVisible(true);
-    console.log(day.dateString)
+    console.log(day.dateString);
   };
-  
+
   const handleTimePress = (time) => {
     setSelectedTime(time);
     setConfirmVisible(true);
   };
-  
+
   const handleConfirm = async () => {
     try {
       const posts = await axios.post(`${baseUrl}api/reservation/player/1/1`, {
@@ -33,7 +33,6 @@ const AppointmentScheduler = () => {
         Reserved: false,
       });
       console.log(posts);
-
     } catch (err) {
       console.log(err);
     }
@@ -46,14 +45,12 @@ const AppointmentScheduler = () => {
     try {
       const response = await axios.get(`${baseUrl}api/reservation/players/1`);
      console.log(response.data);
+    } catch (err) {
+      throw err;
     }
-     catch(err){
-throw err
-     }
-    }
-  ;
-  const timeSlots = [9, 11, 13, 15, 17,19,21,23];
-  
+  };
+  const timeSlots = [9, 11, 13, 15, 17, 19, 21, 23];
+
   return (
     <View style={styles.container}>
       <Calendar
@@ -61,7 +58,6 @@ throw err
         markedDates={{
           [selectedDay]: { selected: true },
         }}
-        
       />
       <Modal
         animationType="slide"
@@ -70,120 +66,150 @@ throw err
           setModalVisible(false);
         }}
       >
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Select a time:</Text>
-          {timeSlots.map((hour) => (
-            <TouchableOpacity
-              key={hour}
-              style={[
-                styles.timeSlot,
-                hour === selectedTime && styles.selectedTimeSlot,
-              ]}
-              onPress={() => handleTimePress(hour)}
+        <Root>
+          <View style={styles.modalContainer}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 24,
+                borderBottomColor: "darkorange",
+              }}
             >
-              <Text>{hour}:00</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+              Please select a time :
+            </Text>
+            {timeSlots.map((hour) => (
+              <TouchableOpacity
+                key={hour}
+                style={{
+                  marginVertical: 10,
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  minWidth: 70,
+                  minHeight: 35,
+                  alignItems: "center",
+                  borderColor: "darkorange",
+                }}
+                onPress={() => {
+                  Popup.show({
+                    type: "Success",
+                    title: "Confirm Your Reservation",
+                    button: true,
+                    textBody:
+                      "Are you sure you want to reserve this date and time ?",
+                    buttontext: "Confirm",
+                    callback: () => {
+                      Popup.hide();
+                    },
+                  });
+                }}
+              >
+                <Text style={{ color: "darkorange", fontSize: 15, top: 5 }}>
+                  {hour}:00
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Root>
+        <Popup />
       </Modal>
       <Modal
-  animationType="slide"
-  visible={confirmVisible}
-  onRequestClose={() => {
-    setConfirmVisible(false);
-  }}
->
-  <View style={styles.modalContainer}>
-    <Text style={styles.modalTitle}>
-      Are you sure you want to select {selectedTime}:00 on {selectedDay}?
-    </Text>
-    <View style={styles.modalButtonContainer}>
-      <TouchableOpacity
-        style={[styles.modalButton, styles.cancelButton]}
-        onPress={() => setConfirmVisible(false)}
+        animationType="slide"
+        visible={confirmVisible}
+        onRequestClose={() => {
+          setConfirmVisible(false);
+        }}
       >
-        <Text style={styles.modalButtonText}>Cancel</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-  style={[styles.modalButton, styles.confirmButton]}
-  onPress={handleConfirm} 
->
-  <Text style={styles.modalButtonText}>Confirm</Text>
-</TouchableOpacity>
-    </View>
-  </View>
-  
-</Modal>
+        <View style={{ backgroundColor: "black", paddingTop: 60 }}>
+          <Text style={styles.modalTitle}>
+            Are you sure you want to select {selectedTime}:00 on {selectedDay}?
+          </Text>
+          <View style={{ backgroundColor: "black", height: "100%" }}>
+            <TouchableOpacity
+              style={{ backgroundColor: "black" }}
+              onPress={() => setConfirmVisible(false)}
+            >
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.modalButton, styles.confirmButton]}
+              onPress={handleConfirm}
+            >
+              <Text style={styles.modalButtonText}>Confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1e3f20',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
   },
   calendarContainer: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
     margin: 10,
   },
   calendarHeader: {
-    backgroundColor: '#2f4f4f',
+    backgroundColor: "#2f4f4f",
     padding: 10,
   },
   calendarHeaderText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   calendarDay: {
-    color: '#2f4f4f',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "#2f4f4f",
+    fontWeight: "bold",
+    textAlign: "center",
     paddingTop: 5,
     paddingBottom: 5,
   },
   calendarSelectedDay: {
-    backgroundColor: '#2f4f4f',
+    backgroundColor: "#2f4f4f",
     borderRadius: 50,
   },
   modalContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 50,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 90,
+    top: -30,
   },
   modalTitle: {
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   timeSlot: {
-    backgroundColor: '#fff',
+    backgroundColor: "black",
     borderWidth: 2,
-    borderColor: '#5cb85c',
+    borderColor: "#5cb85c",
+    color: "darkorange",
     padding: 10,
     marginVertical: 5,
-    width: '80%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   timeSlotText: {
-    color: '#5cb85c',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   selectedTimeSlot: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   modalButtonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
   },
   modalButton: {
@@ -193,18 +219,17 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   cancelButton: {
-    backgroundColor: 'red',
-    borderColor: 'red',
+    backgroundColor: "red",
+    borderColor: "red",
   },
   confirmButton: {
-    backgroundColor: 'green',
-    borderColor: 'green',
+    backgroundColor: "green",
+    borderColor: "green",
   },
   modalButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 export default AppointmentScheduler;
-

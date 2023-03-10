@@ -10,38 +10,43 @@ import { baseUrl } from '../../../urlConfig/urlConfig.js'
 
 
 const SignUpScreen = () => {
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
-  const [firstname, setfirstname] = useState('')
-  const [lastname, setlastname] = useState('')
-  const [username, setusername] = useState('')
-  const navigation = useNavigation()
-
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [username, setusername] = useState("");
+  const navigation = useNavigation();
 
   const handleSignUp = async () => {
-      const userInfos = await createUserWithEmailAndPassword(auth, email, password).then(res=>{
-        addAccount(res._tokenResponse.localId)
-        navigation.navigate("HomeScreen")
-        alert(`Welcome`)
-      }).catch(err=>{ setTimeout(() => {
-        alert("Invalid email or password")
-      }, 2000);})
-  }
+    const userInfos = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
+      .then((res) => {
+        addAccount(res._tokenResponse.localId);
+        navigation.navigate("HomeScreen");
+        alert(`Welcome`);
+      })
+      .catch((err) => {
+        setTimeout(() => {
+          alert("Invalid email or password");
+        }, 2000);
+      });
+  };
 
   //userName must tbe unique
-  const validUserName =(username,email)=>{
-    if(username.length < 3){
-      alert("Username must be at least 3 characters long")
-      return false
+  const validUserName = (username, email) => {
+    if (username.length < 3) {
+      alert("Username must be at least 3 characters long");
+      return false;
+    } else if (username.length > 20) {
+      alert("Username must be less than 20 characters long");
+      return false;
+    } else {
+      return true;
     }
-    else if(username.length > 20){
-      alert("Username must be less than 20 characters long")
-      return false
-    }
-    else{
-      return true
-    }
-  }
+  };
 
   const addAccount = (fireId) => {
     axios.post(`${baseUrl}api/player/playerSignUp`, {
@@ -52,22 +57,24 @@ const SignUpScreen = () => {
       UserName: username
     }).then(res => { console.log(res)
       })
-    .catch(err => { console.error(err) });
-  }
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding">
-      <View
-        style={styles.inputContainer}
-      >
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <View style={styles.inputContainer}>
+        <Text style={{ color: "darkorange", top: -50, fontSize: 15, left: 20 }}>
+          Register Here and join the fun
+        </Text>
         <TextInput
           style={styles.input}
           value={firstname}
           placeholder={"First Name"}
           onChangeText={(text) => setfirstname(text)}
           autoCapitalize="words"
+          placeholderTextColor="lightgrey"
         />
         <TextInput
           style={styles.input}
@@ -75,96 +82,110 @@ const SignUpScreen = () => {
           placeholder={"Last Name"}
           onChangeText={(text) => setlastname(text)}
           autoCapitalize="words"
+          placeholderTextColor="lightgrey"
         />
         <TextInput
-         
           style={styles.input}
           value={email}
           placeholder={"E-mail"}
           onChangeText={(text) => setemail(text)}
+          placeholderTextColor="lightgrey"
         />
         <TextInput
           style={styles.input}
           value={password}
           placeholder={"Password"}
           secureTextEntry
-          onChangeText={(text) => {setpassword(text)}          }
+          onChangeText={(text) => {
+            setpassword(text);
+          }}
+          placeholderTextColor="lightgrey"
         />
         <TextInput
           style={styles.input}
           value={username}
           placeholder={"Username"}
-          onChangeText={(text) => {setusername(text)}}
+          onChangeText={(text) => {
+            setusername(text);
+          }}
           autoCapitalize="words"
+          placeholderTextColor="lightgrey"
         />
-      </View >
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           title={"Sign Up"}
-          onPress={() => { handleSignUp(),validUserName(username,email)
+          onPress={() => {
+            handleSignUp();
+            if (validUserName(username, email)) {
+              return navigation.navigate("Home");
+            }
           }}
           style={styles.button}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("playerlogin");
+          }}
+        >
+          <Text style={{ color: "lightgrey", top: 60, fontSize: 10 }}>
+            Already a Player ? Login Here .
+          </Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%'
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputContainer: {
-    alignContent: 'center',
-    justifyContent: 'center',
-    width: '60%'
+    width: "80%",
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "transparent",
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: "darkorange",
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
     marginTop: 5,
+    color: "darkorange",
+    marginVertical: 20,
   },
   buttonContainer: {
-    width: '30%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
-    backgroundColor: 'orange',
-    width: '100%',
+    backgroundColor: "transparent",
+    width: "70%",
     padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: "darkorange",
+    alignItems: "center",
+    color: "lightgrey",
+    top: 30,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20
+    color: "white",
+
+    fontSize: 15,
   },
   buttonOutlineText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20
+    color: "darkorange",
+    fontSize: 15,
   },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 7,
-    borderColor: 'orange',
-    borderWidth: 3
-  }
+});
 
-})
-
-export default SignUpScreen
-
-
+export default SignUpScreen;

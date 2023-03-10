@@ -7,12 +7,11 @@ import { FacebookAuthProvider, signInWithCredential, signInWithEmailAndPassword 
 
 
 const LoginScreen = () => {
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const navigation = useNavigation();
 
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
-  const navigation = useNavigation()
-  
-//still not done 
+  //still not done
 
  
 
@@ -20,130 +19,121 @@ const LoginScreen = () => {
 
   const handleSignIn = async () => {
     try {
-      const userInfos = await signInWithEmailAndPassword(auth, email, password)
-      const user = userInfos.user
-      alert("Welcome")
-      navigation.navigate("HomeScreen")
+      const userInfos = await signInWithEmailAndPassword(auth, email, password);
+      const user = userInfos.user;
+      alert("Welcome");
+      navigation.navigate("Home");
     } catch (err) {
       console.log(err);
-      alert("Invalid E-mail or Password!")
+      alert("Invalid E-mail or Password!");
     }
-  }
-
+  };
 
   // const image={uri:"https://thumbs.dreamstime.com/b/creative-collage-unrecognizable-models-running-jumping-advertising-sport-healthy-lifestyle-motion-activity-movement-concept-161953582.jpg"}
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       {/* <ImageBackground source={image} resizeMode="cover" style={styles.container}> */}
 
       <View style={styles.inputContainer}>
+        <Text style={{ color: "darkorange", fontSize: 15, top: -90, left: 65 }}>
+          Please Login as A Player
+        </Text>
         <TextInput
-          placeholder='E-mail'
+          placeholder="E-mail"
           value={email}
-          onChangeText={text => setemail(text)}
+          onChangeText={(text) => setemail(text)}
           style={styles.input}
+          placeholderTextColor="lightgrey"
         />
         <TextInput
-          placeholder='Password'
+          placeholder="Password"
           value={password}
-          onChangeText={text => setpassword(text)}
+          onChangeText={(text) => setpassword(text)}
           style={styles.input}
           secureTextEntry
+          placeholderTextColor="lightgrey"
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleSignIn}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleSignIn} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
                    style={styles.facebook}
         >
           <Text style={styles.buttonText}>Login with Facebook</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("SignUpScreen")}
-          style={[styles.button, styles.buttonOutline]}
+          onPress={() => {
+            navigation.navigate("registerplayer");
+          }}
+          style={styles.buttonOutLine}
         >
-          <Text style={styles.buttonOutlineText}>Sign Up</Text>
+          <Text style={styles.buttonOutLineText}>
+            Don't have an Account ? Register Here .
+          </Text>
         </TouchableOpacity>
       </View>
       {/* </ImageBackground> */}
     </KeyboardAvoidingView>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
-  facebook: {
-    backgroundColor: "#3b5998",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 30,
-    marginTop: 5,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   container: {
     flex: 1,
-    backgroundColor: 'grey',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%'
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
-    alignContent: 'center',
-    justifyContent: 'center',
-    width: '80%'
+    width: "85%",
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
+    marginBottom: 20,
+    fontSize: 15,
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
+    paddingVertical: 15,
+    color: "darkorange",
   },
   buttonContainer: {
-    width: '30%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginVertical: 10,
   },
   button: {
-    backgroundColor: 'orange',
-    width: '100%',
-    padding: 15,
-    borderRadius: 30,
-    alignItems: 'center',
+    backgroundColor: "transparent",
+    borderColor: "darkorange",
+    borderWidth: 0.5,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 5,
+    alignItems: "center",
+    bottom: -10,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    width: "100%"
+    color: "darkorange",
+    fontSize: 15,
   },
-  buttonOutlineText: {
-    color: 'orange',
-    fontWeight: 'bold',
-    fontSize: 20
+  buttonOutLine: {
+    backgroundColor: "transparent",
+    borderWidth: 0.5,
+    borderColor: "transparent",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 10,
+    bottom: -70,
   },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 7,
-    borderColor: 'orange',
-    borderWidth: 3
-  }
-
-})
-export default LoginScreen
+  buttonOutLineText: {
+    color: "lightgrey",
+    fontSize: 10,
+  },
+});
+export default LoginScreen;

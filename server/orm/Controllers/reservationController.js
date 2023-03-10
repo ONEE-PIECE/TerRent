@@ -17,7 +17,7 @@ const Reservation=db.Reservation
     // Return the newly created reservation record
     res.status(201).json(reservation);
   } catch (error) {
-    // Handle any errors that occur
+    // Handle any errors that occur^^^^^^
     console.error(error);
     res.status(500).send(error)
   }

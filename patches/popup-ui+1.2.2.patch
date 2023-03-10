@@ -1,0 +1,85 @@
+diff --git a/node_modules/popup-ui/src/basic/Popup/index.js b/node_modules/popup-ui/src/basic/Popup/index.js
+index 921daa0..64f52d2 100644
+--- a/node_modules/popup-ui/src/basic/Popup/index.js
++++ b/node_modules/popup-ui/src/basic/Popup/index.js
+@@ -29,7 +29,7 @@ class Popup extends Component {
+ 			icon: config.icon !== undefined ? config.icon : false,
+ 			textBody: config.textBody,
+ 			button: config.button !== undefined ? config.button : true,
+-			buttonText: config.buttonText || 'Ok',
++			buttonText: config.buttonText || 'Confirm',
+ 			callback: config.callback !== undefined ? config.callback : this.defaultCallback(),
+ 			background: config.background || 'rgba(0, 0, 0, 0.5)',
+ 			timing: config.timing,
+@@ -87,7 +87,7 @@ class Popup extends Component {
+ 			'Callback!',
+ 			'Callback complete!',
+ 			[
+-				{ text: 'Ok', onPress: () => this.hidePopup() }
++				{ text: 'Confirm', onPress: () => this.hidePopup() }
+ 			]
+ 		)
+ 	}
+@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
+ 		zIndex: 99999,
+ 		width: WIDTH,
+ 		height: HEIGHT,
+-		backgroundColor: 'rgba(0, 0, 0, 0.5)',
++		backgroundColor: 'white',
+ 		alignItems: 'center',
+ 		top: 0,
+ 		left: 0
+@@ -167,8 +167,10 @@ const styles = StyleSheet.create({
+ 		maxWidth: 300,
+ 		width: 230,
+ 		minHeight: 300,
+-		backgroundColor: '#fff',
++		backgroundColor: 'black',
+ 		borderRadius: 30,
++		borderColor:"darkorange",
++		borderWidth:0.5,
+ 		alignItems: 'center',
+ 		overflow: 'hidden',
+ 		position: 'absolute',
+@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
+ 	Header: {
+ 		height: 230,
+ 		width: 230,
+-		backgroundColor: '#FBFBFB',
++		backgroundColor: 'greenorange',
+ 		borderRadius: 100,
+ 		marginTop: -120
+ 	},
+@@ -193,27 +195,28 @@ const styles = StyleSheet.create({
+ 	Title: {
+ 		fontWeight: 'bold',
+ 		fontSize: 18,
+-		color: '#333'
++		color: 'darkorange'
+ 	},
+ 	Desc: {
+ 		textAlign: 'center',
+-		color: '#666',
++		color: 'white',
+ 		marginTop: 10
+ 	},
+ 	Button: {
+ 		borderRadius: 50,
+ 		height: 40,
+ 		width: 130,
++		backgroundColor:"darkorange",
+ 		justifyContent: 'center',
+ 		alignItems: 'center',
+ 		marginTop: 30
+ 	},
+ 	TextButton: {
+-		color: '#fff',
++		color: 'white',
+ 		fontWeight: 'bold'
+ 	},
+ 	Success: {
+-		backgroundColor: '#AAF577',
++		backgroundColor: 'darkorange',
+ 		shadowColor: "#AAF577",
+ 		shadowOffset: {
+ 			width: 0,

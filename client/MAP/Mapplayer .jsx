@@ -1,53 +1,52 @@
-import React, {useEffect,useState} from 'react';
-import MapView,{Circle, Marker,Polyline,PROVIDER_GOOGLE} from 'react-native-maps';
-import { TouchableOpacity, StyleSheet, View ,Text, Button} from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import * as Location from 'expo-location'
-import MapViewDirections from 'react-native-maps-directions';
-import Confirmation from './Confirmation';
-import { createNativeStackNavigator } from "@react-navigation/native-stack"; 
-import {GOOGLE_MAPS_KEY} from '@env'
-import { NavigationContainer, } from '@react-navigation/native';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import MapView, {
+  Circle,
+  Marker,
+  Polyline,
+  PROVIDER_GOOGLE,
+} from "react-native-maps";
+import { TouchableOpacity, StyleSheet, View, Text, Button } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import * as Location from "expo-location";
+import MapViewDirections from "react-native-maps-directions";
+import Confirmation from "./Confirmation";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { GOOGLE_MAPS_KEY } from "@env";
+import { NavigationContainer } from "@react-navigation/native";
+import { Dimensions } from "react-native";
+import { useWindowDimensions } from "react-native";
 
-
-const Mapplayer=({navigation:{navigate}})=> {
-   const [position,setposition]=useState({
-     latitude:36.743500,
-     longitude:10.231976,
- })
-
-  // const [tunis,settunis]=useState({
-  //   latitude:36.80638936,
-  //   longitude:10.181667,
-  //   latitudeDelta: 0.0922,
-  //   longitudeDelta: 0.0421,
-  // })
-  const [regin,setregin]=useState({
-    latitude:36.8941559,
-    longitude:10.1870625,
+const Mapplayer = ({ navigation: navigate }) => {
+  const [tunis, settunis] = useState({
+    latitude: 36.80638936,
+    longitude: 10.181667,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
-  })
+  });
+  const [regin, setregin] = useState({
+    latitude: 36.8941559,
+    longitude: 10.1870625,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-
   useEffect(() => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location)
+      setLocation(location);
+    })();
+  }, []);
 
     
-    })()
-  }, [])
+   
   useEffect(()=>{ axios.get('http://192.168.104.6:3000/api/terrain/terrains/oneterrains/1')
     .then((result)=>{
       console.log(result.data.Name,"mmmmmmmm");
@@ -143,17 +142,17 @@ const Mapplayer=({navigation:{navigate}})=> {
      
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   map: {
-    width: "100%",
-    height:"100%" ,
+    width: Dimensions.width,
+    height: "100%",
+    backgroundColor: "white",
   },
 });
-
 
 export default Mapplayer;

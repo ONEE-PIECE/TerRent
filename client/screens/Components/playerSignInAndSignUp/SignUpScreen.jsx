@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { auth } from "./config";
+import { auth } from "../../../config";
 import React, { useState } from "react";
 import "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -29,8 +29,10 @@ const SignUpScreen = () => {
     )
       .then((res) => {
         addAccount(res._tokenResponse.localId);
-        navigation.navigate("HomeScreen");
-        alert(`Welcome`);
+        if (validUserName(username, email)) {
+          navigation.navigate("Home");
+          alert("Welcome");
+        }
       })
       .catch((err) => {
         setTimeout(() => {
@@ -54,7 +56,7 @@ const SignUpScreen = () => {
 
   const addAccount = (fireId) => {
     axios
-      .post("http://192.168.1.37:3000/api/player/playerSignUp", {
+      .post("http://192.168.101.8:3000/api/player/playerSignUp", {
         FireId: fireId,
         FirstName: firstname,
         SecondName: lastname,
@@ -123,9 +125,6 @@ const SignUpScreen = () => {
           title={"Sign Up"}
           onPress={() => {
             handleSignUp();
-            if (validUserName(username, email)) {
-              return navigation.navigate("Home");
-            }
           }}
           style={styles.button}
         >
@@ -136,7 +135,7 @@ const SignUpScreen = () => {
             navigation.navigate("playerlogin");
           }}
         >
-          <Text style={{ color: "lightgrey", top: 60, fontSize: 10 }}>
+          <Text style={{ color: "lightgrey", top: 120, fontSize: 10 }}>
             Already a Player ? Login Here .
           </Text>
         </TouchableOpacity>

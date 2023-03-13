@@ -8,41 +8,16 @@ import {
   Button,
 } from "react-native";
 import React, { useState } from "react";
-import { auth } from "./config";
+import { auth } from "../../../config";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
-import {
-  FacebookAuthProvider,
-  signInWithCredential,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { AccessToken } from "react-native-fbsdk-next";
-import { logInWithReadPermissionsAsync } from "expo-facebook";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
 const LoginScreen = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigation = useNavigation();
 
   //still not done
-
-  const logInWithFacebook = async () => {
-    try {
-      await logInWithReadPermissionsAsync("", {
-        permissions: ["public_profile", "email"],
-      }).then((res) => console.log(res));
-      const data = await AccessToken.getCurrentAccessToken();
-      if (!data) {
-        return;
-      }
-      const fbCredentials = FacebookAuthProvider.credential(data.access_token);
-      const auth = getAuth();
-      const res = await signInWithCredential(auth, fbCredentials);
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSignIn = async () => {
     try {
@@ -56,12 +31,8 @@ const LoginScreen = () => {
     }
   };
 
-  // const image={uri:"https://thumbs.dreamstime.com/b/creative-collage-unrecognizable-models-running-jumping-advertising-sport-healthy-lifestyle-motion-activity-movement-concept-161953582.jpg"}
-
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      {/* <ImageBackground source={image} resizeMode="cover" style={styles.container}> */}
-
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
         <Text style={{ color: "darkorange", fontSize: 15, top: -90, left: 65 }}>
           Please Login as A Player
@@ -86,12 +57,7 @@ const LoginScreen = () => {
         <TouchableOpacity onPress={handleSignIn} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={logInWithFacebook}
-          style={styles.facebook}
-        >
-          <Text style={styles.buttonText}>Login with Facebook</Text>
-        </TouchableOpacity> */}
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("registerplayer");
@@ -103,7 +69,6 @@ const LoginScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* </ImageBackground> */}
     </KeyboardAvoidingView>
   );
 };
@@ -162,6 +127,7 @@ const styles = StyleSheet.create({
   buttonOutLineText: {
     color: "lightgrey",
     fontSize: 10,
+    top: 50,
   },
 });
 export default LoginScreen;

@@ -10,7 +10,7 @@ const MyCarousel = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       carouselRef.current?.snapToNext();
-    }, 15000); // Change the time duration here for the slide rotation
+    }, 7000); // Change the time duration here for the slide rotation
     return () => clearInterval(timer);
   }, []);
 
@@ -70,7 +70,7 @@ const MyCarousel = () => {
       itemWidth={screenWidth}
       loop={true}
       autoplay={true}
-      autoplayInterval={9000} // Change the time duration here for the slide rotation
+      autoplayInterval={7000} // Change the time duration here for the slide rotation
       onSnapToItem={onSnapToItem}
       initialScrollIndex={currentIndex}
       decelerationRate="normal" // Set the decelerationRate prop

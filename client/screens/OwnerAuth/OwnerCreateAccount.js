@@ -6,12 +6,13 @@ import {
   View,
   TextInput,
 } from "react-native";
+import { auth, app } from "../../config.js";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { authentification } from "../../FbConfig/config.js";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
-import { storage } from "../../FbConfig/config.js";
+
 import { useNavigation } from "@react-navigation/native";
 import {
   Button,
@@ -23,6 +24,13 @@ import {
   NativeBaseProvider,
 } from "native-base";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { baseUrl } from "../../urlConfig/urlConfig.js";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const OwnerCreateAccount = () => {
   const navigation = useNavigation();
@@ -37,30 +45,71 @@ const OwnerCreateAccount = () => {
   const [FireId, setFireId] = useState("");
   const [show, setShow] = useState(false);
 
-  // Upload an image to Firebase Cloud Storage
-  const uploadImage = async (uri, path) => {
+  /// Upload an image to Firebase Cloud Storage
+  const uploadPatentImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
+    const filename = uri.substring(uri.lastIndexOf("/") + 1);
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `terrent_Patent_images/${filename}`);
+    const uploadTask = uploadBytesResumable(storageRef, blob, filename);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setPatentImage(downloadURL);
+        });
+      }
+    );
+  };
 
-    try {
-      const snapshot = await storage.ref().child(path).put(blob);
-      console.log("Image uploaded successfully!", snapshot);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+  const uploadProfileImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const filename = uri.substring(uri.lastIndexOf("/") + 1);
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `terrent_Profile_images/${filename}`);
+    const uploadTask = uploadBytesResumable(storageRef, blob, filename);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setProfileImage(downloadURL);
+        });
+      }
+    );
   };
 
   const axiosPost = (FireId) => {
     console.log(FireId);
     let body = {
       Fireid: FireId,
+      Email: email,
       FullName: fullName,
       PhoneNumber: phoneNumber,
       patentImage: patentImage,
       ProfileImage: ProfileImage,
     };
     axios
-      .post("http://192.168.101.8:3000/owner/signUpOwner", body)
+      .post(`${baseUrl}owner/signUpOwner`, body)
       .then((response) => console.log("account created successfully"))
       .catch((err) => console.log(err));
   };
@@ -73,29 +122,32 @@ const OwnerCreateAccount = () => {
       allowsEditing: true,
       quality: 1,
     });
-
     if (!result.canceled) {
-      setProfileImage(result.uri);
+      uploadProfileImage(result.uri);
     }
   };
   const pickPatentImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 1,
-    });
-    console.log("result patentimage", result);
-    if (!result.cancelled) {
-      setPatentImage(result.uri);
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        quality: 1,
+        base64: false,
+      });
+      if (!result.canceled) {
+        uploadPatentImage(result.uri);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const Register = () => {
-    createUserWithEmailAndPassword(authentification, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         // uploadImage(patentImage,'my-image.jpg')
         axiosPost(res._tokenResponse.localId);
-        navigation.navigate("Login");
+        navigation.navigate("ownerLogin");
       })
       .catch((e) => console.log(e));
   };
@@ -107,7 +159,7 @@ const OwnerCreateAccount = () => {
           <Text
             style={{ color: "darkorange", top: -40, fontSize: 15, left: 20 }}
           >
-            Register Here and join the fun{" "}
+            Register Here and join the fun
           </Text>
           <TextInput
             size="sm"
@@ -220,12 +272,7 @@ const OwnerCreateAccount = () => {
           >
             Upload Profile Image
           </Button> */}
-          <Button
-            style={styles.button2}
-            onPress={() => {
-              Register();
-            }}
-          >
+          <Button style={styles.button2} onPress={Register}>
             <Text style={{ color: "darkorange" }}>Register</Text>
           </Button>
           <TouchableOpacity

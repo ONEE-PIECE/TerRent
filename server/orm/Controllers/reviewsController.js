@@ -1,4 +1,3 @@
-
 const db = require("../index");
 const Reviews = db.Reviews;
 
@@ -33,5 +32,4 @@ const addreview = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
- module.exports = { getAllreviews,addreview };
-
+module.exports = { getAllreviews, addreview };

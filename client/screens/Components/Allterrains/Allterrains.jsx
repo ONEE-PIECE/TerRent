@@ -82,14 +82,14 @@ const Allterrains = ({ navigation, route }) => {
         } else {
           setdata(response.data);
         }
+        handleregion(response.data);
       })
+
       .catch((error) => console.log(error));
   }, []);
-  const handleregion = () => {
+  const handleregion = (region) => {
     axios
-      .get(
-        `http://192.168.101.8:3000/api/terrain/terrains/region/${Items.item}`
-      )
+      .get(`http://192.168.101.8:3000/api/terrain/terrains/region/${region}`)
       .then((res) => {
         console.log(res);
         setdataregion(res.data);
@@ -103,6 +103,7 @@ const Allterrains = ({ navigation, route }) => {
         style={{ paddingLeft: 0 }}
         data={Items}
         renderItem={rednerItem}
+        snapToInterval={40}
         itemWidth={100}
       />
       <Card style={{ backgroundColor: "black", borderRadius: 0 }}>
@@ -269,7 +270,6 @@ const Allterrains = ({ navigation, route }) => {
           }}
         >
           <View style={{ opacity: 0.9 }}>
-            {console.log(item)}
             <Card.Cover
               source={{
                 uri: item.Img1,

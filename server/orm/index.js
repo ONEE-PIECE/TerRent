@@ -20,11 +20,27 @@ db.Reservation = require("../orm/models/reservationModel")(
 ); // require the reservation model
 db.Event = require("../orm/models/eventsModel")(sequelize, DataTypes); // require the event model
 db.Reviews = require("../orm/models/reviewsModel")(sequelize, DataTypes); // require the Reviews model
+db.Comments = require("./models/PostModel")(sequelize, DataTypes); // require the comments model
+db.Admin = require("./models/AdminModel")(sequelize, DataTypes); // require the Admin model
 db.sequelize
   .sync({ force: false })
   .then(() => console.log("All models were synchronized successfully"))
   .catch((err) => console.log(err));
 //relations
+//many to many relation between Terrain and players
+
+db.Terrain.belongsToMany(db.Player, {
+  through: "Comments",
+  as: "players",
+  foreignKey: "terrainId",
+});
+
+db.Player.belongsToMany(db.Terrain, {
+  through: "Comments",
+  as: "terrains",
+  foreignKey: "playerFireId",
+});
+
 //many to many relation events with players
 db.Event.belongsToMany(db.Player, {
   through: "eventsHasPlayers",

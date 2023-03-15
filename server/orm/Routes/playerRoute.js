@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require("../Controllers/playerController");
 router.post("/playerSignUp", controller.addPlayer);
 router.get("/:FireId", controller.getPlayer);
+router.get("/mail/:Email", controller.getPlayerviamail);
 router.put("/updatePlayer", controller.updatePlayer);
 router.put("/updatePlayerPoints", controller.updatePlayerPoints);
 module.exports = router;

@@ -7,27 +7,37 @@ import {
   KeyboardAvoidingView,
   Button,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../../../config";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
+import { baseUrl } from "../../../urlConfig/urlConfig";
 const LoginScreen = () => {
   const [email, setemail] = useState("");
+  const [dataplayer, setdataplayer] = useState([]);
   const [password, setpassword] = useState("");
   const navigation = useNavigation();
+  useEffect(() => {
+    axios
+      .get(`${baseUrl}api/player/mail/${email}`)
+      .then((res) => {
+        setdataplayer(res.data[0]);
 
-  //still not done
-
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
   const handleSignIn = async () => {
     try {
       const userInfos = await signInWithEmailAndPassword(auth, email, password);
       const user = userInfos.user;
       alert("Welcome");
-      navigation.navigate("Home");
+      navigation.navigate("Home", { FireId: dataplayer.FireId });
     } catch (err) {
       console.log(err);
-      alert("Invalid E-mail or Password!");
+      alert(err);
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 import {
   View,
   Text,
@@ -8,12 +9,15 @@ import {
   TextInput,
   Image,
   StyleSheet,
+  ImageBackground,
+  FlatList,
 } from "react-native";
 import { Card } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { baseUrl } from "../urlConfig/urlConfig";
-import { ScrollView } from "react-navigation";
+import BottomNavigationBarowner from "./Components/Bottomnavowner/Bottomnavowner";
+
 const HandleOwnerTerrains = () => {
   const [terrains, setTerrains] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -73,34 +77,12 @@ const HandleOwnerTerrains = () => {
     });
   }, []);
   return (
-    <View style={{ backgroundColor: "#F49D1A", height: "100%" }}>
-      {terrains ? (
-        terrains.map((terrain) => (
-          // <View key={terrain.id}>
-          //   <Text>{terrain.Name}</Text>
-          //   <Text>{terrain.Price}</Text>
-          //   <Text>{terrain.Description}</Text>
-          //   <Text>{terrain.Location}</Text>
-          //   <Text>{terrain.Region}</Text>
-          //   <Text>{terrain.Category}</Text>
-          //   <Image
-          //     source={{
-          //       uri: "https://i.guim.co.uk/img/media/888a4d1a86c821338ae04c8af431b2d3dcb80fe6/0_346_5184_3110/master/5184.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=a0b14c1253162370f7c2a76e5c962551",
-          //     }}
-          //   />
-          //   <Text>{terrain.Capacity}</Text>
-          //   <Text>{terrain.Availability ? "Available" : "Unavailable"}</Text>
-          //   <Button
-          //     title="Delete"
-          //     onPress={() => handleDeleteTerrain(terrain.id)}
-          //   />
-          //   <Button
-          //     title="Update"
-          //     onPress={() => {
-          //       setModalVisible(true);
-          //     }}
-          //   />
-          // </View>
+    <View style={{ backgroundColor: "black", height: "100%" }}>
+      <FlatList
+        data={terrains}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
           <Card
             style={{
               paddingBottom: 10,
@@ -108,17 +90,28 @@ const HandleOwnerTerrains = () => {
               shadowColor: "transparent",
               backgroundColor: "transparent",
               marginTop: 30,
+              width: "50%",
+              // borderBottomColor: "#C147E9",
+              // borderBottomWidth: 2,
+              // borderBottomRightRadius: 20,
+              // borderBottomLeftRadius: 20,
             }}
             onPress={(e) => {
-              navigation.navigate("reservations", { id: terrain.id });
+              navigation.navigate("reservations", { id: item.id });
             }}
           >
             <View style={{ opacity: 0.9 }}>
-              <Card.Cover
+              <ImageBackground
+                style={{ height: 200 }}
+                borderRadius={15}
                 source={{
-                  uri: terrain.Img1,
+                  uri: item.Img1,
                 }}
-              />
+              >
+                <View
+                  style={{ flex: 1, backgroundColor: "rgba(0,0,0, 0.4)" }}
+                />
+              </ImageBackground>
             </View>
             <Text
               style={{
@@ -141,7 +134,7 @@ const HandleOwnerTerrains = () => {
                 textTransform: "capitalize",
               }}
             >
-              {terrain.Name}
+              {item.Name}
             </Text>
 
             <Text
@@ -157,13 +150,11 @@ const HandleOwnerTerrains = () => {
                 fontWeight: "600",
               }}
             >
-              {terrain.Capacity} Player
+              {item.Category}
             </Text>
           </Card>
-        ))
-      ) : (
-        <Text>Loading..</Text>
-      )}
+        )}
+      />
       <Modal
         animationType="slide"
         visible={modalVisible}
@@ -190,10 +181,10 @@ const HandleOwnerTerrains = () => {
           />
           /////change img
           {/* <TextInput
-            placeholder="Images"
-            value={Img1}
-            onChangeText={(text) => setImages(text)}
-          /> */}
+        placeholder="Images"
+        value={Img1}
+        onChangeText={(text) => setImages(text)}
+      /> */}
           <TextInput
             placeholder="Capacity"
             value={capacity}
@@ -210,6 +201,7 @@ const HandleOwnerTerrains = () => {
           <Button title="Cancel" onPress={() => setModalVisible(false)} />
         </View>
       </Modal>
+      <BottomNavigationBarowner />
     </View>
   );
 };

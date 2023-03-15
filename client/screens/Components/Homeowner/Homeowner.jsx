@@ -4,25 +4,37 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { Avatar } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ImageBackground } from "react-native";
+import { baseUrl } from "../../../urlConfig/urlConfig";
 
-const Homeowner = ({ navigation }) => {
+const Homeowner = ({ navigation, route }) => {
   const [dataowner, setdataowner] = useState([]);
+
   return (
     <View style={styles.container}>
-      <Text style={{ color: "white", fontSize: 20, top: 30, left: -60 }}>
+      <Text
+        style={{
+          color: "#C147E9",
+          fontSize: 25,
+          top: 60,
+          left: -70,
+          fontStyle: "italic",
+        }}
+      >
         Welcome
       </Text>
       <Text
         style={{
-          color: "white",
+          color: "#C147E9",
           fontSize: 15,
-          top: 20,
+          top: 50,
           left: 40,
           textTransform: "capitalize",
         }}
       >
-        owner Name
+        {route.params.FirstName + " " + route.params.LaseName}
       </Text>
+
       <View style={styles.row}>
         <View style={styles.card}>
           <Text
@@ -36,17 +48,40 @@ const Homeowner = ({ navigation }) => {
           <Text style={styles.subtitle}>
             In here you can see all your added terrains
           </Text>
-          <Ionicons name="eye-outline" color={"white"} size={140}></Ionicons>
+          <ImageBackground
+            source={{
+              uri: "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700320628.jpg",
+            }}
+            style={{
+              position: "absolute",
+              borderWidth: 1,
+
+              width: 160,
+              height: 250,
+              top: 10,
+              opacity: 0.6,
+            }}
+            borderRadius={20}
+          ></ImageBackground>
         </View>
         <View style={styles.card}>
           <Text style={styles.title}>Add a new Terrain</Text>
           <Text style={styles.subtitle}>In here you can add a new terrain</Text>
 
-          <Ionicons
-            name="add-circle-outline"
-            color={"white"}
-            size={140}
-          ></Ionicons>
+          <ImageBackground
+            source={{
+              uri: "https://e1.pxfuel.com/desktop-wallpaper/706/490/desktop-wallpaper-geometric-shapes-dark-background-black-violet-violet-dark-black-thumbnail.jpg",
+            }}
+            style={{
+              position: "absolute",
+
+              width: 160,
+              height: 250,
+              opacity: 0.6,
+              top: 10,
+            }}
+            borderRadius={20}
+          ></ImageBackground>
         </View>
       </View>
       <View style={styles.row}>
@@ -55,14 +90,46 @@ const Homeowner = ({ navigation }) => {
           <Text style={styles.subtitle}>
             In here you can accept or ignore incoming reservations
           </Text>
-          <Ionicons name="calendar" size={140} color={"white"}></Ionicons>
+          <ImageBackground
+            source={{
+              uri: "https://cutewallpaper.org/28/dark-violet-wallpaper-logo-hd/13728636.jpg",
+            }}
+            style={{
+              position: "absolute",
+              borderWidth: 1,
+              width: 160,
+              height: 250,
+              opacity: 0.6,
+              top: 10,
+            }}
+            borderRadius={20}
+          ></ImageBackground>
         </View>
         <View style={styles.card2}>
           <Text style={styles.title}>Events</Text>
           <Text style={styles.subtitle}>
             In here you can see your events or add new ones
           </Text>
-          <Ionicons name="calendar" size={140} color={"white"}></Ionicons>
+
+          <ImageBackground
+            source={{
+              uri: "https://cutewallpaper.org/23/abstract-purple-black-wallpaper/216185177.jpg",
+            }}
+            style={{
+              position: "absolute",
+              borderWidth: 1,
+
+              width: 160,
+              opacity: 0.6,
+              height: 250,
+              top: 10,
+            }}
+            borderRadius={20}
+          >
+            {/* <View
+              style={{ flex: 1, backgroundColor: "rgba(0,0,0, 0.60)" }}
+            ></View>  hedha l shader li bch nestaaamlou filokhrin */}
+          </ImageBackground>
         </View>
       </View>
 
@@ -70,7 +137,7 @@ const Homeowner = ({ navigation }) => {
         <View style={styles.card3}>
           <Avatar.Image
             source={{
-              uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+              uri: route.params.ProfileImage,
             }}
             size={45}
           />
@@ -80,21 +147,25 @@ const Homeowner = ({ navigation }) => {
               top: -35,
               fontSize: 20,
               fontWeight: "bold",
-              color: "black",
+              color: "#C147E9",
             }}
           >
-            Profile
+            {route.params.FirstName}
           </Text>
         </View>
         <View style={styles.card3}>
-          <Ionicons name="log-out-outline" color={"black"} size={40}></Ionicons>
+          <Ionicons
+            name="log-out-outline"
+            color={"#C147E9"}
+            size={40}
+          ></Ionicons>
           <Text
             style={{
               left: 60,
               top: -35,
               fontSize: 20,
               fontWeight: "bold",
-              color: "black",
+              color: "#C147E9",
             }}
           >
             Logout
@@ -110,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F49D1A",
+    backgroundColor: "black",
   },
   row: {
     flex: 1,
@@ -119,11 +190,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 20,
     marginVertical: 10,
+    top: 20,
   },
   card: {
     flex: 1,
     backgroundColor: "black",
-    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "transparent",
+    borderRadius: 20,
+
     padding: 10,
     height: 250,
     marginTop: 80,
@@ -140,7 +215,7 @@ const styles = StyleSheet.create({
   },
   card3: {
     flex: 1,
-    backgroundColor: "#F49D1A",
+    backgroundColor: "black",
     borderRadius: 20,
     padding: 10,
     height: 250,
@@ -149,14 +224,16 @@ const styles = StyleSheet.create({
     height: 70,
   },
   title: {
+    zIndex: 1,
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
     color: "white",
   },
   subtitle: {
+    zIndex: 1,
     fontSize: 14,
-    color: "#666666",
+    color: "lightgrey",
     marginBottom: 10,
   },
   image: {

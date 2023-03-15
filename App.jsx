@@ -1,7 +1,7 @@
 import Map from "./client/MAP/Map.jsx";
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx";
@@ -9,11 +9,10 @@ import Allterrains from "./client/screens/Components/Allterrains/Allterrains.jsx
 import OneTerrain from "./client/screens/Components/Terraindetails/OneTerrain.jsx";
 
 import { Avatar } from "react-native-paper";
-
+import EventsList from "./client/screens/Events.jsx";
 import LoginScreen from "./client/screens/Components/playerSignInAndSignUp/LoginScreen.jsx";
 
 import SignUpScreen from "./client/screens/Components/playerSignInAndSignUp/SignUpScreen.jsx";
-
 import AppointmentScheduler from "./client/screens/calander.jsx";
 import Reservation from "./client/screens/owner.jsx";
 import Home from "./client/screens/Components/Homepage/Home.jsx";
@@ -24,31 +23,35 @@ import Mapplayer from "./client/MAP/Mapplayer .jsx";
 
 import OwnerLogin from "./client/screens/OwnerAuth/OwnerLogin";
 import OwnerCreateAccount from "./client/screens/OwnerAuth/OwnerCreateAccount";
-
+import Post from "./client/screens/Components/Terraindetails/Post.jsx";
 import AddEventForm from "./client/screens/addEvents.jsx";
 import LandingScreen from "./client/screens/Components/landing/landingpage.jsx";
 import Homeowner from "./client/screens/Components/Homeowner/Homeowner.jsx";
 import Terrainreservations from "./client/screens/terrainreservations.jsx";
+import Playerprofile from "./client/screens/Components/Profiles/PlayerProfile.jsx";
 
 const Stack = createNativeStackNavigator();
-const App = () => {
+
+const App = ({ navigation, route }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen name="Post" component={Post}></Stack.Screen> */}
+
+        {/* <Stack.Screen
           name="Landingscreen"
           component={LandingScreen}
           options={{
             statusBarColor: "black",
-
-            headerShown: false,
-
+            headerStyle: {
+              backgroundColor: "black",
+            },
             title: "",
 
             initialRouteName: "Landingscreen",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
-
         <Stack.Screen
           name="ownerlogin"
           component={OwnerLogin}
@@ -58,24 +61,25 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
             title: "",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
         <Stack.Screen
           name="homeowner"
           component={Homeowner}
           options={{
-            statusBarColor: "#F49D1A",
+            statusBarColor: "black",
             headerStyle: {
-              backgroundColor: "#F49D1A",
+              backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "black",
+              color: "darkorange",
             },
-            title: "Your Terrains",
-
+            title: "",
+            headerShown: false,
             navigationBarColor: "black",
           }}
         ></Stack.Screen>
@@ -89,9 +93,10 @@ const App = () => {
             },
             headerShown: false,
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
             title: "Register Here",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -103,9 +108,25 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
             title: "",
+            navigationBarColor: "black",
+          }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="profileplayer"
+          component={Playerprofile}
+          options={{
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "darkorange",
+            },
+            title: "Your Profile",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -118,9 +139,26 @@ const App = () => {
             },
             headerShown: false,
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
             title: "Register Here",
+            navigationBarColor: "black",
+          }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="HandleOwnerTerrains"
+          component={HandleOwnerTerrains}
+          options={{
+            title: "Your Terrains",
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "darkorange",
+            },
+            headerTintColor: "black",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -132,9 +170,10 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
             title: "",
+            navigationBarColor: "black",
             headerRight: () => (
               <View
                 style={{
@@ -142,7 +181,7 @@ const App = () => {
                   borderWidth: 3,
                   borderRadius: 20,
 
-                  borderColor: "orange",
+                  borderColor: "darkorange",
 
                   borderStyle: "solid",
                 }}
@@ -167,9 +206,10 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
-            headerTintColor: "orange",
+            headerTintColor: "darkorange",
+            navigationBarColor: "black",
             headerRight: () => (
               <View
                 style={{
@@ -177,17 +217,23 @@ const App = () => {
                   borderWidth: 3,
                   borderRadius: 20,
 
-                  borderColor: "orange",
+                  borderColor: "darkorange",
 
                   borderStyle: "solid",
                 }}
               >
-                <Avatar.Image
-                  source={{
-                    uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("profileplayer");
                   }}
-                  size={30}
-                />
+                >
+                  <Avatar.Image
+                    source={{
+                      uri: "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg?fit=640,427",
+                    }}
+                    size={30}
+                  />
+                </TouchableOpacity>
               </View>
             ),
           }}
@@ -201,9 +247,9 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
-            headerTintColor: "orange",
+            headerTintColor: "darkorange",
             title: "Oneterrain",
             headerRight: () => (
               <View
@@ -212,7 +258,7 @@ const App = () => {
                   borderWidth: 3,
                   borderRadius: 20,
 
-                  borderColor: "orange",
+                  borderColor: "darkorange",
 
                   borderStyle: "solid",
                 }}
@@ -230,12 +276,7 @@ const App = () => {
         <Stack.Screen
           name="Reservation"
           component={Reservation}
-          options={{ title: "Reservation" }}
-        ></Stack.Screen>
-        <Stack.Screen
-          name="AppointmentScheduler"
-          component={AppointmentScheduler}
-          options={{ title: "AppointmentScheduler" }}
+          options={{ title: "Reservation", navigationBarColor: "black" }}
         ></Stack.Screen>
         <Stack.Screen
           name="Map"
@@ -257,45 +298,52 @@ const App = () => {
               backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "orange",
+              color: "darkorange",
             },
-            headerTintColor: "orange",
+            headerTintColor: "darkorange",
             title: "Get your directions !",
           }}
-        ></Stack.Screen>
-        <Stack.Screen
-          name="HandleOwnerTerrains"
-          component={HandleOwnerTerrains}
-          options={{
-            title: "Your Terrains",
-            statusBarColor: "#F49D1A",
-            headerStyle: {
-              backgroundColor: "#F49D1A",
-            },
-            headerTitleStyle: {
-              color: "black",
-            },
-            headerTintColor: "black",
-          }}
-        ></Stack.Screen>
-        <Stack.Screen
+        ></Stack.Screen> */}
+        {/* <Stack.Screen
           name="AddEventForm"
           component={AddEventForm}
-          options={{ title: "AddEventForm" }}
-        ></Stack.Screen>
-        <Stack.Screen
+          options={{ title: "AddEventForm", navigationBarColor: "black" }}
+        ></Stack.Screen> */}
+        {/* <Stack.Screen
+          name="EventsList"
+          component={EventsList}
+          options={{ title: "EventsList" }}
+        ></Stack.Screen> */}
+        {/* <Stack.Screen
           name="reservations"
           component={Reservation}
           options={{
             title: "This Terrain Reservations",
-            statusBarColor: "#F49D1A",
+            statusBarColor: "black",
             headerStyle: {
-              backgroundColor: "#F49D1A",
+              backgroundColor: "black",
             },
             headerTitleStyle: {
-              color: "black",
+              color: "darkorange",
             },
-            headerTintColor: "black",
+            headerShown: false,
+            headerTintColor: "darkorange",
+            navigationBarColor: "black",
+          }}
+        ></Stack.Screen> */}
+        <Stack.Screen
+          name="profileplayer"
+          component={Playerprofile}
+          options={{
+            statusBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "darkorange",
+            },
+            title: "Your Profile",
+            navigationBarColor: "black",
           }}
         ></Stack.Screen>
       </Stack.Navigator>

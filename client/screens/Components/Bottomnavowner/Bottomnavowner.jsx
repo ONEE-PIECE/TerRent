@@ -3,9 +3,10 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const BottomNavigationBar = ({}) => {
-  const [activeTab, setActiveTab] = useState("Home");
+const BottomNavigationBarowner = ({}) => {
+  const [activeTab, setActiveTab] = useState("calendar");
   const auth = getAuth();
   const navigation = useNavigation();
 
@@ -18,22 +19,32 @@ const BottomNavigationBar = ({}) => {
     <View style={styles.bottomNavigationBar}>
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => handleTabPress("Home")}
+        onPress={() => navigation.goBack()}
       >
         <Ionicons
           name={activeTab === "Home" ? "home" : "home-outline"}
           size={24}
-          color={activeTab === "Home" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "home" ? "#C147E9" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => handleTabPress("Search")}
+        onPress={() => handleTabPress("HandleOwnerTerrains")}
       >
         <Ionicons
-          name={activeTab === "calendar-outline" ? "search" : "calendar"}
+          name={activeTab === "calendar-outline" ? "calendar" : "calendar"}
           size={24}
-          color={activeTab === "Search" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "calendar" ? "#C147E9" : "lightgrey"}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.tabButton}
+        // onPress={() => handleTabPress("Profile")}
+      >
+        <Ionicons
+          name={activeTab === "Profile" ? "profile" : "person-outline"}
+          size={24}
+          color={activeTab === "profile" ? "#C147E9" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -44,23 +55,13 @@ const BottomNavigationBar = ({}) => {
             .catch((error) => {
               console.error(error);
             });
-          navigation.navigate("playerlogin");
+          navigation.navigate("ownerlogin");
         }}
       >
         <Ionicons
           name={activeTab === "log-out-outline" ? "logout" : "log-out-sharp"}
           size={24}
-          color={activeTab === "Logout" ? "#00c8e9" : "lightgrey"}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.tabButton}
-        onPress={() => handleTabPress("Profile")}
-      >
-        <Ionicons
-          name={activeTab === "Profile" ? "person" : "person-outline"}
-          size={24}
-          color={activeTab === "Profile" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "logout" ? "#C147E9" : "lightgrey"}
         />
       </TouchableOpacity>
     </View>
@@ -74,8 +75,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: "black",
-    borderTopWidth: 2,
-    borderTopColor: "#00c8e9",
+    borderTopWidth: 1,
+    borderTopColor: "#C147E9",
+    borderTopStartRadius: 10,
+    elevation: 20,
+    borderTopEndRadius: 10,
+    top: -50,
   },
   tabButton: {
     flex: 1,
@@ -83,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomNavigationBar;
+export default BottomNavigationBarowner;

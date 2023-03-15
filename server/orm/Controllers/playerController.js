@@ -24,6 +24,10 @@ const getPlayer = async (req, res) => {
   const player = await Player.findAll({ where: { FireId: req.params.FireId } });
   res.status(200).json(player);
 };
+const getPlayerviamail = async (req, res) => {
+  const player = await Player.findAll({ where: { Email: req.params.Email } });
+  res.status(200).json(player);
+};
 const updatePlayerPoints = async (req, res) => {
   const user = await Player.update(
     { Points: req.body.Points },
@@ -31,4 +35,10 @@ const updatePlayerPoints = async (req, res) => {
   );
   res.status(201).send(user);
 };
-module.exports = { getPlayer, addPlayer, updatePlayer, updatePlayerPoints };
+module.exports = {
+  getPlayer,
+  addPlayer,
+  updatePlayer,
+  updatePlayerPoints,
+  getPlayerviamail,
+};

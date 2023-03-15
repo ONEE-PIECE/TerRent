@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { Alert } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
+import { Dimensions } from "react-native";
 import {
   FlatList,
   StyleSheet,
@@ -17,10 +18,10 @@ import { NetworkInfo } from "react-native-network-info";
 import config from "../../../config";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { LinearGradient } from "expo-linear-gradient";
 const ITEM_WIDTH = 340;
 const ITEM_HEIGHT = 300;
-const ITEM_SPACING = 10;
+const ITEM_SPACING = 50;
 
 const AnimatedTouchable = Animated.createAnimatedComponent(
   TouchableWithoutFeedback
@@ -28,21 +29,8 @@ const AnimatedTouchable = Animated.createAnimatedComponent(
 import HorizontalPicker from "@vseslav/react-native-horizontal-picker";
 import { TouchableOpacity } from "react-native";
 import BottomNavigationBar from "../Bottomnav/BottomNav";
-
-const Items = [
-  "ariana",
-  "tounes",
-  "mourouj",
-  "ghazela",
-  "kabareya",
-  "yasminet",
-  "souse",
-  "hammamet",
-  "ouardeya",
-  "centre ville",
-  "lac",
-  "carthage",
-];
+import { baseUrl } from "../../../urlConfig/urlConfig";
+const Items = ["ariana", "tunis", "Ben Arous", "fouchana", "mourouj"];
 // const IPV4Address = NetworkInfo.getIPV4Address()
 //   .then((res) => {
 //     console.log(res);
@@ -53,11 +41,16 @@ const Allterrains = ({ navigation, route }) => {
   const [data, setdata] = useState([]);
   const [dataregion, setdataregion] = useState([]);
   const rednerItem = (region, index) => (
-    <View style={{ width: 130, left: -100 }}>
-      <TouchableOpacity style={{ borderColor: "orange" }}>
+    <View style={{ width: 150, left: 40 }}>
+      <TouchableOpacity
+        onPress={() => {
+          handleregion(region);
+        }}
+        style={{ borderColor: "black" }}
+      >
         <Text
           style={{
-            color: "orange",
+            color: "darkorange",
             fontStyle: "italic",
             letterSpacing: 3,
             fontWeight: "700",
@@ -73,9 +66,7 @@ const Allterrains = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     axios
-      .get(
-        `http://192.168.101.8:3000/api/terrain/terrains/category/${route.params.Category}`
-      )
+      .get(`${baseUrl}api/terrain/terrains/category/${route.params.Category}`)
       .then((response) => {
         if (response.data.length === 0) {
           alert("no data");
@@ -89,24 +80,24 @@ const Allterrains = ({ navigation, route }) => {
   }, []);
   const handleregion = (region) => {
     axios
-      .get(`http://192.168.101.8:3000/api/terrain/terrains/region/${region}`)
+      .get(`${baseUrl}api/terrain/terrains/region/${region}`)
       .then((res) => {
-        console.log(res);
+        console.log("fghjk", res);
         setdataregion(res.data);
       })
       .catch((error) => console.log(error));
   };
+  const SCREEN_WIDTH = Dimensions.get("window").width;
 
   return (
-    <ScrollView style={{ backgroundColor: "black" }}>
+    <ScrollView style={{ backgroundColor: "black", height: "100%" }}>
       <HorizontalPicker
-        style={{ paddingLeft: 0 }}
         data={Items}
         renderItem={rednerItem}
         snapToInterval={40}
         itemWidth={100}
       />
-      <Card style={{ backgroundColor: "black", borderRadius: 0 }}>
+      <Card style={{ backgroundColor: "black", marginBottom: 0 }}>
         <Card.Cover
           source={{
             uri: route.params.imgg,
@@ -127,15 +118,13 @@ const Allterrains = ({ navigation, route }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "black",
+            color: "white",
             fontSize: 25,
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
           }}
-        >
-          Soccer For All
-        </Text>
+        ></Text>
       </Card>
 
       <Text
@@ -143,7 +132,8 @@ const Allterrains = ({ navigation, route }) => {
           fontSize: 20,
           marginBottom: 10,
           marginLeft: 10,
-          color: "orange",
+          color: "darkorange",
+          textAlign: "center",
         }}
       >
         Most Rated Soccer Fields
@@ -198,20 +188,25 @@ const Allterrains = ({ navigation, route }) => {
                     paddingBottom: 10,
                     paddingRight: 20,
                     paddingLeft: 0,
-                    shadowColor: "black",
-                    backgroundColor: "black",
+                    shadowColor: "transparent",
+                    backgroundColor: "transparent",
                   }}
                   onPress={() => {
                     navigation.navigate("oneterrain", { id: item.id });
                   }}
                 >
                   <View style={{ opacity: 0.9 }}>
-                    <Card.Cover
+                    <ImageBackground
+                      borderRadius={10}
                       style={styles.itemImage}
                       source={{
                         uri: item.Img1,
                       }}
-                    />
+                    >
+                      <View
+                        style={{ flex: 1, backgroundColor: "rgba(0,0,0, 0.4)" }}
+                      />
+                    </ImageBackground>
                   </View>
                   <Text
                     style={{
@@ -251,88 +246,177 @@ const Allterrains = ({ navigation, route }) => {
           fontSize: 20,
           marginBottom: 10,
           marginLeft: 10,
-          color: "orange",
+          top: -25,
+          color: "darkorange",
+          textAlign: "center",
         }}
       >
         All Terrains
       </Text>
-      {data.map((item) => (
-        <Card
-          style={{
-            paddingBottom: 10,
-            paddingHorizontal: 10,
-            shadowColor: "transparent",
-            backgroundColor: "black",
-            marginVertical: 10,
-          }}
-          onPress={(e) => {
-            navigation.navigate("oneterrain", { id: item.id });
-          }}
-        >
-          <View style={{ opacity: 0.9 }}>
-            <Card.Cover
-              source={{
-                uri: item.Img1,
+      {dataregion.length !== 0
+        ? dataregion.map((it) => (
+            <Card
+              style={{
+                paddingHorizontal: 10,
+                shadowColor: "transparent",
+                backgroundColor: "transparent",
+                marginVertical: 10,
+                top: -40,
               }}
-            />
-          </View>
-          <Text
-            style={{
-              position: "absolute",
-              top: 140,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              borderWidth: 0.5,
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 20,
-              paddingLeft: 20,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              backgroundColor: "#181818",
-              opacity: 0.9,
-              textTransform: "capitalize",
-            }}
-          >
-            {item.Name}
-          </Text>
+              onPress={(e) => {
+                navigation.navigate("oneterrain", { id: it.id });
+              }}
+            >
+              <ImageBackground
+                borderRadius={10}
+                style={{ width: "100%", height: 150 }}
+                source={{
+                  uri: it.Img1,
+                }}
+              >
+                <View
+                  style={{ flex: 1, backgroundColor: "rgba(0,0,0, 0.4)" }}
+                />
+              </ImageBackground>
 
-          <Text
-            style={{
-              position: "absolute",
-              top: 170,
-              left: 50,
-              right: 0,
-              bottom: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              fontWeight: "600",
-            }}
-          >
-            {item.Capacity} Player
-          </Text>
-          <Text
-            style={{
-              position: "absolute",
-              top: 170,
-              left: 270,
-              right: 0,
-              bottom: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              paddingLeft: 70,
-            }}
-          >
-            {item.Rating} <Ionicons name="star-sharp" size={20}></Ionicons>
-          </Text>
-        </Card>
-      ))}
-      <BottomNavigationBar />
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  paddingLeft: 20,
+
+                  backgroundColor: "transparent",
+                  opacity: 0.9,
+                  textTransform: "capitalize",
+                }}
+              >
+                {it.Name}
+              </Text>
+
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  left: 50,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "white",
+                  fontWeight: "600",
+                }}
+              >
+                Ready for : {it.Capacity} Player
+              </Text>
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 100,
+                  left: 150,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "white",
+                  paddingLeft: 70,
+                }}
+              >
+                Average Rating of {it.Rating}
+                <Ionicons name="star-sharp" size={20}></Ionicons>
+              </Text>
+            </Card>
+          ))
+        : data.map((item) => (
+            <Card
+              style={{
+                paddingHorizontal: 10,
+                shadowColor: "transparent",
+                backgroundColor: "transparent",
+                marginVertical: 10,
+                top: -40,
+              }}
+              onPress={(e) => {
+                navigation.navigate("oneterrain", { id: item.id });
+              }}
+            >
+              <ImageBackground
+                borderRadius={10}
+                style={{ width: "100%", height: 150 }}
+                source={{
+                  uri: item.Img1,
+                }}
+              >
+                <View
+                  style={{ flex: 1, backgroundColor: "rgba(0,0,0, 0.4)" }}
+                />
+              </ImageBackground>
+
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  paddingLeft: 20,
+
+                  backgroundColor: "transparent",
+                  opacity: 0.9,
+                  textTransform: "capitalize",
+                }}
+              >
+                {dataregion.length !== 0 ? it.Name : item.Name}
+              </Text>
+
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  left: 50,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "white",
+                  fontWeight: "600",
+                }}
+              >
+                Ready for : {item.Capacity} Player
+              </Text>
+              <Text
+                style={{
+                  position: "absolute",
+                  top: 100,
+                  left: 150,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "white",
+                  paddingLeft: 70,
+                }}
+              >
+                Average Rating of {item.Rating}
+                <Ionicons name="star-sharp" size={20}></Ionicons>
+              </Text>
+            </Card>
+          ))}
+      {/* <BottomNavigationBar /> */}
     </ScrollView>
   );
 };
@@ -348,6 +432,10 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 340,
     height: 180,
+  },
+  container: {
+    width: "100%",
+    height: "100%",
   },
 });
 

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Text, View, Button, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+
+import Icon from "react-native-vector-icons/Feather";
+import Icon2 from "react-native-vector-icons/AntDesign";
+import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { baseUrl } from "../urlConfig/urlConfig";
 import { Card } from "react-native-paper";
@@ -9,14 +12,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TouchableOpacity } from "react-native";
-const Reservation = ({ naviagtion, route }) => {
+const Reservation = ({ navigation, route }) => {
   const [reservations, setReservations] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [filterReserved, setFilterReserved] = useState(false);
   const [token, setToken] = useState("");
   const [terrain, setTerrain] = useState([]);
   const [style, setstyle] = useState(false);
-  _retrieveData = async () => {
+  const _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem("OwnerToken");
       console.log("welcome :", value);
@@ -45,6 +48,7 @@ const Reservation = ({ naviagtion, route }) => {
         console.log(error);
       });
   };
+  const SCREEN_WIDTH = Dimensions.get("window").width;
 
   const handleFetchingAllTheReservationForAnOwner = () => {
     axios
@@ -112,25 +116,24 @@ const Reservation = ({ naviagtion, route }) => {
     ? reservations.filter((reservation) => reservation.Reserved)
     : reservations;
   return (
-    <ScrollView style={{ backgroundColor: "#F49D1A" }}>
+    <ScrollView style={{ backgroundColor: "black" }}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Icon name="bell" size={30} style={styles.icon} />
-          <Text style={styles.notificationCount}>{notificationCount}</Text>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={handleFilterReserved}
+          >
+            <Text style={styles.headerButtonText}>Confirmed </Text>
+          </TouchableOpacity>
+          <View style={styles.divider} />
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={handleClearFilter}
+          >
+            <Text style={styles.headerButtonText}>All reservations</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={{ backgroundColor: "transparent", left: 250 }}
-          onPress={handleFilterReserved}
-        >
-          <Text style={{ fontSize: 30 }}>Filter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ top: -40, left: 70 }}
-          onPress={handleClearFilter}
-        >
-          <Text style={{ fontSize: 30 }}>All</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Reservations:</Text>
+
         {filteredReservations.map((reservation) => (
           <View>
             <Card
@@ -138,11 +141,13 @@ const Reservation = ({ naviagtion, route }) => {
                 paddingBottom: 10,
                 paddingHorizontal: 10,
                 shadowColor: "transparent",
-                backgroundColor: "transparent",
-                marginVertical: 10,
-                borderColor: "black",
+                backgroundColor: "white",
+                width: 340,
+                borderColor: "#C147E9",
                 borderWidth: 1,
-                marginVertical: 50,
+                marginTop: 30,
+                top: 120,
+                left: 0,
               }}
             >
               <Text
@@ -163,7 +168,7 @@ const Reservation = ({ naviagtion, route }) => {
                   top: 20,
                   justifyContent: "center",
                   alignItems: "center",
-                  color: "black",
+                  color: "#C147E9",
                   fontWeight: "600",
                 }}
               >
@@ -186,11 +191,8 @@ const Reservation = ({ naviagtion, route }) => {
               <TouchableOpacity
                 style={{
                   position: "absolute",
-                  left: 110,
-                  top: 50,
-
-                  borderLeftColor: "black",
-                  borderLeftWidth: 1,
+                  right: -60,
+                  top: -5,
                 }}
                 onPress={() => {
                   handleUpdateReservation(reservation.id);
@@ -199,19 +201,21 @@ const Reservation = ({ naviagtion, route }) => {
                 }}
                 disabled={reservation.Reserved}
               >
-                <Text style={{ fontSize: 13 }}>Confirm</Text>
+                <Text style={{ fontSize: 13, color: "lightgreen", top: 0 }}>
+                  <Icon size={30} name="check"></Icon>
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   position: "absolute",
-                  top: 50,
-                  left: 250,
-                  borderLeftColor: "black",
-                  borderLeftWidth: 1,
+                  top: 30,
+                  right: -60,
                 }}
                 onPress={() => handleDeleteReservation(reservation.id)}
               >
-                <Text style={{ fontSize: 13 }}>Reject Reservation</Text>
+                <Text style={{ fontSize: 13, color: "red", top: 15 }}>
+                  <Icon2 size={30} name="delete"></Icon2>
+                </Text>
               </TouchableOpacity>
             </Card>
           </View>
@@ -222,10 +226,37 @@ const Reservation = ({ naviagtion, route }) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#C147E9",
+  },
+  headerButton: {
+    flex: 1,
+    alignItems: "center",
+    marginVertical: 30,
+    left: -160,
+  },
+  headerButtonText: {
+    fontSize: 20,
+    color: "lightgrey",
+  },
+  divider: {
+    borderLeftWidth: 1,
+    borderLeftColor: "#C147E9",
+    height: "70%",
+    marginHorizontal: 10,
+
+    left: -165,
+  },
   container: {
     top: 50,
     flex: 1,
-    backgroundColor: "#F49D1A",
+    backgroundColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 20,
     height: 1000,
@@ -238,23 +269,17 @@ const styles = StyleSheet.create({
     left: 170,
     position: "absolute",
   },
-  icon: {
-    marginRight: 10,
-    top: 20,
-  },
-  notificationCount: {
-    fontWeight: "bold",
-  },
+
   title: {
-    fontSize: 24,
+    fontSize: 10,
     fontWeight: "bold",
     marginBottom: 10,
+    color: "white",
   },
   reservationContainer: {
     borderWidth: 1,
     borderColor: "#ccc",
     padding: 10,
-    marginBottom: 10,
   },
   reservationText: {
     marginBottom: 5,

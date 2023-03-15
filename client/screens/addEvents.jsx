@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Button, Image, Text } from "react-native";
+import { View, TextInput, Button, Image, Text,TouchableOpacity,Platform } from "react-native";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+//  import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+
+
 import {
   getStorage,
   ref,
@@ -19,6 +24,11 @@ const AddEventForm = () => {
   const [eventImage, setEventImage] = useState("");
   const [message, setMessage] = useState("");
   const [userToken, setUserToken] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [time, setTime] = useState("");
+const [showTimePicker, setShowTimePicker] = useState(false);
+
   // retrieve token from local storage
   _retrieveData = async () => {
     try {
@@ -40,6 +50,14 @@ const AddEventForm = () => {
       if (status !== "granted") {
         alert("Sorry, we need camera roll permissions to make this work!");
       }
+    }
+  };
+  
+  const handleTimeChange = (event, selectedDate) => {
+    setShowTimePicker(false);
+    if (selectedDate !== undefined) {
+      setSelectedDate(selectedDate);
+      setTime(selectedDate.toLocaleTimeString());
     }
   };
   // upload image to the firebase storage
@@ -73,6 +91,7 @@ const AddEventForm = () => {
     Permession();
     _retrieveData();
   }, []);
+
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
@@ -101,6 +120,7 @@ const AddEventForm = () => {
       console.log(err);
     }
   };
+
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -123,7 +143,38 @@ const AddEventForm = () => {
         onChangeText={setDescription}
         placeholder="Description"
       />
-      <TextInput value={date} onChangeText={setDate} placeholder="Date" />
+    <TouchableOpacity onPress={() => setShowDateTimePicker(true)}>
+  <Text>{selectedDate.toLocaleString()}</Text>
+  {showDateTimePicker && (
+  <DateTimePicker
+    value={selectedDate}
+    mode="datetime"
+    is24Hour={true}
+    display="default"
+    onChange={(event, selectedDate) => {
+      setShowDateTimePicker(false);
+      if (selectedDate !== undefined) {
+        setSelectedDate(selectedDate);
+        setDate(selectedDate.toLocaleString());
+      }
+    }}
+  />
+)}
+
+</TouchableOpacity>
+<TouchableOpacity onPress={() => setShowTimePicker(true)}>
+  <Text>{time ? time : 'Select Time'}</Text>
+  {showTimePicker && (
+    <DateTimePicker
+      value={selectedDate}
+      mode="time"
+      is24Hour={true}
+      display="default"
+      onChange={handleTimeChange}
+    />
+  )}
+</TouchableOpacity>
+
       <TextInput value={price} onChangeText={setPrice} placeholder="Price" />
       {eventImage && (
         <Image

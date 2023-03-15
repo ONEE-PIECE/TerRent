@@ -30,4 +30,52 @@ const getEventsForAterrain = async (req, res) => {
     res.status(404).send(err);
   }
 };
-module.exports = { addEvent, getEventsForAterrain };
+
+const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { EventName, Description, Date, Price, EventImage } = req.body;
+
+    const event = await Event.update(
+      {
+        EventName,
+        Description,
+        Date,
+        Price,
+        EventImage,
+      },
+      {
+        where: {
+          id:id,
+        },
+      }
+    );
+    res.status(200).json(event);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send("Server Error");
+  }
+};
+
+const deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Event.destroy({
+      where: {
+        id: id
+      }
+    });
+    res.status(200).json({
+      message: `Event with id ${id} has been deleted successfully`
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Unable to delete event"
+    });
+  }
+}
+
+
+
+module.exports = { addEvent, getEventsForAterrain,updateEvent,deleteEvent };

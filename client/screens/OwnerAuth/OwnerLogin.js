@@ -49,10 +49,14 @@ const OwnerLogin = () => {
       setOwnerData(data);
       console.log(axiosResponse.data.Fireid);
       _storeData(axiosResponse.data.Fireid);
-      console.log(data.AccountConfirmation, "goodbye madi taw netsarref");
+
       if (data.AccountConfirmation) {
         const res = await signInWithEmailAndPassword(auth, email, password);
-        navigation.navigate("homeowner");
+        navigation.navigate("homeowner", {
+          FirstName: ownerData.FirstName,
+          LastName: ownerData.LastName,
+          ProfileImage: ownerData.ProfileImage,
+        });
       } else {
         alert(
           "Your account is not authorized to login please wait for confirmation"
@@ -67,7 +71,15 @@ const OwnerLogin = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
-        <Text style={{ color: "darkorange", fontSize: 15, top: -90, left: 65 }}>
+        <Text
+          style={{
+            color: "#C147E9",
+            fontSize: 20,
+            top: -70,
+
+            textAlign: "center",
+          }}
+        >
           Please Login as An Owner
         </Text>
 
@@ -83,7 +95,6 @@ const OwnerLogin = () => {
         />
         <TextInput
           placeholder="Password"
-          
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -118,7 +129,7 @@ const OwnerLogin = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#000000",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingHorizontal: 10,
     paddingVertical: 15,
-    color: "darkorange",
+    color: "#C147E9",
   },
   buttonContainer: {
     flexDirection: "column",
@@ -143,17 +154,17 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "transparent",
-    borderColor: "darkorange",
+    borderColor: "black",
     borderWidth: 0.5,
-    paddingVertical: 15,
-    paddingHorizontal: 25,
+
     borderRadius: 5,
     alignItems: "center",
-    bottom: -10,
+    bottom: -40,
   },
   buttonText: {
-    color: "darkorange",
+    color: "#C147E9",
     fontSize: 15,
+    top: -30,
   },
   buttonOutLine: {
     backgroundColor: "transparent",
@@ -167,8 +178,9 @@ const styles = StyleSheet.create({
     bottom: -70,
   },
   buttonOutLineText: {
-    color: "lightgrey",
+    color: "darkgrey",
     fontSize: 10,
+    top: -50,
   },
 });
 

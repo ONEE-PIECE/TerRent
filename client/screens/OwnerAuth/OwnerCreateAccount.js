@@ -147,7 +147,7 @@ const OwnerCreateAccount = () => {
       .then((res) => {
         // uploadImage(patentImage,'my-image.jpg')
         axiosPost(res._tokenResponse.localId);
-        navigation.navigate("ownerLogin");
+        navigation.navigate("homeowner");
       })
       .catch((e) => console.log(e));
   };
@@ -156,9 +156,7 @@ const OwnerCreateAccount = () => {
     <NativeBaseProvider>
       <Center flex={1} style={styles.container}>
         <Stack space={3} w="75%" maxW="300px" mx="auto">
-          <Text
-            style={{ color: "darkorange", top: -40, fontSize: 15, left: 20 }}
-          >
+          <Text style={{ color: "#C147E9", top: -40, fontSize: 20, left: 20 }}>
             Register Here and join the fun
           </Text>
           <TextInput
@@ -209,9 +207,8 @@ const OwnerCreateAccount = () => {
                       name={show ? "visibility" : "visibility-off"}
                     />
                   }
-                  size={6}
-                  mr="2"
-                  color="darkorange"
+                  size={26}
+                  color="white"
                 />
               </Pressable>
             }
@@ -273,15 +270,17 @@ const OwnerCreateAccount = () => {
             Upload Profile Image
           </Button> */}
           <Button style={styles.button2} onPress={Register}>
-            <Text style={{ color: "darkorange" }}>Register</Text>
+            <Text style={{ color: "#C147E9" }}>Register</Text>
           </Button>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ownerlogin");
-            }}
-          >
+          <TouchableOpacity>
             <Text
-              style={{ color: "lightgrey", top: 60, fontSize: 10, left: 60 }}
+              style={{
+                color: "darkgrey",
+                top: 30,
+                fontSize: 12,
+                left: 60,
+                position: "absolute",
+              }}
             >
               Already an Owner ? Login Here .
             </Text>
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderBottomWidth: 0.5,
     borderBottomColor: "lightgrey",
-    color: "darkorange",
+    color: "#C147E9",
     marginVertical: 3,
   },
 
@@ -322,13 +321,11 @@ const styles = StyleSheet.create({
   button2: {
     backgroundColor: "transparent",
     width: "100%",
-    padding: 15,
-    borderRadius: 3,
-    borderWidth: 0.5,
-    borderColor: "darkorange",
+
+    borderColor: "lightgrey",
     alignItems: "center",
     color: "lightgrey",
 
-    top: 50,
+    top: 20,
   },
 });

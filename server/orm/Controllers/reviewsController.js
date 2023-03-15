@@ -7,6 +7,7 @@ const getAllreviews = async (req, res) => {
 
     const reviews = await Reviews.findAll({
       where: { terrainId: id },
+      attributes: ['Comments']
     });
 
     res.status(201).json(reviews);
@@ -18,11 +19,10 @@ const getAllreviews = async (req, res) => {
 const addreview = async (req, res) => {
   try {
     const { playerId, terrainId } = req.params;
-    const { Comments, Rating } = req.body;
+    const { Comments } = req.body;
 
     const review = await Reviews.create({
       Comments,
-      Rating,
       playerId: playerId,
       terrainId: terrainId,
     });
@@ -32,4 +32,36 @@ const addreview = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
-module.exports = { getAllreviews, addreview };
+
+const addStars=async(req,res)=>{
+  try{
+    const { playerId, terrainId } = req.params;
+    const {Rating}=req.body
+
+    const query=await Reviews.create({
+     Rating,
+     playerId:playerId,
+     terrainId:terrainId  
+    })
+    res.status(201).json(query)
+  }
+  catch(err){
+    res.status(404).json({message:"Server Error"})
+  }
+}
+const getAllStars=async(req,res)=>{
+  try{
+  const {id}=req.params
+  const query=await Reviews.findAll({
+    where: { terrainId: id },
+    attributes: ['Rating']
+  })
+  res.status(201).json(query);
+} 
+catch (error) {
+  console.error(error);
+  res.status(500).json({ message: "Server Error" });
+}
+}
+
+module.exports = { addStars,getAllreviews, addreview ,getAllStars};

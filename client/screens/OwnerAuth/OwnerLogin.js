@@ -9,43 +9,77 @@ import React, { useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { Button, Icon } from "native-base";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { authentification } from "../../FbConfig/config.js";
+
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import axios from "axios";
+import { baseUrl } from "../../urlConfig/urlConfig";
+import { auth } from "../../config.js";
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [ownerData, setOwnerData] = useState([]);
-
   const navigation = useNavigation();
-
   _storeData = async (id) => {
     try {
-      await AsyncStorage.setItem("Token", id);
+      await AsyncStorage.setItem("OwnerToken", id);
     } catch (error) {
       console.log(error);
     }
   };
+  //getting owner data by email to verify that the account is authorized to access or not
+  const signInOwner = async () => {
+    // console.log(`${baseUrl}owner/signInOwner/Authorization/${email}`, "url");
+    // axios
+    //   .get(`${baseUrl}owner/signInOwner/Authorization/${email}`)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
 
-  const signInOwner = () => {
-    signInWithEmailAndPassword(authentification, email, password)
-      .then((res) => {
-        _storeData(res._tokenResponse.localId);
-      })
-      .then(() => {
-        navigation.navigate("Home");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
+    try {
+      // get data from axios
+      const axiosResponse = await axios.get(
+        `${baseUrl}owner/signInOwner/Authorization/${email}`
+      );
+      console.log(axiosResponse.data.AccountConfirmation);
+
+      const data = axiosResponse.data;
+      console.log(data);
+      setOwnerData(data);
+      console.log(axiosResponse.data.Fireid);
+      _storeData(axiosResponse.data.Fireid);
+
+      if (data.AccountConfirmation) {
+        const res = await signInWithEmailAndPassword(auth, email, password);
+        navigation.navigate("homeowner", {
+          FirstName: ownerData.FirstName,
+          LastName: ownerData.LastName,
+          ProfileImage: ownerData.ProfileImage,
+        });
+      } else {
+        alert(
+          "Your account is not authorized to login please wait for confirmation"
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
-        <Text style={{ color: "darkorange", fontSize: 15, top: -90, left: 65 }}>
+        <Text
+          style={{
+            color: "#C147E9",
+            fontSize: 20,
+            top: -70,
+
+            textAlign: "center",
+          }}
+        >
           Please Login as An Owner
         </Text>
 
@@ -95,7 +129,7 @@ const OwnerLogin = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#000000",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -111,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingHorizontal: 10,
     paddingVertical: 15,
-    color: "darkorange",
+    color: "#C147E9",
   },
   buttonContainer: {
     flexDirection: "column",
@@ -120,17 +154,17 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "transparent",
-    borderColor: "darkorange",
+    borderColor: "black",
     borderWidth: 0.5,
-    paddingVertical: 15,
-    paddingHorizontal: 25,
+
     borderRadius: 5,
     alignItems: "center",
-    bottom: -10,
+    bottom: -40,
   },
   buttonText: {
-    color: "darkorange",
+    color: "#C147E9",
     fontSize: 15,
+    top: -30,
   },
   buttonOutLine: {
     backgroundColor: "transparent",
@@ -144,8 +178,9 @@ const styles = StyleSheet.create({
     bottom: -70,
   },
   buttonOutLineText: {
-    color: "lightgrey",
+    color: "darkgrey",
     fontSize: 10,
+    top: -50,
   },
 });
 

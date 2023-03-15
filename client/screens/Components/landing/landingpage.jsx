@@ -8,34 +8,51 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const LandingScreen = ({ navigation: { navigate } }) => {
   return (
-    <View style={{ backgroundColor: "black" }}>
-      <Button
-        onPress={() => {
-          navigate("ownerlogin");
-        }}
-        style={{ top: 38, left: -100, zIndex: 1 }}
-      >
-        <Text
+    <View>
+      <View style={{ backgroundColor: "black" }}>
+        <Button
+          onPress={() => {
+            navigate("ownerlogin");
+          }}
           style={{
-            color: "darkorange",
+            position: "absolute",
+            left: 30,
+            zIndex: 1,
+            top: 10,
+            borderColor: "#C147E9",
+            borderWidth: 1,
+            backgroundColor: "#C147E9",
+            borderRadius: 20,
           }}
         >
-          Start as an Owner
-        </Text>
-      </Button>
-      <Button
-        onPress={() => {
-          navigate("playerlogin");
-        }}
-        style={{
-          left: 100,
-
-          paddingLeft: 0,
-        }}
-      >
-        <Text style={{ color: "darkorange" }}>Start as a Player</Text>
-      </Button>
-      <Carrouseel />
+          <Text
+            style={{
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            Start as an Owner
+          </Text>
+        </Button>
+        <Button
+          onPress={() => {
+            navigate("playerlogin");
+          }}
+          style={{
+            position: "absolute",
+            right: 30,
+            zIndex: 1,
+            top: 10,
+            borderColor: "darkorange",
+            borderWidth: 1,
+            backgroundColor: "darkorange",
+            borderRadius: 20,
+          }}
+        >
+          <Text style={{ color: "black" }}>Start as a Player</Text>
+        </Button>
+        <Carrouseel />
+      </View>
     </View>
   );
 };

@@ -23,7 +23,7 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "Home" ? "home" : "home-outline"}
           size={24}
-          color={activeTab === "Home" ? "darkorange" : "lightgrey"}
+          color={activeTab === "Home" ? "#00c8e9" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -33,7 +33,7 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "calendar-outline" ? "search" : "calendar"}
           size={24}
-          color={activeTab === "Search" ? "darkorange" : "lightgrey"}
+          color={activeTab === "Search" ? "#00c8e9" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -50,7 +50,7 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "log-out-outline" ? "logout" : "log-out-sharp"}
           size={24}
-          color={activeTab === "Logout" ? "darkorange" : "lightgrey"}
+          color={activeTab === "Logout" ? "#00c8e9" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -60,7 +60,7 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "Profile" ? "person" : "person-outline"}
           size={24}
-          color={activeTab === "Profile" ? "darkorange" : "lightgrey"}
+          color={activeTab === "Profile" ? "#00c8e9" : "lightgrey"}
         />
       </TouchableOpacity>
     </View>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: "black",
     borderTopWidth: 2,
-    borderTopColor: "darkorange",
+    borderTopColor: "#00c8e9",
   },
   tabButton: {
     flex: 1,

@@ -1,30 +1,82 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 import axios from "axios";
-import { Root, Popup } from "popup-ui";
+import { Popup } from "popup-ui";
+import Root from "popup-ui/src/basic/Root";
+
 const AppointmentScheduler = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const [allReservations, setAllReservatins] = useState([]);
+  const [resversedDate, setreservedDate] = useState([]);
 
   const handleDayPress = (day) => {
     setSelectedDay(day.dateString);
     setSelectedTime(null);
-    setModalVisible(true);
-    console.log(day.dateString);
+
+    console.log(day);
+    const reservationsForSelectedDay = allReservations.filter((reservation) => {
+      const reservationDate = new Date(reservation.Day);
+      const selectedDate = new Date(day.dateString);
+      return (
+        reservationDate.toDateString() === selectedDate.toDateString() &&
+        reservation.Reserved === true
+      );
+    });
+    console.log(reservationsForSelectedDay);
+
+    var newarray = reservationsForSelectedDay.map((e) => {
+      let time = e.Hour;
+
+      return time.slice(0, time.length - 3);
+    });
+
+    setreservedDate(newarray);
+    return newarray;
   };
+
+  // const aa=reservationsForSelectedDay.filter(reservation=>{
+  //   reservation.Reserved===true
+  //   console.log(aa);
+  // })
 
   const handleTimePress = (time) => {
     setSelectedTime(time);
-    setConfirmVisible(true);
+    setModalVisible(true);
   };
+
+  useEffect(() => {
+    fetchallreservation();
+  }, []);
+
+  const fetchallreservation = () => {
+    axios
+      .get("http://192.168.101.8:3000/api/reservation/playerG")
+      .then(function (response) {
+        setAllReservatins(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  // console.log(allReservations);
 
   const handleConfirm = async () => {
     try {
       const posts = await axios.post(
-        "http://192.168.43.108:3000/api/reservation/player/1/1",
+        "http://192.168.101.8:3000/api/reservation/player/1/1",
         {
           Day: selectedDay,
           Hour: selectedTime,
@@ -36,201 +88,118 @@ const AppointmentScheduler = () => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    fetchReservedSlots();
-  }, []);
 
-  const fetchReservedSlots = async () => {
-    try {
-      const response = await axios.get(
-        "http://192.168.43.108:3000/api/reservation/players/1"
-      );
-      console.log(response.data);
-    } catch (err) {
-      throw err;
-    }
-  };
-  const timeSlots = [9, 11, 13, 15, 17, 19, 21, 23];
+  const timeSlots = [
+    "9:00",
+    "11:00",
+    "13:00",
+    "15:00",
+    "17:00",
+    "19:00",
+    "21:00",
+    "23:00",
+  ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={{ flex: 1 }}>
       <Calendar
         onDayPress={handleDayPress}
         markedDates={{
           [selectedDay]: { selected: true },
         }}
       />
-      <Modal
-        animationType="slide"
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <Root>
-          <View style={styles.modalContainer}>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 24,
-                borderBottomColor: "darkorange",
-              }}
-            >
-              Please select a time :
-            </Text>
+      {selectedDay && (
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontSize: 20, marginVertical: 20, color: "white" }}>
+            Select a time:
+          </Text>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={true}
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+          >
             {timeSlots.map((hour) => (
               <TouchableOpacity
                 key={hour}
-                style={{
-                  marginVertical: 10,
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  minWidth: 70,
-                  minHeight: 35,
-                  alignItems: "center",
-                  borderColor: "darkorange",
-                }}
+                style={[
+                  {
+                    width: 80,
+                    height: 40,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginHorizontal: 10,
+                  },
+                  hour === selectedTime && {
+                    borderBottomWidth: 1,
+                    borderColor: "darkorange",
+                  },
+                ]}
                 onPress={() => {
-                  Popup.show({
-                    type: "Success",
-                    title: "Confirm Your Reservation",
-                    button: true,
-                    textBody:
-                      "Are you sure you want to reserve this date and time ?",
-                    buttontext: "Confirm",
-                    callback: () => {
-                      Popup.hide();
-                    },
-                  });
+                  handleTimePress(hour),
+                    Popup.show({
+                      type: "Success",
+                      title: "Confirm Your Reservation",
+                      button: true,
+                      textBody:
+                        "Are you sure you want to reserve this date and time ?",
+                      buttontext: "Confirm",
+                      callback: () => {
+                        Popup.hide();
+                        handleConfirm();
+                      },
+                    });
                 }}
               >
-                <Text style={{ color: "darkorange", fontSize: 15, top: 5 }}>
-                  {hour}:00
+                <Text
+                  style={[
+                    {
+                      color: resversedDate.includes(hour)
+                        ? "lightgrey"
+                        : "darkorange",
+                      opacity: resversedDate.includes(hour) ? 0.5 : 1,
+                      fontSize: 18,
+                      fontWeight: "600",
+                      fontStyle: "italic",
+                    },
+                    hour === selectedTime && {
+                      color: "darkorange",
+                    },
+                  ]}
+                >
+                  {resversedDate.includes(hour) ? "reserved" : hour}
                 </Text>
               </TouchableOpacity>
             ))}
-          </View>
-        </Root>
-        <Popup />
-      </Modal>
-      <Modal
-        animationType="slide"
-        visible={confirmVisible}
-        onRequestClose={() => {
-          setConfirmVisible(false);
-        }}
-      >
-        <View style={{ backgroundColor: "black", paddingTop: 60 }}>
-          <Text style={styles.modalTitle}>
-            Are you sure you want to select {selectedTime}:00 on {selectedDay}?
-          </Text>
-          <View style={{ backgroundColor: "black", height: "100%" }}>
-            <TouchableOpacity
-              style={{ backgroundColor: "black" }}
-              onPress={() => setConfirmVisible(false)}
-            >
-              <Text style={styles.modalButtonText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.modalButton, styles.confirmButton]}
-              onPress={handleConfirm}
-            >
-              <Text style={styles.modalButtonText}>Confirm</Text>
-            </TouchableOpacity>
-          </View>
+          </ScrollView>
         </View>
-      </Modal>
-    </View>
+      )}
+    </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  calendarContainer: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
-    overflow: "hidden",
-    margin: 10,
-  },
-  calendarHeader: {
-    backgroundColor: "#2f4f4f",
-    padding: 10,
-  },
-  calendarHeaderText: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  calendarDay: {
-    color: "#2f4f4f",
-    fontWeight: "bold",
-    textAlign: "center",
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
-  calendarSelectedDay: {
-    backgroundColor: "#2f4f4f",
-    borderRadius: 50,
   },
   modalContainer: {
-    backgroundColor: "black",
+    flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    padding: 90,
-    top: -30,
+    marginTop: 50,
   },
   modalTitle: {
-    color: "white",
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
   },
-  timeSlot: {
-    backgroundColor: "black",
-    borderWidth: 2,
-    borderColor: "#5cb85c",
-    color: "darkorange",
-    padding: 10,
-    marginVertical: 5,
-    width: "80%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  timeSlotText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
+
   selectedTimeSlot: {
-    backgroundColor: "green",
-  },
-  modalButtonContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-  },
-  modalButton: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-  },
-  cancelButton: {
-    backgroundColor: "red",
-    borderColor: "red",
-  },
-  confirmButton: {
-    backgroundColor: "green",
-    borderColor: "green",
-  },
-  modalButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "center",
+    backgroundColor: "transparent",
   },
 });
 export default AppointmentScheduler;

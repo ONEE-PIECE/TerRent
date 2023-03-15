@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const {
@@ -15,14 +15,9 @@ router.get("/:ownerId", getTerrainsForSpecialOwner);
 router.delete("/:id", deleteTerrainForAnOwner);
 router.patch("/:id", updateTerrain);
 
-
-
-
-
 router.get("/");
 router.get("/terrains/region/:region", getAll);
 router.get("/terrains/category/:Category", getAllCat);
-router.get("/terrains/oneterrains/:terrainId", getOne);
+router.get("/terrains/oneterrains/:id", getOne);
 
-
-module.exports=router
+module.exports = router;

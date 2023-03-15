@@ -1,0 +1,153 @@
+diff --git a/node_modules/react-native-calendars/src/agenda/style.js b/node_modules/react-native-calendars/src/agenda/style.js
+index 98261bf..930ad83 100644
+--- a/node_modules/react-native-calendars/src/agenda/style.js
++++ b/node_modules/react-native-calendars/src/agenda/style.js
+@@ -29,7 +29,7 @@ export default function styleConstructor(theme = {}) {
+             height: 24,
+             bottom: 0,
+             alignItems: 'center',
+-            backgroundColor: appStyle.calendarBackground
++            backgroundColor: "black"
+         },
+         dayHeader: {
+             width: 32,
+@@ -37,7 +37,7 @@ export default function styleConstructor(theme = {}) {
+             fontSize: appStyle.textDayHeaderFontSize,
+             fontFamily: appStyle.textDayHeaderFontFamily,
+             fontWeight: appStyle.textDayHeaderFontWeight,
+-            color: appStyle.textSectionTitleColor
++            color: "darkorange"
+         },
+         reservations: {
+             flex: 1,
+diff --git a/node_modules/react-native-calendars/src/calendar-list/style.js b/node_modules/react-native-calendars/src/calendar-list/style.js
+index 8e1c37f..df89b96 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/style.js
++++ b/node_modules/react-native-calendars/src/calendar-list/style.js
+@@ -7,7 +7,7 @@ export default function getStyle(theme = {}) {
+             flex: Platform.OS === 'web' ? 1 : undefined
+         },
+         container: {
+-            backgroundColor: appStyle.calendarBackground
++            backgroundColor: "transparent"
+         },
+         placeholder: {
+             backgroundColor: appStyle.calendarBackground,
+@@ -28,7 +28,7 @@ export default function getStyle(theme = {}) {
+             left: 0,
+             right: 0,
+             top: 0,
+-            backgroundColor: appStyle.calendarBackground,
++            backgroundColor: "black",
+             paddingHorizontal: 15
+         },
+         // @ts-expect-error
+diff --git a/node_modules/react-native-calendars/src/calendar/day/basic/style.js b/node_modules/react-native-calendars/src/calendar/day/basic/style.js
+index 11711a0..f22462d 100644
+--- a/node_modules/react-native-calendars/src/calendar/day/basic/style.js
++++ b/node_modules/react-native-calendars/src/calendar/day/basic/style.js
+@@ -18,7 +18,7 @@ export default function styleConstructor(theme = {}) {
+             fontSize: appStyle.textDayFontSize,
+             fontFamily: appStyle.textDayFontFamily,
+             fontWeight: appStyle.textDayFontWeight,
+-            color: appStyle.dayTextColor,
++            color: "darkorange",
+             backgroundColor: 'rgba(255, 255, 255, 0)',
+             ...appStyle.textDayStyle
+         },
+@@ -26,7 +26,9 @@ export default function styleConstructor(theme = {}) {
+             marginTop: constants.isAndroid ? 4 : 6
+         },
+         selected: {
+-            backgroundColor: appStyle.selectedDayBackgroundColor,
++            backgroundColor: "darkorange",
++            
++            
+             borderRadius: 16
+         },
+         today: {
+@@ -34,16 +36,16 @@ export default function styleConstructor(theme = {}) {
+             borderRadius: 16
+         },
+         todayText: {
+-            color: appStyle.todayTextColor
++            color: "white"
+         },
+         selectedText: {
+-            color: appStyle.selectedDayTextColor
++            color: "black"
+         },
+         disabledText: {
+-            color: appStyle.textDisabledColor
++            color: "darkgrey"
+         },
+         inactiveText: {
+-            color: appStyle.textInactiveColor
++            color: "darkgrey"
+         },
+         dot: {
+             width: 4,
+diff --git a/node_modules/react-native-calendars/src/calendar/header/style.js b/node_modules/react-native-calendars/src/calendar/header/style.js
+index 16e5f71..c839a70 100644
+--- a/node_modules/react-native-calendars/src/calendar/header/style.js
++++ b/node_modules/react-native-calendars/src/calendar/header/style.js
+@@ -23,7 +23,7 @@ export default function (theme = {}) {
+             fontSize: appStyle.textMonthFontSize,
+             fontFamily: appStyle.textMonthFontFamily,
+             fontWeight: appStyle.textMonthFontWeight,
+-            color: appStyle.monthTextColor,
++            color: "darkgrey",
+             margin: 10
+         },
+         arrow: {
+@@ -32,7 +32,7 @@ export default function (theme = {}) {
+         },
+         arrowImage: {
+             ...rtlStyle,
+-            tintColor: appStyle.arrowColor,
++            tintColor: "darkorange",
+             ...Platform.select({
+                 web: {
+                     width: appStyle.arrowWidth,
+@@ -42,7 +42,7 @@ export default function (theme = {}) {
+         },
+         disabledArrowImage: {
+             ...rtlStyle,
+-            tintColor: appStyle.disabledArrowColor
++            tintColor: "darkgrey"
+         },
+         week: {
+             marginTop: 7,
+@@ -60,7 +60,7 @@ export default function (theme = {}) {
+             fontSize: appStyle.textDayHeaderFontSize,
+             fontFamily: appStyle.textDayHeaderFontFamily,
+             fontWeight: appStyle.textDayHeaderFontWeight,
+-            color: appStyle.textSectionTitleColor
++            color: "darkgrey"
+         },
+         disabledDayHeader: {
+             color: appStyle.textSectionTitleDisabledColor
+diff --git a/node_modules/react-native-calendars/src/calendar/style.js b/node_modules/react-native-calendars/src/calendar/style.js
+index c9af755..00d01d1 100644
+--- a/node_modules/react-native-calendars/src/calendar/style.js
++++ b/node_modules/react-native-calendars/src/calendar/style.js
+@@ -6,7 +6,7 @@ export default function getStyle(theme = {}) {
+         container: {
+             paddingLeft: 5,
+             paddingRight: 5,
+-            backgroundColor: appStyle.calendarBackground
++            backgroundColor: "transparent"
+         },
+         dayContainer: {
+             flex: 1,
+diff --git a/node_modules/react-native-calendars/src/style.js b/node_modules/react-native-calendars/src/style.js
+index 5efb8bd..3e677a8 100644
+--- a/node_modules/react-native-calendars/src/style.js
++++ b/node_modules/react-native-calendars/src/style.js
+@@ -1,5 +1,5 @@
+ // default values for app style (see all options for theme type in types.ts)
+-const FOREGROUND_COLOR = 'white';
++const FOREGROUND_COLOR = 'black';
+ const DEFAULT_TEXT_COLOR = '#2d4150';
+ const SECONDARY_TEXT_COLOR = '#00BBF2';
+ const AGENDA_TEXT_COLOR = '#7a92a5';

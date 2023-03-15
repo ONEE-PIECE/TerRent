@@ -6,7 +6,7 @@ import { Avatar, Button, Card, Surface } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Home = ({ navigation: { navigate } }) => {
+const Home = ({ navigation: { navigate }, route }) => {
   return (
     <ScrollView style={{ backgroundColor: "black" }}>
       <Card
@@ -41,8 +41,10 @@ const Home = ({ navigation: { navigate } }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "orange",
-            fontSize: 25,
+            color: "darkorange",
+            opacity: 0.9,
+            fontSize: 23,
+
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
@@ -60,7 +62,7 @@ const Home = ({ navigation: { navigate } }) => {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
+            color: "lightgrey",
           }}
         >
           Check all Soccer Fields
@@ -77,6 +79,7 @@ const Home = ({ navigation: { navigate } }) => {
         onPress={() => {
           navigate("Allterrains", {
             Category: "basket",
+
             imgg: "https://w0.peakpx.com/wallpaper/737/886/HD-wallpaper-basketball-black-pure.jpg",
           });
         }}
@@ -98,8 +101,10 @@ const Home = ({ navigation: { navigate } }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "orange",
-            fontSize: 25,
+            color: "darkorange",
+            opacity: 0.9,
+            fontSize: 23,
+
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
@@ -117,7 +122,7 @@ const Home = ({ navigation: { navigate } }) => {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
+            color: "lightgrey",
           }}
         >
           Check all BasketBall courts
@@ -154,8 +159,10 @@ const Home = ({ navigation: { navigate } }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "orange",
-            fontSize: 25,
+            color: "darkorange",
+            opacity: 0.9,
+            fontSize: 23,
+
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
@@ -173,7 +180,7 @@ const Home = ({ navigation: { navigate } }) => {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
+            color: "lightgrey",
           }}
         >
           Check all Handball terrains
@@ -210,9 +217,11 @@ const Home = ({ navigation: { navigate } }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "orange",
+            color: "darkorange",
+            opacity: 0.9,
 
-            fontSize: 25,
+            fontSize: 23,
+
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
@@ -229,7 +238,7 @@ const Home = ({ navigation: { navigate } }) => {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
+            color: "lightgrey",
           }}
         >
           Check all tennis Courts
@@ -268,8 +277,10 @@ const Home = ({ navigation: { navigate } }) => {
             justifyContent: "center",
             alignItems: "center",
 
-            color: "orange",
-            fontSize: 25,
+            color: "darkorange",
+            opacity: 0.9,
+            fontSize: 23,
+
             paddingLeft: 20,
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
@@ -287,7 +298,7 @@ const Home = ({ navigation: { navigate } }) => {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
+            color: "lightgrey",
           }}
         >
           Check all Paintball fields

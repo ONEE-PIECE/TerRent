@@ -13,6 +13,7 @@ import { Calendar } from "react-native-calendars";
 import axios from "axios";
 import { Popup } from "popup-ui";
 import Root from "popup-ui/src/basic/Root";
+import { baseUrl } from "../urlConfig/urlConfig";
 
 const AppointmentScheduler = () => {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -23,6 +24,7 @@ const AppointmentScheduler = () => {
   const [resversedDate, setreservedDate] = useState([]);
 
   const handleDayPress = (day) => {
+    console.log(resversedDate);
     setSelectedDay(day.dateString);
     setSelectedTime(null);
 
@@ -63,7 +65,7 @@ const AppointmentScheduler = () => {
 
   const fetchallreservation = () => {
     axios
-      .get("http://192.168.101.8:3000/api/reservation/playerG")
+      .get(`${baseUrl}api/reservation/playerG`)
       .then(function (response) {
         setAllReservatins(response.data);
       })
@@ -76,7 +78,7 @@ const AppointmentScheduler = () => {
   const handleConfirm = async () => {
     try {
       const posts = await axios.post(
-        "http://192.168.101.8:3000/api/reservation/player/1/1",
+        `${baseUrl}api/reservation/player/4/NIYExgZeJbOO7rz802KyyZfZyGD2`,
         {
           Day: selectedDay,
           Hour: selectedTime,
@@ -110,7 +112,15 @@ const AppointmentScheduler = () => {
       />
       {selectedDay && (
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 20, marginVertical: 20, color: "white" }}>
+          <Text
+            style={{
+              fontSize: 17,
+              fontStyle: "italic",
+              marginVertical: 20,
+              color: "white",
+              textAlign: "center",
+            }}
+          >
             Select a time:
           </Text>
 
@@ -129,6 +139,7 @@ const AppointmentScheduler = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     marginHorizontal: 10,
+                    marginBottom: 10,
                   },
                   hour === selectedTime && {
                     borderBottomWidth: 1,
@@ -159,7 +170,7 @@ const AppointmentScheduler = () => {
                         : "darkorange",
                       opacity: resversedDate.includes(hour) ? 0.5 : 1,
                       fontSize: 18,
-                      fontWeight: "600",
+                      fontWeight: "400",
                       fontStyle: "italic",
                     },
                     hour === selectedTime && {

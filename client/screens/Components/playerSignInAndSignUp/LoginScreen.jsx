@@ -6,7 +6,9 @@ import {
   View,
   KeyboardAvoidingView,
   Button,
+  ToastAndroid,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import { auth } from "../../../config";
 import { useNavigation } from "@react-navigation/native";
@@ -14,16 +16,25 @@ import "react-native-gesture-handler";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { baseUrl } from "../../../urlConfig/urlConfig";
+import { Keyboard } from "react-native";
 const LoginScreen = () => {
   const [email, setemail] = useState("");
   const [dataplayer, setdataplayer] = useState([]);
   const [password, setpassword] = useState("");
   const navigation = useNavigation();
+  _storeData = async (id) => {
+    try {
+      await AsyncStorage.setItem("PlayerToken", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     axios
       .get(`${baseUrl}api/player/mail/${email}`)
       .then((res) => {
         setdataplayer(res.data[0]);
+        _storeData(res.data[0]);
 
         console.log(res.data);
       })
@@ -33,12 +44,20 @@ const LoginScreen = () => {
     try {
       const userInfos = await signInWithEmailAndPassword(auth, email, password);
       const user = userInfos.user;
-      alert("Welcome");
-      navigation.navigate("Home", { FireId: dataplayer.FireId });
+
+      navigation.navigate("Home");
     } catch (err) {
       console.log(err);
-      alert(err);
+      showToast();
+      Keyboard.dismiss();
     }
+  };
+  const showToast = () => {
+    ToastAndroid.show(
+      "Invalid Email or Password",
+      ToastAndroid.TOP,
+      ToastAndroid.SHORT
+    );
   };
 
   return (
@@ -137,7 +156,7 @@ const styles = StyleSheet.create({
   buttonOutLineText: {
     color: "lightgrey",
     fontSize: 10,
-    top: 50,
+    top: -10,
   },
 });
 export default LoginScreen;

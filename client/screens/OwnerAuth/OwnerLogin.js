@@ -1,7 +1,9 @@
 import {
+  Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -58,14 +60,28 @@ const OwnerLogin = () => {
           ProfileImage: ownerData.ProfileImage,
         });
       } else {
-        alert(
-          "Your account is not authorized to login please wait for confirmation"
-        );
+        showToast();
+        Keyboard.dismiss();
       }
     } catch (error) {
       console.log(error);
-      alert(error);
+      showToastmail();
+      Keyboard.dismiss();
     }
+  };
+  const showToast = () => {
+    ToastAndroid.show(
+      "You are Not authorized yet",
+
+      ToastAndroid.SHORT
+    );
+  };
+  const showToastmail = () => {
+    ToastAndroid.show(
+      "Wrong Email or Password",
+
+      ToastAndroid.SHORT
+    );
   };
 
   return (

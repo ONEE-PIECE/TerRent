@@ -20,14 +20,14 @@ const LandingScreen = ({ navigation: { navigate } }) => {
             zIndex: 1,
             top: 10,
             borderColor: "#C147E9",
-            borderWidth: 1,
-            backgroundColor: "#C147E9",
+            borderWidth: 2,
+            backgroundColor: "transparent",
             borderRadius: 20,
           }}
         >
           <Text
             style={{
-              color: "black",
+              color: "#C147E9",
               fontWeight: "bold",
             }}
           >
@@ -44,12 +44,12 @@ const LandingScreen = ({ navigation: { navigate } }) => {
             zIndex: 1,
             top: 10,
             borderColor: "darkorange",
-            borderWidth: 1,
-            backgroundColor: "darkorange",
+            borderWidth: 2,
+            backgroundColor: "transparent",
             borderRadius: 20,
           }}
         >
-          <Text style={{ color: "black" }}>Start as a Player</Text>
+          <Text style={{ color: "darkorange" }}>Start as a Player</Text>
         </Button>
         <Carrouseel />
       </View>

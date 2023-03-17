@@ -44,14 +44,16 @@ const EventsList = () => {
   };
 
   const handleUpdate = (id) => {
-    const eventToUpdate = events.find((event) => event.id === id);
+    const eventToUpdate = events.find((ahmed) => ahmed.id === id);
     setUpdatingEventId(id);
+
     setUpdatedEventName(eventToUpdate.EventName);
     setUpdatedEventDescription(eventToUpdate.Description);
     setUpdatedEventPrice(eventToUpdate.Price);
   };
 
-  const handleUpdateFormSubmit = async () => {
+  const handleUpdateFormSubmit = async (updatingEventId) => {
+    console.log(updatingEventId);
     try {
       await axios.put(`${baseUrl}api/events/${updatingEventId}`, {
         EventName: updatedEventName,
@@ -69,33 +71,104 @@ const EventsList = () => {
       Alert.alert("Error", "Unable to update event.");
     }
   };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+        height: "100%",
+        marginTop: 50,
+        paddingTop: 20,
+        backgroundColor: "black",
+      }}
+    >
       {events.length ? (
         events.map((event) => (
-          <TouchableOpacity
-            key={event.id}
-            style={{
-              padding: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: "#ccc",
-            }}
-            onPress={() => handleUpdate(event.id)}
-            onLongPress={() => handleDelete(event.id)}
-          >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              {event.EventName}
-            </Text>
-            <Text style={{ fontSize: 14 }}>{event.Description}</Text>
-            <Text style={{ fontSize: 12 }}>{event.Date.slice(0, 10)}</Text>
-            <Text style={{ fontSize: 12 }}>{event.Price}</Text>
-            <TouchableOpacity onPress={() => handleDelete(event.id)}>
-              <Text style={{ color: "red", marginTop: 10 }}>Delete</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleUpdate(event.id)}>
-              <Text style={{ color: "green", marginTop: 10 }}>update</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
+          <View>
+            <View
+              key={event.id}
+              style={{
+                padding: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: "#ccc",
+              }}
+              onPress={() => handleUpdate(event.id)}
+            >
+              <Text
+                style={{
+                  textTransform: "capitalize",
+                  fontSize: 30,
+                  fontWeight: "bold",
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                {event.EventName}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "white",
+                  marginTop: 20,
+
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                }}
+              >
+                {event.Description}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "white",
+                  marginTop: 5,
+                  textAlign: "center",
+                }}
+              >
+                {event.Date.slice(0, 10)}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                  textAlign: "center",
+                  marginBottom: 50,
+                }}
+              >
+                {event.Price}
+              </Text>
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  top: 180,
+                  marginBottom: 50,
+                  left: 30,
+                }}
+                onPress={() => handleDelete(event.id)}
+              >
+                <Text style={{ color: "#C147E9", top: -30, right: -300 }}>
+                  Delete
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{ position: "absolute", top: 200, left: 10 }}
+                onPress={() => handleUpdate(event.id)}
+              >
+                <Text
+                  style={{
+                    color: "grey",
+
+                    top: -50,
+                    paddingBottom: 50,
+                    left: 20,
+                    position: "absolute",
+                  }}
+                >
+                  update
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         ))
       ) : (
         <Text>No events found.</Text>
@@ -106,45 +179,86 @@ const EventsList = () => {
             value={updatedEventName}
             onChangeText={setUpdatedEventName}
             placeholder="Event name"
-            style={{ fontSize: 16, marginBottom: 8 }}
+            style={{
+              fontSize: 16,
+              marginBottom: 8,
+              color: "white",
+              borderBottomColor: "#C147E9",
+              borderBottomWidth: 1,
+              alignSelf: "center",
+              height: 40,
+            }}
           />
           <TextInput
             value={updatedEventDescription}
             onChangeText={setUpdatedEventDescription}
             placeholder="Event description"
-            style={{ fontSize: 14, marginBottom: 8 }}
+            style={{
+              fontSize: 14,
+              marginBottom: 8,
+              color: "white",
+              borderBottomColor: "#C147E9",
+              borderBottomWidth: 1,
+              alignSelf: "center",
+              height: 40,
+            }}
           />
           <TextInput
             value={updatedEventPrice}
             onChangeText={setUpdatedEventPrice}
             placeholder="Event price"
-            style={{ fontSize: 12, marginBottom: 8 }}
+            style={{
+              fontSize: 12,
+              marginBottom: 8,
+              color: "white",
+              borderBottomColor: "#C147E9",
+              borderBottomWidth: 1,
+              alignSelf: "center",
+              height: 40,
+            }}
           />
           <TouchableOpacity
             onPress={handleUpdateFormSubmit}
-            style={{ backgroundColor: "blue", padding: 8 }}
+            style={{
+              backgroundColor: "transparent",
+              padding: 8,
+              marginRight: 320,
+              top: 20,
+            }}
           >
-            <Text style={{ color: "white" }}>Save</Text>
+            <Text style={{ color: "#C147E9" }}>Save</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setUpdatingEventId(null)}
-            style={{ backgroundColor: "red", padding: 8, marginLeft: 8 }}
+            style={{
+              backgroundColor: "transparent",
+              padding: 8,
+              marginLeft: 320,
+              marginBottom: 50,
+              top: -20,
+            }}
           >
-            <Text style={{ color: "white" }}>Cancel</Text>
+            <Text style={{ color: "grey", marginBottom: 80 }}>Cancel</Text>
           </TouchableOpacity>
         </View>
       ) : null}
       <View>
-        {/* <Countdown
-          until={timeDiffInSeconds}
-          onFinish={() => console.log("Countdown finished")}
-          size={12}
-          timeToShow={["D", "H", "M", "S"]}
-          digitStyle={{ backgroundColor: "#FFF" }}
-          digitTxtStyle={{ color: "#1CC625" }}
-          separatorStyle={{ color: "#1CC625" }}
-          timeLabels={{ d: "Days", h: "Hours", m: "Minutes", s: "Seconds" }}
-        /> */}
+        <Countdown
+          style={{ top: -50 }}
+          size={25}
+          until={1000}
+          digitStyle={{
+            backgroundColor: "transparent",
+            borderWidth: 0,
+            borderColor: "darkorange",
+          }}
+          digitTxtStyle={{ color: "#C147E9" }}
+          timeLabelStyle={{ color: "red", fontWeight: "bold" }}
+          separatorStyle={{ color: "#C147E9" }}
+          timeToShow={["H", "M", "S"]}
+          timeLabels={{ m: null, s: null }}
+          showSeparator
+        />
       </View>
     </View>
   );

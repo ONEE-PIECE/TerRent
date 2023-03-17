@@ -13,12 +13,23 @@ const addPlayer = async (req, res) => {
   res.status(201).send(user);
 };
 const updatePlayer = async (req, res) => {
-  let onePlayer = {
-    UserName: req.body.UserName,
-    ProfileImage: req.body.ProfileImage,
-  };
-  const user = await Player.create(onePlayer);
-  res.status(201).send(user);
+  const { FireId, FirstName, SecondName, Email, ProfileImage } = req.body;
+  try {
+    const player = await Player.update(
+      {
+        FirstName,
+        SecondName,
+        Email,
+        ProfileImage,
+      },
+      {
+        where: { FireId: FireId },
+      }
+    );
+    res.status(200).send("Account Updated !");
+  } catch (err) {
+    console.log(err);
+  }
 };
 const getPlayer = async (req, res) => {
   const player = await Player.findAll({ where: { FireId: req.params.FireId } });

@@ -32,7 +32,6 @@ const SignUpScreen = () => {
         addAccount(res._tokenResponse.localId);
         if (validUserName(username, email)) {
           navigation.navigate("Home");
-          alert("Welcome");
         }
       })
       .catch((err) => {

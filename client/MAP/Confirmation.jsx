@@ -3,7 +3,7 @@ import axios from "axios";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { baseUrl } from "../urlConfig/urlConfig";
 const Confirmation = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -15,7 +15,6 @@ const Confirmation = ({ navigation, route }) => {
   const [images, setImages] = useState("");
   const [capacity, setCapacity] = useState("");
   const [availability, setAvailability] = useState(false);
-
   const handleAddTerrain = async () => {
     try {
       const newTerrain = {
@@ -31,7 +30,7 @@ const Confirmation = ({ navigation, route }) => {
         Availability: availability,
       };
       const response = await axios.post(
-        "http://192.168.101.8:3000/api/terrain/ownerId",
+        `${baseUrl}api/terrain/add/dFaAF4CSP1Rmkb04vSdgiDGR9Kq1`,
         newTerrain
       );
       console.log(response.data);
@@ -39,8 +38,7 @@ const Confirmation = ({ navigation, route }) => {
       console.error(error);
     }
   };
-  console.log("iheb", lat);
-  console.log("atef", route.params.lat, route.params.long);
+
   return (
     <View style={styles.container}>
       <TextInput placeholder="Name" value={name} onChangeText={setName} />
@@ -55,7 +53,6 @@ const Confirmation = ({ navigation, route }) => {
         value={description}
         onChangeText={setDescription}
       />
-
       <TextInput placeholder="Region" value={region} onChangeText={setRegion} />
       <TextInput
         placeholder="Category"
@@ -77,7 +74,6 @@ const Confirmation = ({ navigation, route }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     top: "30%",

@@ -23,7 +23,7 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "Home" ? "home" : "home-outline"}
           size={24}
-          color={activeTab === "Home" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "Home" ? "darkorange" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -33,12 +33,13 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "calendar-outline" ? "search" : "calendar"}
           size={24}
-          color={activeTab === "Search" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "Search" ? "darkorange" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.tabButton}
         onPress={() => {
+          handleTabPress("logout");
           signOut(auth)
             .then(() => {})
             .catch((error) => {
@@ -50,17 +51,17 @@ const BottomNavigationBar = ({}) => {
         <Ionicons
           name={activeTab === "log-out-outline" ? "logout" : "log-out-sharp"}
           size={24}
-          color={activeTab === "Logout" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "logout" ? "darkorange" : "lightgrey"}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => handleTabPress("Profile")}
+        onPress={() => handleTabPress("profileplayer")}
       >
         <Ionicons
-          name={activeTab === "Profile" ? "person" : "person-outline"}
+          name={activeTab === "profileplayer" ? "person" : "person-outline"}
           size={24}
-          color={activeTab === "Profile" ? "#00c8e9" : "lightgrey"}
+          color={activeTab === "profileplayer" ? "darkorange" : "lightgrey"}
         />
       </TouchableOpacity>
     </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: "black",
     borderTopWidth: 2,
-    borderTopColor: "#00c8e9",
+    borderTopColor: "darkorange",
   },
   tabButton: {
     flex: 1,

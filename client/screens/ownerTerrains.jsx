@@ -36,7 +36,9 @@ const HandleOwnerTerrains = () => {
     try {
       const value = await AsyncStorage.getItem("OwnerToken");
       console.log("welcome :", value);
-      let ownerTerrains = await axios.get(`${baseUrl}api/terrain/${value}`);
+      let ownerTerrains = await axios.get(
+        `${baseUrl}api/terrain/dFaAF4CSP1Rmkb04vSdgiDGR9Kq1`
+      );
       console.log("owner", ownerTerrains.data);
       return ownerTerrains.data;
     } catch (error) {

@@ -14,13 +14,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { NavigationContainer } from "@react-navigation/native";
 import axios from "axios";
-
 const Mapplayer = ({ navigation: { navigate } }) => {
+  const [start, setstart] = useState({
+    latitude: 36.7435,
+    longitude: 10.231976,
+  });
   const [position, setposition] = useState({
     latitude: 36.7435,
     longitude: 10.231976,
   });
-
   const [regin, setregin] = useState({
     latitude: 36.8941559,
     longitude: 10.1870625,
@@ -29,7 +31,6 @@ const Mapplayer = ({ navigation: { navigate } }) => {
   });
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -37,21 +38,17 @@ const Mapplayer = ({ navigation: { navigate } }) => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
   useEffect(() => {
     axios
-      .get("http://192.168.104.6:3000/api/terrain/terrains/oneterrains/1")
+      .get(`http://192.168.104.10:3000/api/terrain/terrains/oneterrains/4`)
       .then((result) => {
-        console.log(result.data.Name, "mmmmmmmm");
         setposition({
           latitude: result.data.lat,
           longitude: result.data.long,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
           name: result.data.Name,
         });
       })
@@ -59,14 +56,14 @@ const Mapplayer = ({ navigation: { navigate } }) => {
         console.log(err);
       });
   }, []);
-
+  console.log("4", position.lat);
   let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
   }
-
+  console.log("aaaaaa", typeof destination);
   return (
     <View style={{ marginTop: 33, flex: 1 }}>
       <MapView
@@ -78,9 +75,8 @@ const Mapplayer = ({ navigation: { navigate } }) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        showsUserLocation={true}
+        showsUserLocation={false}
         onUserLocationChange={(e) => {
-          console.log("onUserLocationChange", e.nativeEvent.coordinate);
           setregin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -93,36 +89,37 @@ const Mapplayer = ({ navigation: { navigate } }) => {
             longitude: regin.longitude,
           }}
           draggable={true}
-          title={"here "}
-          description={"this is me "}
-          onDragStart={(e) => {
-            console.log("drag start", e.nativeEvent.coordinate);
-          }}
+          title={"here your position "}
+          description={"player "}
+          onDragStart={(e) => {}}
           onDragEnd={(e) => {
-            console.log("drag end", e.nativeEvent.coordinate);
             setregin({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             });
           }}
         ></Marker>
-        <Marker coordinate={position} title={position.name} />
-        {console.log("name", position.Name)}
-
+        {/* <Marker coordinate={position} title={position.name} /> */}
         <Circle center={regin} radius={100} />
-
         <MapViewDirections
           origin={regin}
           destination={position}
-          apikey={GOOGLE_MAPS_KEY}
+          apikey={"AIzaSyB3gw78dU8-sOg2nzSiHi4-7LUgEedSasM"}
           strokeWidth={5}
+          strokeColor="blue"
+          renderMarker={(position) => {
+            <Marker
+              coordinate={position}
+              title={"your destination"}
+              description={"terRent"}
+            />;
+          }}
         />
       </MapView>
       <Polyline destination={[regin, position]} />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -133,5 +130,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
-
 export default Mapplayer;

@@ -13,7 +13,6 @@ import Confirmation from "./Confirmation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { NavigationContainer } from "@react-navigation/native";
-
 const Map = ({ navigation: { navigate } }) => {
   const [tunis, settunis] = useState({
     latitude: 36.80638936,
@@ -29,7 +28,6 @@ const Map = ({ navigation: { navigate } }) => {
   });
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -37,19 +35,16 @@ const Map = ({ navigation: { navigate } }) => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
-
   let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
   }
-
   return (
     <View style={{ marginTop: 33, flex: 1 }}>
       <GooglePlacesAutocomplete
@@ -88,7 +83,7 @@ const Map = ({ navigation: { navigate } }) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        showsUserLocation={true}
+        showsUserLocation={false}
         onUserLocationChange={(e) => {
           console.log("onUserLocationChange", e.nativeEvent.coordinate);
           setregin({
@@ -116,10 +111,8 @@ const Map = ({ navigation: { navigate } }) => {
             });
           }}
         ></Marker>
-
         <Circle center={regin} radius={100} />
       </MapView>
-
       <View style={{ position: "absolute", bottom: 30, zIndex: 1, left: 130 }}>
         <Button
           title="confirm your position "
@@ -134,7 +127,6 @@ const Map = ({ navigation: { navigate } }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -144,5 +136,4 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-
 export default Map;

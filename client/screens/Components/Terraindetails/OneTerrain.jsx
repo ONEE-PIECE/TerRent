@@ -15,12 +15,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { ImageBackground } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ToastAndroid } from "react-native";
 import { Root } from "popup-ui";
 import { KeyboardAvoidingView } from "react-native";
 import { baseUrl } from "../../../urlConfig/urlConfig.js";
 import { Rating } from "react-native-ratings";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+import BottomNavigationBar from "../Bottomnav/BottomNav.jsx";
 
 const OneTerrain = ({ navigation, route }) => {
   const [review, setreview] = useState("");
@@ -61,10 +63,13 @@ const OneTerrain = ({ navigation, route }) => {
   }
 
   const addReview = () => {
-    axios.post(`${baseUrl}api/reviews/addreview/${route.params.id}`, {
-      idterrain: route.params.id,
-      Comments: review,
-    });
+    axios.post(
+      `${baseUrl}api/reviews/addreview/dFaAF4CSP1Rmkb04vSdgiDGR9Kq1/${route.params.id}`,
+      {
+        terrainId: route.params.id,
+        Comments: review,
+      }
+    );
   };
   const showreview = () => {
     setseeReviews(true);
@@ -97,7 +102,7 @@ const OneTerrain = ({ navigation, route }) => {
   }, [route.params.id]);
   const addStar = () => {
     axios
-      .post(`${baseUrl}api/reviews/stars/Rmt1HlADW2eRc82c7XG5srWLjUQ2/1`, {
+      .post(`${baseUrl}api/reviews/stars/dFaAF4CSP1Rmkb04vSdgiDGR9Kq1/5`, {
         Rating: ratingValue,
       })
       .then((response) => {
@@ -144,17 +149,28 @@ const OneTerrain = ({ navigation, route }) => {
       </View>
     );
   };
-
+  const showToast = () => {
+    ToastAndroid.show("Request sent successfully!", ToastAndroid.SHORT);
+  };
   const { width: screenWidth } = Dimensions.get("window");
 
   const onSnapToItem = (index) => {
     setCurrentIndex(index);
   };
-  const isReviewEmpty = review.trim().length === 0;
+
+  // const isReviewEmpty = review.trim().length === 0;
   return (
     <Root>
-      <KeyboardAvoidingView behavior="padding">
-        <ScrollView style={{ backgroundColor: "black", height: 800 }}>
+      <KeyboardAvoidingView
+        behavior="height"
+        style={{ paddingBottom: 50, backgroundColor: "black" }}
+      >
+        <ScrollView
+          style={{
+            backgroundColor: "black",
+            marginBottom: 70,
+          }}
+        >
           <Card
             style={{
               marginTop: 0,
@@ -402,19 +418,24 @@ const OneTerrain = ({ navigation, route }) => {
                       addReview;
                     }}
                     textColor="darkorange"
-                    style={{ opacity: isReviewEmpty ? 0.5 : 1 }}
+                    // style={{ opacity: isReviewEmpty ? 0.5 : 1 }}
                   >
                     Post
                   </Button>
                   <Button
-                    style={{ backgroundColor: "orange", borderColor: "white" }}
+                    style={{
+                      backgroundColor: "white",
+                      borderColor: "transparent",
+                      marginBottom: -0,
+                    }}
                     title="Add Review"
                     onPress={addStar}
                   />
                   <Rating
+                    tintColor="black"
                     type="star"
                     startingValue={0}
-                    imageSize={20}
+                    imageSize={40}
                     onFinishRating={setRatingValue}
                   />
                 </View>
@@ -422,6 +443,18 @@ const OneTerrain = ({ navigation, route }) => {
             </View>
           )}
         </ScrollView>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 10,
+            flex: 1,
+            alignSelf: "stretch",
+            right: 0,
+            left: 0,
+          }}
+        >
+          <BottomNavigationBar />
+        </View>
       </KeyboardAvoidingView>
     </Root>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { auth, app } from "../../../../config";
+import { auth, app } from "../../../config";
 import axios from "axios";
-import { baseUrl } from "../../../../urlConfig/urlConfig";
+import { baseUrl } from "../../../urlConfig/urlConfig";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
 import {
   getStorage,
   ref,
@@ -18,15 +21,26 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { updateEmail, updatePassword } from "firebase/auth";
-const Ownerprofile = ({ route }) => {
-  const [data, setData] = useState(route.params.dataowner[0]);
-  const [FirstName, setFirstName] = useState(data.FirstName);
-  const [LastName, setLastName] = useState(data.LastName);
-  const [Email, setEmail] = useState(data.Email);
-  const [PhoneNumber, setPhoneNumber] = useState(data.PhoneNumber);
-  const [ProfileImage, setProfileImage] = useState(data.ProfileImage);
+const PlayerSettings = ({ navigation, route }) => {
+  const [data, setData] = useState(null);
+  const [FirstName, setFirstName] = useState("Marwen");
+  const [SecondName, setSecondName] = useState("Slimen");
+  const [Email, setEmail] = useState();
+  const [ProfileImage, setProfileImage] = useState();
   const [Password, setPassword] = useState(null);
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState(null);
+  useEffect(() => {
+    axiosGetPlayer();
+  }, []);
+  // function hedhi bech tetna7A kif norbot l khedma
+  const axiosGetPlayer = () => {
+    axios
+      .get(`${baseUrl}api/player/g4BNGHXshTTJCgQr8GT7LM6EJOf2`)
+      .then((res) => {
+        console.log(res.data[0]);
+        setData(res.data[0]);
+      });
+  };
   const updateEmailFirebase = () => {
     updateEmail(auth.currentUser, Email)
       .then((res) => console.log("updatedEmail"))
@@ -76,16 +90,16 @@ const Ownerprofile = ({ route }) => {
     if (Password && Password === ConfirmPassword) {
       updateEmailFirebase();
       const body = {
-        Fireid: data.Fireid,
+        FireId: "g4BNGHXshTTJCgQr8GT7LM6EJOf2",
         FirstName,
-        LastName,
+        SecondName,
         Email,
-        PhoneNumber,
         ProfileImage,
       };
       axios
-        .put(`${baseUrl}owner/updateOwner`, body)
-        .then((res) => alert("Updated"));
+        .put(`${baseUrl}api/player/updatePlayer`, body)
+        .then((res) => alert("Updated"))
+        .catch((err) => console.log(err));
       updatePasswordFirebase();
     } else {
       alert("Wrong Confirm Password");
@@ -94,14 +108,18 @@ const Ownerprofile = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Image style={styles.avatar} source={{ uri: ProfileImage }} />
+        <Image style={styles.avatar} source={{ uri: route.params.img }} />
         <TouchableOpacity
           style={styles.changeAvatarButton}
           onPress={() => {
             pickProfileImage();
           }}
         >
-          <Text style={styles.changeAvatarButtonText}>Change Avatar</Text>
+          <Ionicons
+            name="camera-outline"
+            color={"lightgrey"}
+            size={50}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.form}>
@@ -116,8 +134,8 @@ const Ownerprofile = ({ route }) => {
         <TextInput
           style={styles.input}
           placeholder="Enter Your Last Name"
-          value={LastName}
-          onChangeText={setLastName}
+          value={SecondName}
+          onChangeText={setSecondName}
         />
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -125,14 +143,6 @@ const Ownerprofile = ({ route }) => {
           placeholder="Enter Email"
           value={Email}
           onChangeText={setEmail}
-        />
-        <Text style={styles.label}>Phone Number </Text>
-        <TextInput
-          keyboardType="numeric"
-          style={styles.input}
-          placeholder="Enter Your Phone Number"
-          value={PhoneNumber.toString()}
-          onChangeText={setPhoneNumber}
         />
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -164,46 +174,52 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "80%",
+    top: -40,
   },
   label: {
     color: "lightgrey",
     marginTop: 20,
   },
   input: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "transparent",
     borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
+    color: "darkorange",
+    borderBottomWidth: 1,
+
+    borderBottomColor: "darkorange",
     padding: 10,
-    fontSize: 18,
+    fontSize: 15,
   },
   button: {
     alignItems: "center",
     marginTop: 20,
-    backgroundColor: "orange",
-    borderRadius: 5,
+    backgroundColor: "transparent",
+    borderColor: "darkorange",
+    borderWidth: 1,
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 18,
+    color: "lightgrey",
+    fontSize: 15,
   },
   avatarContainer: {
-    marginTop: 20,
+    marginTop: -70,
     alignItems: "center",
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 180,
+    height: 180,
+    borderRadius: 100,
+    top: 20,
   },
   changeAvatarButton: {
-    marginTop: 10,
+    top: -30,
   },
   changeAvatarButtonText: {
     color: "#1E90FF",
-    fontSize: 18,
+    fontSize: 15,
   },
 });
-export default Ownerprofile;
+export default PlayerSettings;

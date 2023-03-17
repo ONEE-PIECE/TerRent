@@ -1,7 +1,8 @@
-const { where } = require("sequelize");
+// const { event } = require("react-native-reanimated");
+// const { where } = require("sequelize");
 const db = require("../index.js");
 const Event = db.Event;
-
+const Player = db.Player;
 const addEvent = async (req, res) => {
   try {
     const { EventName, Description, Date, Price, Media } = req.body;
@@ -30,12 +31,10 @@ const getEventsForAterrain = async (req, res) => {
     res.status(404).send(err);
   }
 };
-
 const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const { EventName, Description, Date, Price, EventImage } = req.body;
-
     const event = await Event.update(
       {
         EventName,
@@ -46,7 +45,7 @@ const updateEvent = async (req, res) => {
       },
       {
         where: {
-          id:id,
+          id: id,
         },
       }
     );
@@ -56,26 +55,39 @@ const updateEvent = async (req, res) => {
     res.status(404).send("Server Error");
   }
 };
-
 const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
     await Event.destroy({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     res.status(200).json({
-      message: `Event with id ${id} has been deleted successfully`
+      message: `Event with id ${id} has been deleted successfully`,
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "Unable to delete event"
+      message: "Unable to delete event",
     });
   }
-}
-
-
-
-module.exports = { addEvent, getEventsForAterrain,updateEvent,deleteEvent };
+};
+const joinPlayerToEvent = async (req, res) => {
+  try {
+    const { eventId, playerId } = req.params;
+    const event = await db.Event.findByPk(eventId);
+    const player = await db.Player.findByPk(playerId);
+    event.addPlayer(player);
+    res.status(200).json(`${player} joined${event}`);
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};
+module.exports = {
+  addEvent,
+  getEventsForAterrain,
+  updateEvent,
+  deleteEvent,
+  joinPlayerToEvent,
+};

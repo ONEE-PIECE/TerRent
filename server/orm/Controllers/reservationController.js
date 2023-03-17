@@ -11,7 +11,7 @@ const sendAppointment = async (req, res) => {
       Day,
       Hour,
       Reserved,
-      playerId: playerId,
+      playerFireId: playerId,
       terrainId: terrainId,
     });
     // Return the newly created reservation record
@@ -87,7 +87,7 @@ const confirmedReservations = async (req, res) => {
     const { playerId } = req.params;
     const query = await Reservation.findAll({
       where: {
-        playerId: playerId,
+        playerFireId: playerId,
         Reserved: true,
       },
     });
@@ -101,7 +101,7 @@ const pendingResrvation = async (req, res) => {
     const { playerId } = req.params;
     const query = await Reservation.findAll({
       where: {
-        playerId: playerId,
+        playerFireId: playerId,
         Reserved: false,
       },
     });

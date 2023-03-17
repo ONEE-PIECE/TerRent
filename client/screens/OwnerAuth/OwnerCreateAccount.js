@@ -147,7 +147,7 @@ const OwnerCreateAccount = () => {
       .then((res) => {
         // uploadImage(patentImage,'my-image.jpg')
         axiosPost(res._tokenResponse.localId);
-        navigation.navigate("homeowner");
+        navigation.navigate("ownerlogin");
       })
       .catch((e) => console.log(e));
   };

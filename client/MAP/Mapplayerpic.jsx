@@ -61,9 +61,8 @@ const Mapplayerpic = ({ navigation: navigate }) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        showsUserLocation={true}
+        showsUserLocation={false}
         onUserLocationChange={(e) => {
-          console.log("onUserLocationChange", e.nativeEvent.coordinate);
           setregin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -80,11 +79,8 @@ const Mapplayerpic = ({ navigation: navigate }) => {
           draggable={true}
           title={"here "}
           description={"this is me "}
-          onDragStart={(e) => {
-            console.log("drag start", e.nativeEvent.coordinate);
-          }}
+          onDragStart={(e) => {}}
           onDragEnd={(e) => {
-            console.log("drag end", e.nativeEvent.coordinate);
             setregin({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,

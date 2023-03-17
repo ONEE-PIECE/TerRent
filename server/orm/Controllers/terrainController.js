@@ -13,6 +13,14 @@ const getAll = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+getAllterrains = async (req, res) => {
+  try {
+    const query = await Terrain.findAll({});
+    res.status(200).json(query);
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};
 
 const getAllCat = async (req, res) => {
   const { Category } = req.params;
@@ -70,7 +78,7 @@ const addTerrain = async (req, res) => {
       Capacity,
       Aviability,
 
-      ownerId: ownerId,
+      FireId: ownerId,
     });
     res.status(201).json(terrain);
   } catch (error) {
@@ -139,4 +147,5 @@ module.exports = {
   getAll,
   getOne,
   getAllCat,
+  getAllterrains,
 };
